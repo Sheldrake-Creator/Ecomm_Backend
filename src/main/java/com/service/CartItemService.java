@@ -11,9 +11,9 @@ import com.request.AddItemRequest;
 
 public interface CartItemService {
 
-    public CartItem createCartItem(CartItem cartItem);
-    public CartItem updateCartItem(Long userId, Long id, CartItem cartltem)throws CartItemException, UserException;
-    public CartItem doesCartItemExist(Cart cart, Product product, String size, Long userId);
-    public void removeCartItem(Long userId, Long cartItemId) throws CartItemException, UserException;
-    public CartItem findCartItemById(Long cartItemId)throws CartItemException;
+    CartItem createCartItem(CartItem cartItem);
+    CartItem updateCartItem(Long userId, Long id, CartItem cartltem)throws CartItemException, UserException;
+    CartItem doesCartItemExist(Cart cart, Product product, String size, Long userId);
+    void removeCartItem(Long userId, Long cartItemId) throws CartItemException, UserException;
+    CartItem findCartItemById(Long cartItemId)throws CartItemException;
 }

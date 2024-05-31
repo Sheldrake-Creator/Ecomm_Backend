@@ -12,8 +12,8 @@ import java.util.List;
 
 public interface RatingService {
 
-    public Rating createRating(RatingRequest req, User user) throws ProductException;
-    public List<Rating> getProductsRating(Long productId);
+    Rating createRating(RatingRequest req, User user) throws ProductException;
+    List<Rating> getProductsRating(Long productId);
 
 
 

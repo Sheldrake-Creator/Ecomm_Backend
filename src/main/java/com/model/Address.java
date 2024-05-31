@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 @Entity
 public class Address {
 
+    public Address(){}
+
+
 
     public Address(Long id, String firstName, String lastName, String streetAddress, User user, String city, String state, String zipCode, String mobile) {
         this.id = id;

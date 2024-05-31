@@ -33,7 +33,7 @@ public class CartItemController {
             public ResponseEntity<APIResponse> deleteCartItem(@PathVariable Long cartItemId,
                                                               @RequestHeader("Authorization") String jwt) throws UserException, CartItemException{
         User user=userService. findUserProfileByJwt(jwt);
-        cartItemService.removeCartItem(user.getId(), cartItemId);
+        cartItemService.removeCartItem(user.getUserId(), cartItemId);
 
         APIResponse res=new APIResponse();
         res.setMessage("delete item from cart");
@@ -48,7 +48,7 @@ public class CartItemController {
             @PathVariable Long cartItemId,
             @RequestHeader(" Authorization") String jwt) throws UserException, CartItemException {
         User user =userService.findUserProfileByJwt(jwt);
-        CartItem updatedCartItem = cartItemService.updateCartItem(user.getId(), cartItemId, cartItem);
+        CartItem updatedCartItem = cartItemService.updateCartItem(user.getUserId(), cartItemId, cartItem);
         return new ResponseEntity<>(updatedCartItem, HttpStatus.OK);
     }
 }

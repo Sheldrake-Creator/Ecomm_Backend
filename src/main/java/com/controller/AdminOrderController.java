@@ -12,47 +12,47 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/orders")
+//@RequestMapping("/api/admin/orders")
 public class AdminOrderController {
 
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/")
+//    @GetMapping("/")
     public ResponseEntity<List<Order>> getAllOrdersHandler(){
         List<Order> orders = orderService.getAllOrders();
         return new ResponseEntity<List<Order>>(orders, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/{orderId}/confirmed")
+//    @PutMapping("/{orderId}/confirmed")
     public ResponseEntity<Order> ConfirmedOrderHandler(@PathVariable Long orderId,
                                                        @RequestHeader("Authorization") String jwt) throws OrderException {
         Order order=orderService.confirmedOrder(orderId);
         return new ResponseEntity<>(order,HttpStatus.OK);
     }
 
-    @PutMapping("/{orderId}/shipping")
+//    @PutMapping("/{orderId}/shipping")
     public ResponseEntity<Order> ShippedOrderHandler(@PathVariable Long orderId,
                                                      @RequestHeader("Authorization") String jwt) throws OrderException {
         Order order = orderService.shippedOrder(orderId);
         return new ResponseEntity<>(order,HttpStatus.OK);
     }
 
-    @PutMapping("/{orderId}/deliver")
+//    @PutMapping("/{orderId}/deliver")
     public ResponseEntity<Order> DeliverOrderHandler(@PathVariable Long orderId,
                                                      @RequestHeader(" Authorization") String jwt) throws OrderException {
         Order order=orderService.deliveredOrder(orderId);
         return new ResponseEntity<>(order,HttpStatus.OK);
     }
 
-    @PutMapping("/{orderId}/cancel")
+//    @PutMapping("/{orderId}/cancel")
     public ResponseEntity<Order> CancelOrderHandler(@PathVariable Long orderId,
                                                     @RequestHeader(" Authorization") String jwt) throws OrderException {
         Order order=orderService.canceledOrder(orderId);
         return new ResponseEntity<>(order,HttpStatus.OK);
     }
 
-    @DeleteMapping("/{orderId}/delete")
+//    @DeleteMapping("/{orderId}/delete")
     public ResponseEntity<APIResponse> DeleteOrderHandler(@PathVariable Long orderId,
                                                           @RequestHeader("Authorization") String jwt) throws OrderException{
         orderService.deleteOrder(orderId);

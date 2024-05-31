@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface ReviewService {
 
-    public Review createReview(ReviewRequest request, User user) throws ProductException;
+    Review createReview(ReviewRequest request, User user) throws ProductException;
 
-    public List<Review> getAllReviews(Long ProductId);
+    List<Review> getAllReviews(Long ProductId);
 }

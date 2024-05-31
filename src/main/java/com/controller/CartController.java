@@ -20,17 +20,15 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name="Cart Management",description= "find user cart, add item to cart")
 public class CartController {
 
-    @Autowired
     private CartService cartService;
 
-    @Autowired
     private UserService userService;
 
     @GetMapping("/")
     @Operation(description = "find cart by user id")
     public ResponseEntity<Cart> findUserCart(@RequestHeader("Authorization")String jwt) throws UserException {
         User user = userService.findUserProfileByJwt(jwt);
-        Cart cart = cartService.findUserCart(user.getId());
+        Cart cart = cartService.findUserCart(user.getUserId());
 
         return new ResponseEntity<Cart>(cart, HttpStatus.OK);
     }
@@ -40,7 +38,7 @@ public class CartController {
     public ResponseEntity<APIResponse>addItemToCart(@RequestBody AddItemRequest req,
                                                     @RequestHeader("Authorization")String jwt) throws UserException, ProductException {
         User user = userService.findUserProfileByJwt(jwt);
-        cartService.addItemToCart(user.getId(), req);
+        cartService.addItemToCart(user.getUserId(), req);
 
         APIResponse res=new APIResponse();
         res.setMessage("item added to cart");

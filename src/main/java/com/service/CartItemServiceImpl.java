@@ -44,7 +44,7 @@ public class CartItemServiceImpl implements CartItemService{
 
         CartItem item=findCartItemById(id);
         User user=userService.findUserById(item.getUserId());
-        if(user.getId().equals(userId)){
+        if(user.getUserId().equals(userId)){
             item.setQuantity(cartItem.getQuantity());
             item.setPrice(item.getQuantity()*item.getProduct().getPrice());
             item.setDiscountedPrice(item.getProduct().getDiscountedPrice()*item.getQuantity());
@@ -65,7 +65,7 @@ public class CartItemServiceImpl implements CartItemService{
         User user=userService.findUserById(cartItem.getUserId());
         User reqUser=userService.findUserById(userId);
 
-        if(user.getId().equals(reqUser.getId())) {
+        if(user.getUserId().equals(reqUser.getUserId())) {
             cartItemRepository.deleteById(cartItemId);
         }
         else {

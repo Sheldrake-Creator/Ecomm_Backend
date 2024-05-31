@@ -38,7 +38,7 @@ public class OrderController {
     public ResponseEntity<List<Order>>usersOrderHistory(
             @RequestHeader(" Authorization") String jwt) throws UserException {
         User user = userService.findUserProfileByJwt(jwt);
-        List<Order> orders = orderService.usersOrderHistory(user.getId());
+        List<Order> orders = orderService.usersOrderHistory(user.getUserId());
         return new ResponseEntity<>(orders, HttpStatus.CREATED);
     }
 
