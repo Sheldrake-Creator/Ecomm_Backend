@@ -16,6 +16,8 @@ import com.dto.SignUpDTO;
 import com.dto.UserDTO;
 
 import com.exception.UserException;
+import com.response.AuthResponse;
+import com.response.UserResponse;
 import com.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -59,9 +61,9 @@ public AuthController(UserService userService){
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO>registerHandler(@RequestBody SignUpDTO signUpDto)throws UserException {
-        UserDTO user = userService.register(signUpDto);
-        return ResponseEntity.created(URI.create("/users/"+user.getUserId())).body(user);
+    public ResponseEntity<AuthResponse>registerHandler(@RequestBody SignUpDTO signUpDto)throws UserException {
+        UserDTO userDTO = userService.register(signUpDto);
+        return ResponseEntity.ok(new UserResponse(userDTO));
     }
 
 
