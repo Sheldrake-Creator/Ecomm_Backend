@@ -17,6 +17,7 @@ import com.dto.UserDTO;
 
 import com.exception.UserException;
 import com.response.AuthResponse;
+import com.response.UserAuthProvider;
 import com.response.UserResponse;
 import com.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -30,39 +31,29 @@ import java.net.URI;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class AuthController {
-//
-//    private UserRepository userRepository;
-//    private JwtProvider jwtProvider;
-//    private PasswordEncoder passwordEncoder;
-//    private CustomerUserServiceImpl customerUserService;
-//    private CartService cartService;
-private  UserService userService;
 
-public AuthController(UserService userService){
+private final UserService userService;
+private final UserAuthProvider userAuth;
+
+public AuthController(UserService userService, UserAuthProvider userAuth){
+
     this.userService = userService;
+    this.userAuth = userAuth;
 }
 
-//
-//
-//    public AuthController(UserRepository userRepository, JwtProvider jwtProvider,
-//                          PasswordEncoder passwordEncoder,CustomerUserServiceImpl customerUserService, CartService cartService) {
-//        this.userRepository = userRepository;
-//        this.jwtProvider = jwtProvider;
-//        this.passwordEncoder = passwordEncoder;
-//        this.customerUserService = customerUserService;
-//        this.cartService=cartService;
-//    }
-//
+
 
     @PostMapping("/login")
     public ResponseEntity<UserDTO>loginHandler(@RequestBody CredentialsDTO credentialsDto)throws UserException {
-        UserDTO user = userService.login(credentialsDto);
-        return ResponseEntity.ok(user);
+        UserDTO userDTO = userService.login(credentialsDto);
+        userDTO.setToken(userAuth.createToken(userDTO));
+        return ResponseEntity.ok(userDTO);
     }
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse>registerHandler(@RequestBody SignUpDTO signUpDto)throws UserException {
         UserDTO userDTO = userService.register(signUpDto);
+        userDTO.setToken(userAuth.createToken(userDTO));
         return ResponseEntity.ok(new UserResponse(userDTO));
     }
 
