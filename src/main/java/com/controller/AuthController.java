@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -36,18 +35,16 @@ private final UserService userService;
 private final UserAuthProvider userAuth;
 
 public AuthController(UserService userService, UserAuthProvider userAuth){
-
     this.userService = userService;
     this.userAuth = userAuth;
 }
 
 
-
     @PostMapping("/login")
-    public ResponseEntity<UserDTO>loginHandler(@RequestBody CredentialsDTO credentialsDto)throws UserException {
+    public ResponseEntity<AuthResponse>loginHandler(@RequestBody CredentialsDTO credentialsDto)throws UserException {
         UserDTO userDTO = userService.login(credentialsDto);
         userDTO.setToken(userAuth.createToken(userDTO));
-        return ResponseEntity.ok(userDTO);
+        return ResponseEntity.ok(new UserResponse(userDTO));
     }
 
     @PostMapping("/register")

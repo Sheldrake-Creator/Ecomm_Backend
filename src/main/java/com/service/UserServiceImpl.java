@@ -67,9 +67,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findByUserName(credentialsDTO.userName())
                 .orElseThrow(() -> new AuthException("Unknown User", HttpStatus.NOT_FOUND));
-
-        if(passwordEncoder.matches(CharBuffer.wrap(credentialsDTO.password()),
-                user.getPassword())) {
+        if(passwordEncoder.matches(CharBuffer.wrap(credentialsDTO.password()),user.getPassword())) {
             return userMapper.toUserDto(user);
         }throw new AuthException("Invalid password", HttpStatus.BAD_REQUEST);
     }
@@ -82,11 +80,10 @@ public class UserServiceImpl implements UserService {
         System.out.println("signUpDto "+ Arrays.toString(signUpDto.password()));
         System.out.println("signUpDto "+ signUpDto.email());
 
-
         Optional<User> oUser = userRepository.findByUserName(signUpDto.userName());
 
         if(oUser.isPresent()){
-            throw new AuthException("Login already Exists", HttpStatus.BAD_REQUEST);
+            throw new AuthException("Username already Exists", HttpStatus.BAD_REQUEST);
             //TO DO Add Exception for Existing Email address too
         }
         User user = userMapper.signUpToUser(signUpDto);
