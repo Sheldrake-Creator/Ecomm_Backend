@@ -32,17 +32,4 @@ public class CartController {
 
         return new ResponseEntity<Cart>(cart, HttpStatus.OK);
     }
-
-    @PutMapping("/add")
-    @Operation(description = "add item to cart")
-    public ResponseEntity<APIResponse>addItemToCart(@RequestBody AddItemRequest req,
-                                                    @RequestHeader("Authorization")String jwt) throws UserException, ProductException {
-        User user = userService.findUserProfileByJwt(jwt);
-        cartService.addItemToCart(user.getUserId(), req);
-
-        APIResponse res=new APIResponse();
-        res.setMessage("item added to cart");
-        res.setStatus(true);
-        return new ResponseEntity<>(res,HttpStatus.OK);
-    }
 }

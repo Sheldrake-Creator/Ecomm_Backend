@@ -1,11 +1,14 @@
 package com.controller;
 
 import com.exception.CartItemException;
+import com.exception.ProductException;
 import com.exception.UserException;
 import com.model.CartItem;
 import com.model.User;
+import com.request.AddItemRequest;
 import com.response.APIResponse;
 import com.service.CartItemService;
+import com.service.CartService;
 import com.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
@@ -18,13 +21,27 @@ public class CartItemController {
 
     UserService userService;
     CartItemService cartItemService;
+    CartService cartService;
 
     public CartItemController() {
     }
 
-    public CartItemController(UserService userService, CartItemService cartItemService) {
+    public CartItemController(UserService userService, CartItemService cartItemService, CartService cartService) {
         this.userService = userService;
         this.cartItemService = cartItemService;
+        this.cartService = cartService;
+    }
+    @PutMapping("/add")
+    @Operation(description = "add item to cart")
+    public ResponseEntity<APIResponse>addItemToCart(@RequestBody AddItemRequest req,
+                                                    @RequestHeader("Authorization")String jwt) throws UserException, ProductException {
+        User user = userService.findUserProfileByJwt(jwt);
+        cartService.addItemToCart(user.getUserId(), req);
+
+        APIResponse res=new APIResponse();
+        res.setMessage("item added to cart");
+        res.setStatus(true);
+        return new ResponseEntity<>(res,HttpStatus.OK);
     }
 
     @DeleteMapping("/{cartItemId}")

@@ -46,7 +46,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserProfileByJwt(String jwt){return null;}
+    public User findUserProfileByJwt(String jwt) throws UserException {
+        return null;
+    }
+
+//    @Override
+//    public User findUserProfileByJwt(String jwt){
+//        User user = userRepository.find
+//
+//        }
 
     @Override
     public User findUserByEmail(String email) throws UserException {

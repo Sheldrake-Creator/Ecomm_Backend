@@ -37,9 +37,6 @@ public class ReviewController {
         return new ResponseEntity<>(review,HttpStatus.CREATED);
     }
 
-
-
-
     @GetMapping("/product/{productId}")
     public ResponseEntity<List<Review>> getProductsReview(@PathVariable Long productId)
 throws UserException, ProductException{

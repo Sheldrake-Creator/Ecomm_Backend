@@ -26,8 +26,9 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new JwtAuthFilter(userAuth), BasicAuthenticationFilter.class)
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
-                .authorizeHttpRequests((requests) ->
-                requests.requestMatchers(HttpMethod.POST, "/login","/register").permitAll()
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers(HttpMethod.GET, "/api/cart","/api/cart/add").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/login","/register").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();
