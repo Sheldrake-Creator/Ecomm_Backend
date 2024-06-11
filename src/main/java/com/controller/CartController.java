@@ -1,11 +1,15 @@
 package com.controller;
 
+import com.dto.CartDTO;
+import com.dto.UserDTO;
 import com.exception.ProductException;
 import com.exception.UserException;
 import com.model.Cart;
 import com.model.User;
 import com.request.AddItemRequest;
 import com.response.APIResponse;
+import com.response.CartResponse;
+import com.response.UserResponse;
 import com.service.CartService;
 import com.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,7 +33,12 @@ public class CartController {
     public ResponseEntity<Cart> findUserCart(@RequestHeader("Authorization")String jwt) throws UserException {
         User user = userService.findUserProfileByJwt(jwt);
         Cart cart = cartService.findUserCart(user.getUserId());
-
         return new ResponseEntity<Cart>(cart, HttpStatus.OK);
+    }
+
+    @PostMapping(value="api/createCart")
+    public ResponseEntity<CartResponse> createCart(UserDTO user)throws UserException {
+        CartDTO cart = cartService.createCart(user);
+        return ResponseEntity.ok(new CartResponse(cart));
     }
 }

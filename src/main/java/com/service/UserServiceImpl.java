@@ -9,12 +9,9 @@ import com.exception.UserException;
 import com.mapper.UserMapper;
 import com.model.User;
 import com.repository.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.nio.CharBuffer;
 import java.util.Arrays;
 import java.util.Optional;
@@ -27,7 +24,7 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
     private UserMapper userMapper;
 
-    @Autowired
+
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -94,7 +91,7 @@ public class UserServiceImpl implements UserService {
             throw new AuthException("Username already Exists", HttpStatus.BAD_REQUEST);
             //TO DO Add Exception for Existing Email address too
         }
-        User user = userMapper.signUpToUser(signUpDto);
+        User user = userMapper.signUpDTOToUser(signUpDto);
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(signUpDto.password())));
         User savedUser = userRepository.save(user);
         return userMapper.toUserDto(savedUser);
