@@ -5,11 +5,12 @@ import jakarta.persistence.*;
 
 
 @Entity
+@Table(name = "cart_items")
 public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long cartItemId;
 
     @JsonIgnore
     @ManyToOne
@@ -26,8 +27,8 @@ public class CartItem {
     public CartItem() {
     }
 
-    public CartItem(Long id, Cart cart, Product product, String size, int quantity, Integer price, Integer discountedPrice, Long userId) {
-        this.id = id;
+    public CartItem(Long cartItemId, Cart cart, Product product, String size, int quantity, Integer price, Integer discountedPrice, Long userId) {
+        this.cartItemId = cartItemId;
         this.cart = cart;
         this.product = product;
         this.size = size;
@@ -37,12 +38,12 @@ public class CartItem {
         this.userId = userId;
     }
 
-    public Long getId() {
-        return id;
+    public Long getCartItemId() {
+        return cartItemId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCartItemId(Long id) {
+        this.cartItemId = id;
     }
 
     public Cart getCart() {

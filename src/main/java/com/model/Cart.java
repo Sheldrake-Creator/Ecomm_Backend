@@ -10,7 +10,7 @@ public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long cartId;
 
     @OneToOne
     @JoinColumn(name ="user_id", nullable = false)
@@ -23,33 +23,31 @@ public class Cart {
     @Column(name ="total_price")
     private double totalPrice;
 
-    @Column(name="total_item")
-    private int totalItem;
+    @Column(name="total_items")
+    private int totalItems;
 
     private int totalDiscountedPrice;
 
-    private int discount;
 
     public Cart() {
     }
 
-    public Cart(Long id, User user, Set<CartItem> cartItems, double totalPrice, int totalItem,
-                int totalDiscountedPrice, int discount) {
-        this.id = id;
+    public Cart(Long cartId, User user, Set<CartItem> cartItems, double totalPrice, int totalItems,
+                int totalDiscountedPrice) {
+        this.cartId = cartId;
         this.user = user;
         this.cartItems = cartItems;
         this.totalPrice = totalPrice;
-        this.totalItem = totalItem;
+        this.totalItems = totalItems;
         this.totalDiscountedPrice = totalDiscountedPrice;
-        this.discount = discount;
     }
 
-    public Long getId() {
-        return id;
+    public Long getCartId() {
+        return cartId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCartId(Long cartId) {
+        this.cartId = cartId;
     }
 
     public User getUser() {
@@ -76,12 +74,12 @@ public class Cart {
         this.totalPrice = totalPrice;
     }
 
-    public int getTotalItem() {
-        return totalItem;
+    public int getTotalItems() {
+        return totalItems;
     }
 
-    public void setTotalItem(int totalItem) {
-        this.totalItem = totalItem;
+    public void setTotalItems(int totalItems) {
+        this.totalItems = totalItems;
     }
 
     public int getTotalDiscountedPrice() {
@@ -90,13 +88,5 @@ public class Cart {
 
     public void setTotalDiscountedPrice(int totalDiscountedPrice) {
         this.totalDiscountedPrice = totalDiscountedPrice;
-    }
-
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
-        this.discount = discount;
     }
 }

@@ -7,6 +7,7 @@ import com.mapper.CartMapper;
 import com.model.Cart;
 import com.model.CartItem;
 import com.model.Product;
+import com.model.User;
 import com.repository.CartRepository;
 import com.repository.ProductRepository;
 import com.repository.UserRepository;
@@ -32,18 +33,27 @@ public class CartServiceImpl implements CartService {
         this.productRepository = productRepository;
         this.productService= productService;
         this.userRepository=userRepository;
+        this.cartMapper=cartMapper;
 
     }
 
     @Override
     public CartDTO createCart(UserDTO userDto) {
+        if(userDto==null){
+            throw new IllegalArgumentException("User with ID " + userDto.getUserId() + " not found.");
+        }
+
+        System.out.println("UserDTO "+ userDto);
+
+        System.out.println("UserId ="+ userDto.getUserId());
         int totalPrice=0;
         int totalDiscountedPrice=0;
         int totalItem=0;
         Cart cart=new Cart();
-        userRepository.findUserById(userDto.getUserId());
+        User user =userRepository.findUserByUserId(userDto.getUserId());
+        cart.setUser(user);
         cart.setTotalDiscountedPrice(totalDiscountedPrice);
-        cart.setTotalItem(totalItem);
+        cart.setTotalItems(totalItem);
         cart.setTotalPrice(totalPrice);
         this.cartRepository.save(cart);
         return cartMapper.toCartDTO(cart);
@@ -85,9 +95,8 @@ public class CartServiceImpl implements CartService {
         }
 
         cart.setTotalDiscountedPrice(totalDiscountedPrice);
-        cart.setTotalItem(totalItem);
+        cart.setTotalItems(totalItem);
         cart.setTotalPrice(totalPrice);
-        cart.setDiscount(totalPrice-totalDiscountedPrice);
         return cartRepository.save(cart);
     }
 }

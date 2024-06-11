@@ -54,10 +54,6 @@ public AuthController(UserService userService, UserAuthProvider userAuth){
         return ResponseEntity.ok(new UserResponse(userDTO));
     }
 
-
-
-
-
 //    @PostMapping("/signin")
 //    public ResponseEntity<AuthResponse>loginUserHandler(@RequestBody LoginRequest loginRequest){
 //

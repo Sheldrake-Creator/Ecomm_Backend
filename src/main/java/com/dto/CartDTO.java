@@ -2,6 +2,8 @@ package com.dto;
 
 
 
+import com.model.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CartDTO {
     private long cartId;
-    private long userId;
+    private User user;
     private int totalDiscountedPrice;
     private int totalItems;
     private double totalPrice;

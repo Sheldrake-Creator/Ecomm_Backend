@@ -58,8 +58,7 @@ public class OrderServiceImpl implements OrderService{
         createdOrder.setOrderItems(orderItems);
         createdOrder.setTotalPrice(cart.getTotalPrice());
         createdOrder.setTotalDiscountedPrice(cart.getTotalDiscountedPrice());
-        createdOrder.setDiscount(cart.getDiscount());
-        createdOrder.setTotalItem(cart.getTotalItem());
+        createdOrder.setTotalItem(cart.getTotalItems());
         createdOrder.setShippingAddress(address);
         createdOrder.setOrderDate(LocalDateTime.now());
         createdOrder.setOrderStatus("PENDING");

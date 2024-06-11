@@ -20,28 +20,13 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="user_id")
     private Long userId;
     private String userName;
     private String token;
     private String password;
     private String email;
     private String role;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return userName;
-    }
-
-    public void setUsername(String userName) {
-        this.userName = userName;
-    }
 
 
     @OneToMany(mappedBy="user",cascade = CascadeType.ALL)
@@ -63,6 +48,24 @@ public class User {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Cart cart;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return userName;
+    }
+
+    public void setUsername(String userName) {
+        this.userName = userName;
+    }
 
     public String getPassword() {
         return password;
