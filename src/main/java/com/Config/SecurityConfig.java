@@ -25,11 +25,10 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthFilter(userAuth), BasicAuthenticationFilter.class)
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(HttpMethod.GET, "/api/cart","/api/cart/add").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/getCart","/api/cart/add").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login","/register","api/createCart").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();
     }
-
 }

@@ -6,6 +6,7 @@ import com.model.Cart;
 import com.model.User;
 import com.request.CartRequest;
 import com.response.CartResponse;
+import com.response.CreateCartResponse;
 import com.service.CartService;
 import com.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,10 +18,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:4200")
-@RestController
 @Tag(name="Cart Management",description= "find user cart, add item to cart")
+@RestController
 @AllArgsConstructor
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CartController {
 
 
@@ -36,12 +38,12 @@ public class CartController {
         return new ResponseEntity<Cart>(cart, HttpStatus.OK);
     }
 
-    @PostMapping(value="api/createCart")
+    @PostMapping(value="createCart")
     public ResponseEntity<CartResponse> createCart(@RequestBody CartRequest cartRequest)throws UserException {
         UserDTO userDTO =cartRequest.getUser();
         System.out.println("UserDTO "+userDTO);
         System.out.println("UserDTO "+userDTO.getUserId());
         CartDTO cart = cartService.createCart(userDTO);
-        return ResponseEntity.ok(new CartResponse(cart));
+        return ResponseEntity.ok(new CreateCartResponse(cart));
     }
 }
