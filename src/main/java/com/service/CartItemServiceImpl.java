@@ -9,7 +9,6 @@ import com.model.User;
 import com.repository.CartItemRepository;
 import com.repository.CartRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -17,16 +16,13 @@ public class CartItemServiceImpl implements CartItemService{
 
     private CartItemRepository cartItemRepository;
     private UserService userService;
-    private CartRepository cartRepository;
 
     public CartItemServiceImpl() {
     }
 
-    public CartItemServiceImpl(CartItemRepository cartItemRepository, UserService userService, CartRepository cartRepository,
-                               ProductService productService) {
+    public CartItemServiceImpl(CartItemRepository cartItemRepository, UserService userService, CartRepository cartRepository) {
         this.cartItemRepository = cartItemRepository;
         this.userService = userService;
-        this.cartRepository = cartRepository;
     }
 
     @Override

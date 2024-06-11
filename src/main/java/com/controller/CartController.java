@@ -1,20 +1,14 @@
 package com.controller;
-
 import com.dto.CartDTO;
 import com.dto.UserDTO;
-import com.exception.ProductException;
 import com.exception.UserException;
 import com.model.Cart;
 import com.model.User;
-import com.request.AddItemRequest;
-import com.response.APIResponse;
 import com.response.CartResponse;
-import com.response.UserResponse;
 import com.service.CartService;
 import com.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

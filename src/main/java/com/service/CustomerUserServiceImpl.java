@@ -14,7 +14,7 @@ package com.service;
 //@Service
 //public class CustomerUserServiceImpl implements UserDetailsService {
 
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 //
 //    @Autowired
 //    private UserRepository userRepository;

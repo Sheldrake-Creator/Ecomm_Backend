@@ -1,6 +1,5 @@
 package com.request;
 
-import com.model.Rating;
 
 public class CreateReviewRequest {
 

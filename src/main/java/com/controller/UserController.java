@@ -1,17 +1,12 @@
 package com.controller;
-
-import com.exception.OrderException;
 import com.exception.UserException;
 import com.model.User;
-import com.repository.UserRepository;
-import com.response.APIResponse;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @SuppressWarnings("GrazieInspection")
 @RestController
@@ -20,8 +15,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserRepository userRepository;
+
+
 
 //    @GetMapping("/profile")
 //    public ResponseEntity<User> getUserProfileHandler(@RequestHeader("Authorization") String jwt) throws UserException{

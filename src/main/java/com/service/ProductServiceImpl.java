@@ -21,14 +21,11 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService{
 
     private ProductRepository productRepository;
-    private UserService userService;
     private CategoryRepository categoryRepository;
 
     public ProductServiceImpl(ProductRepository productRepository,
-                              UserService userService,
                               CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
-        this.userService = userService;
         this.categoryRepository = categoryRepository;
     }
 

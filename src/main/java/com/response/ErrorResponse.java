@@ -2,7 +2,6 @@ package com.response;
 
 import com.dto.ErrorsDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.json.JSONPropertyName;
 
 
 public class ErrorResponse {

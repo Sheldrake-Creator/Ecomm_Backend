@@ -1,11 +1,8 @@
 package com.service;
 
 import com.exception.ProductException;
-import com.exception.ReviewException;
-import com.model.Rating;
 import com.model.Review;
 import com.model.User;
-import com.request.CreateReviewRequest;
 import com.request.ReviewRequest;
 
 import java.util.List;

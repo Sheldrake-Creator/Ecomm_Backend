@@ -17,7 +17,6 @@ public class OrderServiceImpl implements OrderService{
     private CartService cartService;
     private AddressRepository addressRepository;
     private UserRepository userRepository;
-    private OrderItemService orderItemService;
     private OrderItemRepository orderItemRepository;
 
 
@@ -26,7 +25,6 @@ public class OrderServiceImpl implements OrderService{
         this.cartService = cartService;
         this.addressRepository = addressRepository;
         this.userRepository = userRepository;
-        this.orderItemService = orderItemService;
         this.orderItemRepository = orderItemRepository;
     }
 
@@ -134,7 +132,6 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void deleteOrder(Long orderId) throws OrderException {
-        Order order =findOrderById(orderId);
         orderRepository.deleteById(orderId);
     }
 

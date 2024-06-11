@@ -1,13 +1,10 @@
 package com.service;
-
 import com.exception.CartItemException;
-import com.exception.ProductException;
 import com.exception.UserException;
 import com.model.Cart;
 import com.model.CartItem;
 import com.model.Product;
-import com.model.User;
-import com.request.AddItemRequest;
+
 
 public interface CartItemService {
 
