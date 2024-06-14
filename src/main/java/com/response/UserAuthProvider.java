@@ -58,7 +58,7 @@ public class UserAuthProvider {
         String accessToken = token.replace("Bearer ", ""); // delete Bearer
         System.out.println("JWT : " + accessToken); // TokenValue
         DecodedJWT decoded = verifier.verify(accessToken);
-        //*TODO fix this shit later. Authentication needs to be stricter  */
+        //* TODO fix this shit later. Authentication needs to be stricter  */
         return decoded.getIssuer();        
     }
 
