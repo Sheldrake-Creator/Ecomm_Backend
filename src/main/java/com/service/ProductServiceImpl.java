@@ -75,7 +75,7 @@ public class ProductServiceImpl implements ProductService{
         product.setPrice(req.getPrice());
         product.setSizes(req.getSize());
         product.setQuantity(req.getQuantity());
-        product.setCategory(thirdLevel);
+        product.setCategoryId(thirdLevel);
         product.setCreatedAt(LocalDateTime.now());
 
         Product savedProduct = productRepository.save(product);

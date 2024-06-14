@@ -7,23 +7,18 @@ import com.model.CartItem;
 import com.model.Product;
 import com.model.User;
 import com.repository.CartItemRepository;
-import com.repository.CartRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class CartItemServiceImpl implements CartItemService{
 
     private CartItemRepository cartItemRepository;
     private UserService userService;
 
-    public CartItemServiceImpl() {
-    }
 
-    public CartItemServiceImpl(CartItemRepository cartItemRepository, UserService userService, CartRepository cartRepository) {
-        this.cartItemRepository = cartItemRepository;
-        this.userService = userService;
-    }
 
     @Override
     public CartItem createCartItem(CartItem cartItem) {
@@ -36,9 +31,9 @@ public class CartItemServiceImpl implements CartItemService{
     }
 
     @Override
-    public CartItem updateCartItem(Long userId, Long id, CartItem cartItem) throws CartItemException, UserException {
+    public CartItem updateCartItem(Long userId, Long cartId, CartItem cartItem) throws CartItemException, UserException {
 
-        CartItem item=findCartItemById(id);
+        CartItem item=findCartItemById(cartId);
         User user=userService.findUserById(item.getUserId());
         if(user.getUserId().equals(userId)){
             item.setQuantity(cartItem.getQuantity());

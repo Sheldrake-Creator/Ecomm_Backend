@@ -13,7 +13,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long ProductId;
 
     @Column(name = "title")
     private String title;
@@ -56,7 +56,7 @@ public class Product {
 
     @ManyToOne()
     @JoinColumn(name="category_id")
-    private Category category;
+    private Category categoryId;
 
     private LocalDateTime createdAt;
 
@@ -64,11 +64,11 @@ public class Product {
 
     }
 
-    public Product(Long id, String title, String description, int price, int discountedPrice,
+    public Product(Long ProductId, String title, String description, int price, int discountedPrice,
                    int discountPresent, int quantity, String brand, String color, Set<Size> sizes,
-                   String imageUrl, List<Rating> ratings, List<Review> reviews, int numRatings, Category category,
+                   String imageUrl, List<Rating> ratings, List<Review> reviews, int numRatings, Category categoryId,
                    LocalDateTime createdAt) {
-        this.id = id;
+        this.ProductId = ProductId;
         this.title = title;
         this.description = description;
         this.price = price;
@@ -82,16 +82,16 @@ public class Product {
         this.ratings = ratings;
         this.reviews = reviews;
         this.numRatings = numRatings;
-        this.category = category;
+        this.categoryId = categoryId;
         this.createdAt = createdAt;
     }
 
-    public Long getId() {
-        return id;
+    public Long getProductId() {
+        return ProductId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setProductId(Long ProductId) {
+        this.ProductId = ProductId;
     }
 
     public String getTitle() {
@@ -198,12 +198,12 @@ public class Product {
         this.numRatings = numRatings;
     }
 
-    public Category getCategory() {
-        return category;
+    public Category getcategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(Category categoryId) {
+        this.categoryId = categoryId;
     }
 
     public LocalDateTime getCreatedAt() {

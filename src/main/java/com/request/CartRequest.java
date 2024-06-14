@@ -9,7 +9,6 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 public class CartRequest {
 
     @Getter @Setter private UserDTO user;

@@ -13,6 +13,6 @@ public interface CartMapper {
     
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "cartItems", ignore = true)
-    Cart toCart(CartDTO cart);
+    Cart toCart(CartDTO cartDTO);
 
 }

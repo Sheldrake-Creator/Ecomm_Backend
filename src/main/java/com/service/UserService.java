@@ -7,6 +7,9 @@ import com.exception.AuthException;
 import com.exception.UserException;
 import com.model.User;
 import com.dto.UserDTO;
+
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 //import org.springframework.security.core.userdetails.UserDetails;

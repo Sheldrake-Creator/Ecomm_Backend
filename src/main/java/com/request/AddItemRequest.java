@@ -1,51 +1,66 @@
 package com.request;
 
+import com.dto.CartItemDTO;
+import com.dto.ProductDTO;
+import com.dto.UserDTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@AllArgsConstructor
+@NoArgsConstructor
 public class AddItemRequest {
 
-    private Long productId;
-    private String size;
-    private int quantity;
-    private Integer price;
+   @Getter @Setter private UserDTO user;
+   @Getter @Setter private CartItemDTO cartItem;
+   @Getter @Setter private ProductDTO product;
 
-    public AddItemRequest() {
-    }
 
-    public AddItemRequest(Long productId, String size, int quantity, Integer price) {
-        this.productId = productId;
-        this.size = size;
-        this.quantity = quantity;
-        this.price = price;
-    }
+    // private Long productId;
+    // private String size;
+    // private int quantity;
+    // private Integer price;
 
-    public Long getProductId() {
-        return productId;
-    }
+    // public AddItemRequest() {
+    // }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
+    // public AddItemRequest(Long productId, String size, int quantity, Integer price) {
+    //     this.productId = productId;
+    //     this.size = size;
+    //     this.quantity = quantity;
+    //     this.price = price;
+    // }
 
-    public String getSize() {
-        return size;
-    }
+    // public Long getProductId() {
+    //     return productId;
+    // }
 
-    public void setSize(String size) {
-        this.size = size;
-    }
+    // public void setProductId(Long productId) {
+    //     this.productId = productId;
+    // }
 
-    public int getQuantity() {
-        return quantity;
-    }
+    // public String getSize() {
+    //     return size;
+    // }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+    // public void setSize(String size) {
+    //     this.size = size;
+    // }
 
-    public Integer getPrice() {
-        return price;
-    }
+    // public int getQuantity() {
+    //     return quantity;
+    // }
 
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
+    // public void setQuantity(int quantity) {
+    //     this.quantity = quantity;
+    // }
+
+    // public Integer getPrice() {
+    //     return price;
+    // }
+
+    // public void setPrice(Integer price) {
+    //     this.price = price;
+    // }
 }

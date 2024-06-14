@@ -9,6 +9,8 @@ import com.exception.UserException;
 import com.mapper.UserMapper;
 import com.model.User;
 import com.repository.UserRepository;
+import com.response.UserAuthProvider;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,12 +25,14 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private UserMapper userMapper;
+    private UserAuthProvider userAuthProvider;
 
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper, UserAuthProvider userAuthProvider) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
+        this.userAuthProvider = userAuthProvider;
     }
 
     @Override
@@ -41,12 +45,6 @@ public class UserServiceImpl implements UserService {
         }
         throw new UserException("user not found with userId - " + userId);
     }
-
-    @Override
-    public User findUserProfileByJwt(String jwt) throws UserException {
-        return null;
-    }
-
 //    @Override
 //    public User findUserProfileByJwt(String jwt){
 //        User user = userRepository.find
@@ -97,15 +95,15 @@ public class UserServiceImpl implements UserService {
         return userMapper.toUserDto(savedUser);
     }
 
-    //    @Override
-//    public User findUserProfileByJwt(String jwt) throws UserException {
-////        String email = jwtProvider.getEmailFromToken(jwt);
-//        User user = userRepository.findByEmail(email);
-//        if(user != null){
-//            return user;
-//        }
-//        throw new UserException("User Profile not found with email" + email);
-//    }
+       @Override
+   public User findUserProfileByJwt(String jwt) throws UserException {
+       String userName = userAuthProvider.getUserNameFromToken(jwt);
+       Optional<User> user = userRepository.findByUserName(userName);
+       if(user != null){
+           return user.get();
+        }
+       throw new UserException("User Profile not found with User Name" + userName);
+   }
 
 
 }

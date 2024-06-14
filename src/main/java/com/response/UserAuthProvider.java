@@ -40,14 +40,26 @@ public class UserAuthProvider {
     }
 
     public Authentication validateToken(String token){
-        Algorithm algorithm = Algorithm. HMAC256 (secretKey);
+        Algorithm algorithm = Algorithm.HMAC256(secretKey);
         JWTVerifier verifier = JWT.require(algorithm).build();
-        DecodedJWT decoded = verifier. verify (token);
+        DecodedJWT decoded = verifier.verify(token);
         UserDTO user = UserDTO.builder()
                 .userName(decoded.getIssuer())
                 .email(decoded.getClaim("email").asString())
                 .build();
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+    }
+
+    public String getUserNameFromToken(String jwt) {
+        Algorithm algorithm = Algorithm.HMAC256(secretKey);
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        System.out.println("Token Util Start!");
+        String token = jwt;
+        String accessToken = token.replace("Bearer ", ""); // delete Bearer
+        System.out.println("JWT : " + accessToken); // TokenValue
+        DecodedJWT decoded = verifier.verify(accessToken);
+        //*TODO fix this shit later. Authentication needs to be stricter  */
+        return decoded.getIssuer();        
     }
 
 
