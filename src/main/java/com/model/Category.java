@@ -9,7 +9,7 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long categoryId;
 
     @NotNull
     private String name;
@@ -24,19 +24,19 @@ public class Category {
 
     }
 
-    public Category(Long id, @NotNull @Size(max = 50) String name, Category parentCategory, int level) {
-        this.id = id;
+    public Category(Long categoryId, @NotNull @Size(max = 50) String name, Category parentCategory, int level) {
+        this.categoryId = categoryId;
         this.name = name;
         this.parentCategory = parentCategory;
         this.level = level;
     }
 
-    public Long getId() {
-        return id;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getName() {

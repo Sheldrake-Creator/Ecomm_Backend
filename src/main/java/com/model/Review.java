@@ -15,12 +15,12 @@ public class Review {
     private String review;
 
     @ManyToOne
-    @JoinColumn(name="product_id")
+    @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     private LocalDateTime createdAt;
@@ -28,6 +28,7 @@ public class Review {
     public Review() {
 
     }
+
     public Review(Long id, String review, Product product, User user, LocalDateTime createdAt) {
         this.id = id;
         this.review = review;

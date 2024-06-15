@@ -35,7 +35,7 @@ public class Order {
     private Integer totalDiscountedPrice;
     private Integer discount;
     private String orderStatus;
-    private int totalItem;
+    private int totalItems;
     private LocalDateTime createdAt;
 
     public Order() {
@@ -44,7 +44,7 @@ public class Order {
     public Order(Long id, String orderId, User user, List<OrderItem> orderItems,
                  LocalDateTime orderDate, LocalDateTime deliveryDate, Address shippingAddress,
                  PaymentDetails paymentDetails, double totalPrice, Integer totalDiscountedPrice,
-                 Integer discount, String orderStatus, int totalItem, LocalDateTime createdAt) {
+                 Integer discount, String orderStatus, int totalItems, LocalDateTime createdAt) {
         this.id = id;
         this.orderId = orderId;
         this.user = user;
@@ -57,7 +57,7 @@ public class Order {
         this.totalDiscountedPrice = totalDiscountedPrice;
         this.discount = discount;
         this.orderStatus = orderStatus;
-        this.totalItem = totalItem;
+        this.totalItems = totalItems;
         this.createdAt = createdAt;
     }
 
@@ -157,12 +157,12 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public int getTotalItem() {
-        return totalItem;
+    public int gettotalItems() {
+        return totalItems;
     }
 
-    public void setTotalItem(int totalItem) {
-        this.totalItem = totalItem;
+    public void settotalItems(int totalItems) {
+        this.totalItems = totalItems;
     }
 
     public LocalDateTime getCreatedAt() {

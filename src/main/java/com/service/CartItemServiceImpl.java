@@ -1,7 +1,11 @@
 package com.service;
 
+import com.dto.CartDTO;
+import com.dto.CartItemDTO;
+import com.dto.ProductDTO;
 import com.exception.CartItemException;
 import com.exception.UserException;
+import com.mapper.CartItemMapper;
 import com.model.Cart;
 import com.model.CartItem;
 import com.model.Product;
@@ -17,21 +21,28 @@ public class CartItemServiceImpl implements CartItemService{
 
     private CartItemRepository cartItemRepository;
     private UserService userService;
+    private CartItemMapper mapper;
 
 
 
     @Override
-    public CartItem createCartItem(CartItem cartItem) {
-        cartItem.setQuantity(1);
-        cartItem.setPrice(cartItem.getProduct().getPrice()*cartItem.getQuantity());
-        cartItem.setDiscountedPrice(cartItem.getProduct().getDiscountedPrice()*cartItem.getQuantity());
+    public CartItemDTO createCartItem(CartItem cartItem) {
+
+        cartItem.setQuantity(cartItem.getQuantity());
+        cartItem.setPrice(cartItem.getPrice());
+
+        cartItem.setPrice(cartItem.getPrice()*cartItem.getQuantity());
+        cartItem.setDiscountedPrice(cartItem.getDiscountedPrice()*cartItem.getQuantity());
 
         CartItem createdCartItem=cartItemRepository.save(cartItem);
-        return createdCartItem;
+        CartItemDTO cartItemDto = mapper.toCartItemDTO(createdCartItem);
+        ///TODO This is a mess. Make sure this works properly.
+        
+        return cartItemDto;
     }
 
     @Override
-    public CartItem updateCartItem(Long userId, Long cartId, CartItem cartItem) throws CartItemException, UserException {
+    public CartItemDTO updateCartItem(Long userId, Long cartId, CartItemDTO cartItemDto) throws CartItemException, UserException {
 
         CartItem item=findCartItemById(cartId);
         User user=userService.findUserById(item.getUserId());
@@ -40,11 +51,13 @@ public class CartItemServiceImpl implements CartItemService{
             item.setPrice(item.getQuantity()*item.getProduct().getPrice());
             item.setDiscountedPrice(item.getProduct().getDiscountedPrice()*item.getQuantity());
         }
-        return cartItemRepository.save(item);
+        cartItemRepository.save(item);
+        
+        return findCartItemById(cartId)
     }
 
     @Override
-    public CartItem doesCartItemExist(Cart cart, Product product, String size, Long userId) {
+    public CartItem doesCartItemExist(CartDTO cartDto, ProductDTO productDto, String size, Long userId) {
 
         return cartItemRepository.doesCartItemExist(cart, product, size, userId);
     }
@@ -70,5 +83,11 @@ public class CartItemServiceImpl implements CartItemService{
         if(opt.isPresent()) {
             return opt.get();
         }throw new CartItemException(" cartItem not found with id : " + cartItemId);
+    }
+
+    @Override
+    public CartItem doesCartItemExist(Cart cart, Product product, String size, Long userId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'doesCartItemExist'");
     }
 }

@@ -4,12 +4,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.dto.CartItemDTO;
-import com.model.Cart;
 import com.model.CartItem;
 @Mapper(componentModel = "spring")
 public interface CartItemMapper {
 
-    CartItemDTO toCartItemDTO(Cart cart);
+    CartItemDTO toCartItemDTO(CartItem createdCartItem);
 
 
     @Mapping(target = "product", ignore = true)

@@ -11,7 +11,7 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long orderItemId;
 
     @JsonIgnore
     @ManyToOne
@@ -30,9 +30,9 @@ public class OrderItem {
     public OrderItem() {
     }
 
-    public OrderItem(Long id, Order order, Product product, String size, int quantity,
+    public OrderItem(Long orderItemId, Order order, Product product, String size, int quantity,
                      Integer price, Integer discountedPrice, Long userId, LocalDateTime deliveryDate) {
-        this.id = id;
+        this.orderItemId = orderItemId;
         this.order = order;
         this.product = product;
         this.size = size;
@@ -44,11 +44,11 @@ public class OrderItem {
     }
 
     public Long getId() {
-        return id;
+        return orderItemId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.orderItemId = id;
     }
 
     public Order getOrder() {

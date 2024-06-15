@@ -53,7 +53,7 @@ public AuthController(UserService userService, UserAuthProvider userAuth){
         userDTO.setToken(userAuth.createToken(userDTO));
         return ResponseEntity.ok(new UserResponse(userDTO));
     }
-
+}
 //    @PostMapping("/signin")
 //    public ResponseEntity<AuthResponse>loginUserHandler(@RequestBody LoginRequest loginRequest){
 //
@@ -87,4 +87,4 @@ public AuthController(UserService userService, UserAuthProvider userAuth){
 //
 //
 //
-}
+//}

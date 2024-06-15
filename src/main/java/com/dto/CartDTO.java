@@ -1,4 +1,9 @@
 package com.dto;
+
+
+
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,4 +18,5 @@ public class CartDTO {
     private int totalDiscountedPrice;
     private int totalItems;
     private double totalPrice;
+    private Set<CartItemDTO> cartItemDTO;
 }

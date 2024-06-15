@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO login(CredentialsDTO credentialsDTO) throws AuthException {
 
         User user = userRepository.findByUserName(credentialsDTO.userName())
-                .orElseThrow(() -> new AuthException("Unknown User", HttpStatus.NOT_FOUND));
+            .orElseThrow(() -> new AuthException("Unknown User", HttpStatus.NOT_FOUND));
         if(passwordEncoder.matches(CharBuffer.wrap(credentialsDTO.password()),user.getPassword())) {
             return userMapper.toUserDto(user);
         }throw new AuthException("Invalid password", HttpStatus.BAD_REQUEST);

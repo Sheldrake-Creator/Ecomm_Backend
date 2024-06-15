@@ -1,8 +1,10 @@
 package com.service;
 import com.dto.CartDTO;
+import com.dto.CartItemDTO;
 import com.dto.UserDTO;
 import com.exception.CartException;
 import com.exception.ProductException;
+import com.mapper.CartItemMapper;
 import com.mapper.CartMapper;
 import com.model.Cart;
 import com.model.CartItem;
@@ -24,6 +26,7 @@ public class CartServiceImpl implements CartService {
     private ProductRepository productRepository;
     private UserRepository userRepository;
     private CartMapper cartMapper;
+    private CartItemMapper cartItemMapper;
 
     public CartServiceImpl(CartRepository cartRepository, CartItemService cartItemService,
                            ProductRepository productRepository, ProductService productService,
@@ -34,6 +37,7 @@ public class CartServiceImpl implements CartService {
         this.productService= productService;
         this.userRepository=userRepository;
         this.cartMapper=cartMapper;
+        this.cartItemMapper=cartItemMapper;
     }
 
     @Override
@@ -63,7 +67,6 @@ public class CartServiceImpl implements CartService {
         System.out.println("Product "+req.getProduct());
         System.out.println("CartItem "+req.getCartItem());
 
-
         Cart cart = cartRepository.findByUserId(req.getUser().getUserId());
         Product product = productService.findProductById(req.getProduct().getProductId());
         CartItem isPresent = cartItemService.doesCartItemExist(cart,product,req.getCartItem().getSize(),req.getUser().getUserId());
@@ -77,8 +80,9 @@ public class CartServiceImpl implements CartService {
             int price = req.getCartItem().getQuantity() * product.getDiscountedPrice();
             cartItem.setPrice(price);
             cartItem.setSize(req.getCartItem().getSize());
-            CartItem createdCartItem = cartItemService.createCartItem(cartItem);
-            cart.getCartItems().add(createdCartItem);
+            cartItemService.createCartItem(cartItem);
+            
+            cart.getCartItems().add(cartItem);
         }
         return "Item Added To Cart";
     }
