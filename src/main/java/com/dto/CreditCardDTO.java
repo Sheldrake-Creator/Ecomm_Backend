@@ -1,19 +1,20 @@
 package com.dto;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CategoryDTO {
+public class CreditCardDTO {
 
-    private Long categoryId;
-    private String name;
-    private CategoryDTO parentCategory;
-    private int level;
+    private String cardHolderName;
+    private String cardNumber;
+    private LocalDate expirationDate;
+    private String cvv;
 
 }

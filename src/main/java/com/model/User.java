@@ -35,7 +35,7 @@ public class User {
     @Embedded
     @ElementCollection
     @CollectionTable(name="payment_information" ,joinColumns = @JoinColumn(name="user_id"))
-    private List<PaymentInformation> paymentInformation=new ArrayList<>();
+    private List<CreditCardInformation> paymentInformation=new ArrayList<>();
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -48,7 +48,7 @@ public class User {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
     private Cart cart;
 
     public Long getUserId() {
@@ -99,11 +99,11 @@ public class User {
         this.address = address;
     }
 
-    public List<PaymentInformation> getPaymentInformation() {
+    public List<CreditCardInformation> getPaymentInformation() {
         return paymentInformation;
     }
 
-    public void setPaymentInformation(List<PaymentInformation> paymentInformation) {
+    public void setPaymentInformation(List<CreditCardInformation> paymentInformation) {
         this.paymentInformation = paymentInformation;
     }
 

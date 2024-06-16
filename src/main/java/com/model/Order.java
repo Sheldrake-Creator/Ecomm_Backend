@@ -15,7 +15,7 @@ public class Order {
     private Long id;
 
     @Column(name="order_id")
-    private String orderId;
+    private String orderId;// TODO Two ids? Figure out if past me did this on purpose. 
 
     @ManyToOne
     private User user;
@@ -157,11 +157,11 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public int gettotalItems() {
+    public int getTotalItems() {
         return totalItems;
     }
 
-    public void settotalItems(int totalItems) {
+    public void setTotalItems(int totalItems) {
         this.totalItems = totalItems;
     }
 

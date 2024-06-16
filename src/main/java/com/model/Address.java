@@ -6,22 +6,6 @@ import jakarta.persistence.*;
 @Entity
 public class Address {
 
-    public Address(){}
-
-
-
-    public Address(Long id, String firstName, String lastName, String streetAddress, User user, String city, String state, String zipCode, String mobile) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.streetAddress = streetAddress;
-        this.user = user;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-        this.mobile = mobile;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="address_id")
@@ -51,6 +35,23 @@ public class Address {
     private String zipCode;
 
     private String mobile;
+
+
+    public Address(){}
+
+
+
+    public Address(Long id, String firstName, String lastName, String streetAddress, User user, String city, String state, String zipCode, String mobile) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.streetAddress = streetAddress;
+        this.user = user;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.mobile = mobile;
+    }
 
     public Long getId() {
         return id;

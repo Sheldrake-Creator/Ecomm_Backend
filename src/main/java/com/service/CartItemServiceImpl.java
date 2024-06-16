@@ -21,7 +21,7 @@ public class CartItemServiceImpl implements CartItemService{
 
     private CartItemRepository cartItemRepository;
     private UserService userService;
-    private CartItemMapper mapper;
+    private CartItemMapper cartItemMapper;
 
 
 
@@ -35,7 +35,7 @@ public class CartItemServiceImpl implements CartItemService{
         cartItem.setDiscountedPrice(cartItem.getDiscountedPrice()*cartItem.getQuantity());
 
         CartItem createdCartItem=cartItemRepository.save(cartItem);
-        CartItemDTO cartItemDto = mapper.toCartItemDTO(createdCartItem);
+        CartItemDTO cartItemDto = cartItemMapper.toCartItemDTO(createdCartItem);
         ///TODO This is a mess. Make sure this works properly.
         
         return cartItemDto;
@@ -47,17 +47,17 @@ public class CartItemServiceImpl implements CartItemService{
         CartItem item=findCartItemById(cartId);
         User user=userService.findUserById(item.getUserId());
         if(user.getUserId().equals(userId)){
-            item.setQuantity(cartItem.getQuantity());
+            item.setQuantity(cartItemDto.getQuantity());
             item.setPrice(item.getQuantity()*item.getProduct().getPrice());
             item.setDiscountedPrice(item.getProduct().getDiscountedPrice()*item.getQuantity());
         }
         cartItemRepository.save(item);
         
-        return findCartItemById(cartId)
+        return findCartItemById(cartId);
     }
 
     @Override
-    public CartItem doesCartItemExist(CartDTO cartDto, ProductDTO productDto, String size, Long userId) {
+    public CartItem   (CartDTO cartDto, ProductDTO productDto, String size, Long userId) {
 
         return cartItemRepository.doesCartItemExist(cart, product, size, userId);
     }
@@ -78,10 +78,11 @@ public class CartItemServiceImpl implements CartItemService{
     }
 
     @Override
-    public CartItem findCartItemById(Long cartItemId) throws CartItemException {
+    public CartItemDTO findCartItemById(Long cartItemId) throws CartItemException {
         Optional<CartItem> opt =cartItemRepository.findById(cartItemId);
         if(opt.isPresent()) {
-            return opt.get();
+            CartItemDTO cartItem = cartItemMapper.toCartItemDTO(opt.get());
+            return cartItem;
         }throw new CartItemException(" cartItem not found with id : " + cartItemId);
     }
 

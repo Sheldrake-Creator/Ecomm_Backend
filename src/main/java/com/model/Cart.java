@@ -12,7 +12,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
 
-    @OneToOne
+    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)// * Recent Addition. 
     @JoinColumn(name ="user_id", nullable = false)
     private User user;
 
@@ -36,7 +36,7 @@ public class Cart {
                 int totalDiscountedPrice) {
         this.cartId = cartId;
         this.user = user;
-        this.cartItems = cartItems;
+
         this.totalPrice = totalPrice;
         this.totalItems = totalItems;
         this.totalDiscountedPrice = totalDiscountedPrice;
