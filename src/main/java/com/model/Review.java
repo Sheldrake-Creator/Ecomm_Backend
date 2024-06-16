@@ -12,8 +12,6 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String review;
-
     @ManyToOne
     @JoinColumn(name = "product_id")
     @JsonIgnore
@@ -22,6 +20,8 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    private String review;
 
     private LocalDateTime createdAt;
 

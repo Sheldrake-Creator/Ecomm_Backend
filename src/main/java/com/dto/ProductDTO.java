@@ -16,7 +16,7 @@ public class ProductDTO {
     private int price;
     private int discountedPrice;
     private int discountPresent;
-    private int quantity;
+    private int numInStock;
     private String brand;
     private String color;
     private String imageUrl;

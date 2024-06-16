@@ -28,8 +28,8 @@ public class Product {
     @Column(name="discount_present")
     private int discountPresent;
 
-    @Column(name = "quantity")
-    private int quantity;
+    @Column(name = "num_in_Stock")
+    private int numInStock;
 
     @Column(name = "brand")
     private String brand;
@@ -65,7 +65,7 @@ public class Product {
     }
 
     public Product(Long ProductId, String title, String description, int price, int discountedPrice,
-                   int discountPresent, int quantity, String brand, String color, Set<Size> sizes,
+                   int discountPresent, int numInStock, String brand, String color, Set<Size> sizes,
                    String imageUrl, List<Rating> ratings, List<Review> reviews, int numRatings, Category categoryId,
                    LocalDateTime createdAt) {
         this.ProductId = ProductId;
@@ -74,7 +74,7 @@ public class Product {
         this.price = price;
         this.discountedPrice = discountedPrice;
         this.discountPresent = discountPresent;
-        this.quantity = quantity;
+        this.numInStock = numInStock;
         this.brand = brand;
         this.color = color;
         this.sizes = sizes;
@@ -134,12 +134,12 @@ public class Product {
         this.discountPresent = discountPresent;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getNumInStock() {
+        return numInStock;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setNumInStock(int numInStock) {
+        this.numInStock = numInStock;
     }
 
     public String getBrand() {

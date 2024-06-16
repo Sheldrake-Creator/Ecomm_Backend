@@ -1,36 +1,36 @@
 package com.service;
 
+import com.dto.ProductDTO;
 import com.exception.ProductException;
+import com.mapper.ProductMapper;
 import com.model.Category;
 import com.model.Product;
 import com.repository.CategoryRepository;
 import com.repository.ProductRepository;
 import com.request.CreateProductRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class ProductServiceImpl implements ProductService{
 
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
+    private ProductMapper productMapper;
 
-    public ProductServiceImpl(ProductRepository productRepository,
-                              CategoryRepository categoryRepository) {
-        this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
-    }
 
     @Override
-    public Product createProduct(CreateProductRequest req) {
+    public ProductDTO createProduct(CreateProductRequest req) {
 
         Category firstLevel=categoryRepository.findByName(req.getTopLevelCategory());
 
@@ -74,13 +74,13 @@ public class ProductServiceImpl implements ProductService{
         product.setBrand(req.getBrand());
         product.setPrice(req.getPrice());
         product.setSizes(req.getSize());
-        product.setQuantity(req.getQuantity());
+        product.setNumInStock(req.getQuantity());
         product.setCategoryId(thirdLevel);
         product.setCreatedAt(LocalDateTime.now());
 
         Product savedProduct = productRepository.save(product);
 
-        return savedProduct;
+        return productMapper.toProductDTO(savedProduct);
     }
 
     @Override
@@ -94,16 +94,16 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product updateProduct(Long productId, Product req) throws ProductException {
-
+    public ProductDTO updateProduct(ProductDTO req, Long productId) throws ProductException {
+        
         Product product = findProductById(productId);
 
-
-        if(req.getQuantity()!= 0){
-            product.setQuantity(req.getQuantity());
+        if(req.getNumInStock()!= 0){
+            product.setNumInStock(req.getNumInStock());
         }
+        productRepository.save(product);
 
-        return productRepository.save(product);
+        return productMapper.toProductDTO(product);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product findProductByCategory(String category) throws ProductException {
+    public ProductDTO findProductByCategory(String category) throws ProductException {
         return null;
     }
 
@@ -136,10 +136,10 @@ public class ProductServiceImpl implements ProductService{
         }
         if(stock!=null) {
             if(stock.equals("in_stock")){
-                products = products.stream().filter(p -> p.getQuantity() > 0).collect(Collectors.toList());
+                products = products.stream().filter(p -> p.getNumInStock() > 0).collect(Collectors.toList());
             }
             else if (stock.equals("out_of_stock")){
-                    products=products.stream().filter(p -> p.getQuantity() < 1).collect(Collectors.toList());
+                    products=products.stream().filter(p -> p.getNumInStock() < 1).collect(Collectors.toList());
             }
         }
 
@@ -153,9 +153,13 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> findAllProducts() {
+    public List<ProductDTO> findAllProducts() {
         List<Product> products = productRepository.findAll();
-
-        return products;
+        List<ProductDTO> productDtos = new ArrayList<ProductDTO>();
+        
+        for(Product product : products){
+            productDtos.add(productMapper.toProductDTO(product));
+        }
+        return productDtos;
     }
 }

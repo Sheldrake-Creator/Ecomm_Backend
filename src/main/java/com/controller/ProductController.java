@@ -1,9 +1,11 @@
 package com.controller;
 
+import com.dto.ProductDTO;
 import com.exception.ProductException;
+import com.mapper.ProductMapper;
 import com.model.Product;
 import com.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +15,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class ProductController {
 
-    @Autowired
+
     private ProductService productService;
+    private ProductMapper productMapper;
 
     @GetMapping("/products")
     public ResponseEntity<Page<Product>> findProductByCategoryHandler(@RequestParam String category,
@@ -31,17 +35,8 @@ public class ProductController {
     }
 
     @GetMapping("/products/id/{productId}")
-    public ResponseEntity<Product> findProductByIdHandler(@PathVariable Long productId) throws ProductException {
+    public ResponseEntity<ProductDTO> findProductByIdHandler(@PathVariable Long productId) throws ProductException {
         Product product = productService.findProductById(productId);
-        return new ResponseEntity<Product>(product, HttpStatus.ACCEPTED);
+        return new ResponseEntity<ProductDTO>(productMapper.toProductDTO(product), HttpStatus.ACCEPTED);
     }
 }
-
-
-
-
-
-
-
-
-
