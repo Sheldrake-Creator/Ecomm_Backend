@@ -14,7 +14,6 @@ public interface ProductMapper {
     @Mapping(target = "ratings", ignore = true)
     @Mapping(target = "reviews", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "sizes", ignore = true)
     Product toProduct(ProductDTO productDTO);
 
 }

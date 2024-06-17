@@ -2,8 +2,6 @@ package com.controller;
 
 import com.dto.ProductDTO;
 import com.exception.ProductException;
-import com.mapper.ProductMapper;
-import com.model.Product;
 import com.request.CreateProductRequest;
 import com.response.APIResponse;
 import com.service.ProductService;
@@ -45,7 +43,7 @@ public class AdminProductController {
         }
 
         APIResponse res = new APIResponse();
-        res.setMessage("product deleted");
+        res.setMessage("multiple Products Added");
         res.setStatus(true);
 
         return new ResponseEntity<>(res,HttpStatus.CREATED);

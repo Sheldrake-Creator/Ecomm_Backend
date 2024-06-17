@@ -23,7 +23,7 @@ public class ProductDTO {
     private String brand;
     private String color;
     private String imageUrl;
-    // private Set<SizeDTO> sizes;
+    private Set<SizeDTO> sizes;
     // private List<RatingDTO> ratings;
     // private List<ReviewDTO> reviews;
     private int numRatings;

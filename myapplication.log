@@ -2508,3 +2508,331 @@ This generated password is for development use only. Your security configuration
 2024-06-17T00:40:45.618-04:00  INFO 94951 --- [demo] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
 2024-06-17T00:40:45.730-04:00  INFO 94951 --- [demo] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 4545 (http) with context path ''
 2024-06-17T00:40:45.761-04:00  INFO 94951 --- [demo] [restartedMain] com.DemoApplication                      : Started DemoApplication in 10.469 seconds (process running for 11.235)
+2024-06-17T00:43:33.632-04:00  INFO 94951 --- [demo] [http-nio-4545-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-17T00:43:33.638-04:00  INFO 94951 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-06-17T00:43:33.640-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-06-17T00:43:33.641-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-06-17T00:43:33.642-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-06-17T00:43:33.681-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@3489ddfa
+2024-06-17T00:43:33.683-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@2a2b555b
+2024-06-17T00:43:33.692-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-17T00:43:33.697-04:00  INFO 94951 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 54 ms
+2024-06-17T00:43:33.883-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/register", parameters={}
+2024-06-17T00:43:33.889-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.controller.AuthController#registerHandler(SignUpDTO)
+2024-06-17T00:43:34.176-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [SignUpDTO[userName=Silas, email=silas@gmail.com, password=[C@4c724721, role=user]]
+2024-06-17T00:43:34.941-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-17T00:43:34.943-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.response.UserResponse@77268aee]
+2024-06-17T00:43:35.005-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-06-17T00:45:10.387-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/api/createCart", parameters={}
+2024-06-17T00:45:10.389-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.controller.CartController#createCart(CartRequest)
+2024-06-17T00:45:10.421-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.request.CartRequest@6e3c186c]
+2024-06-17T00:45:10.560-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-17T00:45:10.560-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.response.CreateCartResponse@12ca159c]
+2024-06-17T00:45:10.583-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-06-17T00:46:11.965-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/api/admin/products/", parameters={}
+2024-06-17T00:46:11.968-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.controller.AdminProductController#createProduct(CreateProductRequest)
+2024-06-17T00:46:11.999-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.request.CreateProductRequest@63d58e2b]
+2024-06-17T00:46:12.391-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-17T00:46:12.410-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ProductDTO(productId=1, description=Discover stylish men's pants that exude both comfort and fashion (truncated)...]
+2024-06-17T00:46:12.433-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2024-06-17T00:49:06.413-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/admin/products/all", parameters={}
+2024-06-17T00:49:06.426-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.controller.AdminProductController#findAllProduct()
+2024-06-17T00:49:06.514-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-17T00:49:06.516-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[ProductDTO(productId=1, description=Discover stylish men's pants that exude both comfort and fashio (truncated)...]
+2024-06-17T00:49:06.528-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-06-17T00:59:16.996-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/admin/products/creates", parameters={}
+2024-06-17T00:59:17.027-04:00  WARN 94951 --- [demo] [http-nio-4545-exec-5] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+2024-06-17T00:59:17.028-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 405 METHOD_NOT_ALLOWED
+2024-06-17T00:59:17.096-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-5] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={}
+2024-06-17T00:59:17.098-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2024-06-17T00:59:17.143-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-17T00:59:17.146-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Mon Jun 17 00:59:17 EDT 2024, status=405, error=Method Not Allowed, trace=org.springframe (truncated)...]
+2024-06-17T00:59:17.226-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-5] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 405
+2024-06-17T01:02:03.729-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/api/admin/products/creates", parameters={}
+2024-06-17T01:02:03.736-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.controller.AdminProductController#createMultipleProduct(CreateProductRequest[])
+2024-06-17T01:02:03.757-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [{com.request.CreateProductRequest@45156d75, com.request.CreateProductRequest@6fc20613, com.request.C (truncated)...]
+2024-06-17T01:02:04.353-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-17T01:02:04.355-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.response.APIResponse@29086ad6]
+2024-06-17T01:02:04.365-04:00 DEBUG 94951 --- [demo] [http-nio-4545-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2024-06-17T01:03:03.869-04:00  INFO 94951 --- [demo] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-06-17T01:03:04.042-04:00  INFO 94951 --- [demo] [Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-17T01:03:04.077-04:00  INFO 94951 --- [demo] [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-06-17T01:03:04.147-04:00  INFO 94951 --- [demo] [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-06-17T01:03:05.382-04:00  INFO 94951 --- [demo] [restartedMain] com.DemoApplication                      : Starting DemoApplication using Java 17.0.11 with PID 94951 (/Users/silaspacheco/Ecomm_Backend/Ecomm_Backend/target/classes started by silaspacheco in /Users/silaspacheco/Ecomm_Backend/Ecomm_Backend)
+2024-06-17T01:03:05.383-04:00  INFO 94951 --- [demo] [restartedMain] com.DemoApplication                      : No active profile set, falling back to 1 default profile: "default"
+2024-06-17T01:03:06.849-04:00  INFO 94951 --- [demo] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-17T01:03:07.697-04:00  INFO 94951 --- [demo] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 846 ms. Found 10 JPA repository interfaces.
+2024-06-17T01:03:08.011-04:00  INFO 94951 --- [demo] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 4545 (http)
+2024-06-17T01:03:08.013-04:00  INFO 94951 --- [demo] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-06-17T01:03:08.013-04:00  INFO 94951 --- [demo] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.24]
+2024-06-17T01:03:08.032-04:00  INFO 94951 --- [demo] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-06-17T01:03:08.032-04:00  INFO 94951 --- [demo] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2643 ms
+2024-06-17T01:03:08.169-04:00  WARN 94951 --- [demo] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [BF82101C2A8EFCC5FB52553165C230AC]
+2024-06-17T01:03:08.170-04:00 DEBUG 94951 --- [demo] [restartedMain] o.s.w.f.ServerHttpObservationFilter      : Filter 'webMvcObservationFilter' configured for use
+2024-06-17T01:03:08.393-04:00  INFO 94951 --- [demo] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-06-17T01:03:08.395-04:00  INFO 94951 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2024-06-17T01:03:08.462-04:00  INFO 94951 --- [demo] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4aea3381
+2024-06-17T01:03:08.495-04:00  INFO 94951 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2024-06-17T01:03:09.656-04:00  INFO 94951 --- [demo] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-17T01:03:10.320-04:00  WARN 94951 --- [demo] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'adminProductController': Lookup method resolution failed
+2024-06-17T01:03:10.321-04:00  INFO 94951 --- [demo] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-17T01:03:10.323-04:00  INFO 94951 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2024-06-17T01:03:10.364-04:00  INFO 94951 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2024-06-17T01:03:10.365-04:00  INFO 94951 --- [demo] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-06-17T01:03:10.415-04:00  INFO 94951 --- [demo] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-06-17T01:03:10.522-04:00 ERROR 94951 --- [demo] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'adminProductController': Lookup method resolution failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:497) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:367) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1296) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1191) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962) ~[spring-context-6.1.8.jar:6.1.8]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.8.jar:6.1.8]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) ~[spring-boot-3.2.6.jar:3.2.6]
+	at com.DemoApplication.main(DemoApplication.java:12) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.6.jar:3.2.6]
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.controller.AdminProductController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@11625523]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:483) ~[spring-core-6.1.8.jar:6.1.8]
+	at org.springframework.util.ReflectionUtils.doWithLocalMethods(ReflectionUtils.java:320) ~[spring-core-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:475) ~[spring-beans-6.1.8.jar:6.1.8]
+	... 24 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: [LCreateProductRequest;
+	at java.base/java.lang.Class.getDeclaredMethods0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredMethods(Class.java:3402) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredMethods(Class.java:2504) ~[na:na]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:465) ~[spring-core-6.1.8.jar:6.1.8]
+	... 26 common frames omitted
+Caused by: java.lang.ClassNotFoundException: CreateProductRequest
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.2.6.jar:3.2.6]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525) ~[na:na]
+	... 30 common frames omitted
+
+2024-06-17T01:04:23.697-04:00  INFO 95917 --- [demo] [restartedMain] com.DemoApplication                      : Starting DemoApplication using Java 17.0.11 with PID 95917 (/Users/silaspacheco/Ecomm_Backend/Ecomm_Backend/target/classes started by silaspacheco in /Users/silaspacheco/Ecomm_Backend/Ecomm_Backend)
+2024-06-17T01:04:23.703-04:00  INFO 95917 --- [demo] [restartedMain] com.DemoApplication                      : No active profile set, falling back to 1 default profile: "default"
+2024-06-17T01:04:23.786-04:00  INFO 95917 --- [demo] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-06-17T01:04:23.787-04:00  INFO 95917 --- [demo] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-06-17T01:04:25.356-04:00  INFO 95917 --- [demo] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-17T01:04:26.148-04:00  INFO 95917 --- [demo] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 781 ms. Found 10 JPA repository interfaces.
+2024-06-17T01:04:27.919-04:00  INFO 95917 --- [demo] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 4545 (http)
+2024-06-17T01:04:27.965-04:00  INFO 95917 --- [demo] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-06-17T01:04:27.966-04:00  INFO 95917 --- [demo] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.24]
+2024-06-17T01:04:28.086-04:00  INFO 95917 --- [demo] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-06-17T01:04:28.087-04:00  INFO 95917 --- [demo] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4299 ms
+2024-06-17T01:04:28.848-04:00 DEBUG 95917 --- [demo] [restartedMain] o.s.w.f.ServerHttpObservationFilter      : Filter 'webMvcObservationFilter' configured for use
+2024-06-17T01:04:29.607-04:00  INFO 95917 --- [demo] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-06-17T01:04:29.656-04:00  INFO 95917 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-06-17T01:04:30.082-04:00  INFO 95917 --- [demo] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4ccd5174
+2024-06-17T01:04:30.085-04:00  INFO 95917 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-06-17T01:04:32.312-04:00  INFO 95917 --- [demo] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-17T01:04:32.711-04:00  INFO 95917 --- [demo] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-06-17T01:04:33.711-04:00  WARN 95917 --- [demo] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-17T01:04:33.777-04:00  WARN 95917 --- [demo] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: e68ad72d-86d8-4541-9b89-609bf2de24d1
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-06-17T01:04:33.962-04:00 DEBUG 95917 --- [demo] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 25 mappings in 'requestMappingHandlerMapping'
+2024-06-17T01:04:34.129-04:00  INFO 95917 --- [demo] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-06-17T01:04:34.224-04:00  INFO 95917 --- [demo] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@499d8d2d, org.springframework.security.web.session.ForceEagerSessionCreationFilter@43dad304, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6757b89a, org.springframework.security.web.context.SecurityContextHolderFilter@36b7cf91, org.springframework.security.web.header.HeaderWriterFilter@64347480, org.springframework.web.filter.CorsFilter@43b7cd01, org.springframework.security.web.authentication.logout.LogoutFilter@4228ab9c, com.Config.JwtAuthFilter@6666d4bf, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@526c5a89, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6125ca65, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@73b16984, org.springframework.security.web.session.SessionManagementFilter@2bc131a, org.springframework.security.web.access.ExceptionTranslationFilter@55bd14df, org.springframework.security.web.access.intercept.AuthorizationFilter@641be2f6]
+2024-06-17T01:04:34.317-04:00 DEBUG 95917 --- [demo] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-17T01:04:34.370-04:00 DEBUG 95917 --- [demo] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-17T01:04:34.898-04:00  INFO 95917 --- [demo] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-06-17T01:04:35.004-04:00  INFO 95917 --- [demo] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 4545 (http) with context path ''
+2024-06-17T01:04:35.030-04:00  INFO 95917 --- [demo] [restartedMain] com.DemoApplication                      : Started DemoApplication in 11.875 seconds (process running for 12.552)
+2024-06-17T01:04:41.221-04:00  INFO 95917 --- [demo] [http-nio-4545-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-17T01:04:41.223-04:00  INFO 95917 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-06-17T01:04:41.224-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-06-17T01:04:41.225-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-06-17T01:04:41.228-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-06-17T01:04:41.236-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@16b28bf3
+2024-06-17T01:04:41.238-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@68a2a3f3
+2024-06-17T01:04:41.239-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-17T01:04:41.239-04:00  INFO 95917 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 16 ms
+2024-06-17T01:05:25.332-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/admin/products/all", parameters={}
+2024-06-17T01:05:25.337-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.controller.AdminProductController#findAllProduct()
+2024-06-17T01:05:25.774-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-17T01:05:25.794-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[ProductDTO(productId=1, description=Discover stylish men's pants that exude both comfort and fashio (truncated)...]
+2024-06-17T01:05:25.918-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-06-17T01:11:17.529-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-4] o.s.web.servlet.DispatcherServlet        : PUT "/api/admin/products/1/update", parameters={}
+2024-06-17T01:11:17.605-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.controller.AdminProductController#updateProduct(ProductDTO, Long)
+2024-06-17T01:11:18.059-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [ProductDTO(productId=null, description=Discover stylish men's pants that exude both comfort and fash (truncated)...]
+2024-06-17T01:11:18.588-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-17T01:11:18.589-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ProductDTO(productId=1, description=Discover stylish men's pants that exude both comfort and fashion (truncated)...]
+2024-06-17T01:11:18.599-04:00 DEBUG 95917 --- [demo] [http-nio-4545-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2024-06-17T01:13:13.729-04:00  INFO 95917 --- [demo] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-17T01:13:13.738-04:00  INFO 95917 --- [demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-06-17T01:13:13.767-04:00  INFO 95917 --- [demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-06-17T01:21:29.516-04:00  WARN 96661 --- [demo] [main] ory$DuplicateJsonObjectContextCustomizer : 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/Users/silaspacheco/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/Users/silaspacheco/.m2/repository/org/json/json/20210307/json-20210307.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2024-06-17T01:21:29.590-04:00  INFO 96661 --- [demo] [main] com.DemoApplicationTests                 : Starting DemoApplicationTests using Java 17.0.11 with PID 96661 (started by silaspacheco in /Users/silaspacheco/Ecomm_Backend/Ecomm_Backend)
+2024-06-17T01:21:29.593-04:00  INFO 96661 --- [demo] [main] com.DemoApplicationTests                 : No active profile set, falling back to 1 default profile: "default"
+2024-06-17T01:21:29.849-04:00 DEBUG 96661 --- [demo] [main] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@51a06cbe
+2024-06-17T01:21:32.194-04:00  INFO 96661 --- [demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-17T01:21:34.444-04:00  INFO 96661 --- [demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2233 ms. Found 10 JPA repository interfaces.
+2024-06-17T01:21:37.199-04:00  INFO 96661 --- [demo] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-06-17T01:21:37.330-04:00  INFO 96661 --- [demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-06-17T01:21:38.524-04:00  INFO 96661 --- [demo] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1d1da00b
+2024-06-17T01:21:38.528-04:00  INFO 96661 --- [demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-06-17T01:21:41.246-04:00  INFO 96661 --- [demo] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-17T01:21:41.851-04:00  INFO 96661 --- [demo] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-06-17T01:21:43.812-04:00  WARN 96661 --- [demo] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-17T01:21:43.896-04:00  WARN 96661 --- [demo] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 0c152011-26e2-497d-ab0e-0dba7a2a4ddd
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-06-17T01:21:44.313-04:00 DEBUG 96661 --- [demo] [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 25 mappings in 'requestMappingHandlerMapping'
+2024-06-17T01:21:44.869-04:00  INFO 96661 --- [demo] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-06-17T01:21:45.014-04:00  INFO 96661 --- [demo] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4865a49f, org.springframework.security.web.session.ForceEagerSessionCreationFilter@54ad9f72, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@19a67422, org.springframework.security.web.context.SecurityContextHolderFilter@280005ed, org.springframework.security.web.header.HeaderWriterFilter@18514f04, org.springframework.web.filter.CorsFilter@6c78bb9a, org.springframework.security.web.authentication.logout.LogoutFilter@6b3b3a03, com.Config.JwtAuthFilter@9dcabd6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@61f6784c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@626f0377, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3132e390, org.springframework.security.web.session.SessionManagementFilter@281e68dd, org.springframework.security.web.access.ExceptionTranslationFilter@73756237, org.springframework.security.web.access.intercept.AuthorizationFilter@65cf3c52]
+2024-06-17T01:21:45.164-04:00 DEBUG 96661 --- [demo] [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-17T01:21:45.267-04:00 DEBUG 96661 --- [demo] [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-17T01:21:46.081-04:00  INFO 96661 --- [demo] [main] com.DemoApplicationTests                 : Started DemoApplicationTests in 18.335 seconds (process running for 22.926)
+2024-06-17T01:21:47.277-04:00 DEBUG 96661 --- [demo] [SpringApplicationShutdownHook] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@51a06cbe, started on Mon Jun 17 01:21:29 EDT 2024
+2024-06-17T01:21:47.303-04:00  INFO 96661 --- [demo] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-17T01:21:47.320-04:00  INFO 96661 --- [demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-06-17T01:21:47.371-04:00  INFO 96661 --- [demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-06-17T01:22:27.469-04:00  INFO 96726 --- [demo] [restartedMain] com.DemoApplication                      : Starting DemoApplication using Java 17.0.11 with PID 96726 (/Users/silaspacheco/Ecomm_Backend/Ecomm_Backend/target/classes started by silaspacheco in /Users/silaspacheco/Ecomm_Backend/Ecomm_Backend)
+2024-06-17T01:22:27.475-04:00  INFO 96726 --- [demo] [restartedMain] com.DemoApplication                      : No active profile set, falling back to 1 default profile: "default"
+2024-06-17T01:22:27.660-04:00  INFO 96726 --- [demo] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-06-17T01:22:27.707-04:00  INFO 96726 --- [demo] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-06-17T01:22:29.906-04:00  INFO 96726 --- [demo] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-17T01:22:30.681-04:00  INFO 96726 --- [demo] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 753 ms. Found 10 JPA repository interfaces.
+2024-06-17T01:22:31.692-04:00  INFO 96726 --- [demo] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 4545 (http)
+2024-06-17T01:22:31.708-04:00  INFO 96726 --- [demo] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-06-17T01:22:31.709-04:00  INFO 96726 --- [demo] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.24]
+2024-06-17T01:22:31.786-04:00  INFO 96726 --- [demo] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-06-17T01:22:31.787-04:00  INFO 96726 --- [demo] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3994 ms
+2024-06-17T01:22:32.043-04:00  WARN 96726 --- [demo] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [B5286B253629B7B919339CE8DAF472C3]
+2024-06-17T01:22:32.047-04:00 ERROR 96726 --- [demo] [restartedMain] o.a.catalina.session.StandardManager     : Exception loading sessions from persistent storage
+
+java.lang.ClassCastException: class java.io.ObjectStreamClass cannot be cast to class java.lang.String (java.io.ObjectStreamClass and java.lang.String are in module java.base of loader 'bootstrap')
+	at java.base/java.io.ObjectInputStream.readTypeString(ObjectInputStream.java:1810) ~[na:na]
+	at java.base/java.io.ObjectStreamClass.readNonProxy(ObjectStreamClass.java:708) ~[na:na]
+	at java.base/java.io.ObjectInputStream.readClassDescriptor(ObjectInputStream.java:983) ~[na:na]
+	at java.base/java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:2023) ~[na:na]
+	at java.base/java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1898) ~[na:na]
+	at java.base/java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2224) ~[na:na]
+	at java.base/java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1733) ~[na:na]
+	at java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:509) ~[na:na]
+	at java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:467) ~[na:na]
+	at org.apache.catalina.session.StandardSession.doReadObject(StandardSession.java:1198) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.session.StandardSession.readObjectData(StandardSession.java:831) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.session.StandardManager.doLoad(StandardManager.java:210) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.session.StandardManager.load(StandardManager.java:156) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.session.StandardManager.startInternal(StandardManager.java:345) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4441) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:415) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:874) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:437) ~[tomcat-embed-core-10.1.24.jar:10.1.24]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:126) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:105) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:499) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:218) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:188) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:618) ~[spring-context-6.1.8.jar:6.1.8]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-3.2.6.jar:3.2.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) ~[spring-boot-3.2.6.jar:3.2.6]
+	at com.DemoApplication.main(DemoApplication.java:12) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.6.jar:3.2.6]
+
+2024-06-17T01:22:32.075-04:00 DEBUG 96726 --- [demo] [restartedMain] o.s.w.f.ServerHttpObservationFilter      : Filter 'webMvcObservationFilter' configured for use
+2024-06-17T01:22:32.756-04:00  INFO 96726 --- [demo] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-06-17T01:22:32.835-04:00  INFO 96726 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-06-17T01:22:33.253-04:00  INFO 96726 --- [demo] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6c4c7f61
+2024-06-17T01:22:33.255-04:00  INFO 96726 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-06-17T01:22:35.618-04:00  INFO 96726 --- [demo] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-17T01:22:36.063-04:00  INFO 96726 --- [demo] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-06-17T01:22:37.278-04:00  WARN 96726 --- [demo] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-17T01:22:37.344-04:00  WARN 96726 --- [demo] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 37d60842-c02d-4192-b068-f68776795f6a
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-06-17T01:22:37.548-04:00 DEBUG 96726 --- [demo] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 25 mappings in 'requestMappingHandlerMapping'
+2024-06-17T01:22:37.902-04:00  INFO 96726 --- [demo] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-06-17T01:22:38.033-04:00  INFO 96726 --- [demo] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3dba002a, org.springframework.security.web.session.ForceEagerSessionCreationFilter@7d8c8cd3, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4af5a2e5, org.springframework.security.web.context.SecurityContextHolderFilter@7cdb8ce1, org.springframework.security.web.header.HeaderWriterFilter@3101694, org.springframework.web.filter.CorsFilter@5e50c73c, org.springframework.security.web.authentication.logout.LogoutFilter@54da93fb, com.Config.JwtAuthFilter@3386378c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@62b49bbc, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@12f26dcb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2af5df3b, org.springframework.security.web.session.SessionManagementFilter@10369b40, org.springframework.security.web.access.ExceptionTranslationFilter@51ad7cda, org.springframework.security.web.access.intercept.AuthorizationFilter@4272e84b]
+2024-06-17T01:22:38.130-04:00 DEBUG 96726 --- [demo] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-17T01:22:38.194-04:00 DEBUG 96726 --- [demo] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-17T01:22:38.888-04:00  INFO 96726 --- [demo] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-06-17T01:22:39.133-04:00  INFO 96726 --- [demo] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 4545 (http) with context path ''
+2024-06-17T01:22:39.179-04:00  INFO 96726 --- [demo] [restartedMain] com.DemoApplication                      : Started DemoApplication in 12.915 seconds (process running for 14.06)
+2024-06-17T01:22:56.910-04:00  INFO 96726 --- [demo] [http-nio-4545-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-17T01:22:56.913-04:00  INFO 96726 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-06-17T01:22:56.914-04:00 DEBUG 96726 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-06-17T01:22:56.915-04:00 DEBUG 96726 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-06-17T01:22:56.915-04:00 DEBUG 96726 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-06-17T01:22:56.918-04:00 DEBUG 96726 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@7b9e7f0d
+2024-06-17T01:22:56.922-04:00 DEBUG 96726 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@af3bfad
+2024-06-17T01:22:56.922-04:00 DEBUG 96726 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-17T01:22:56.923-04:00  INFO 96726 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 9 ms
+2024-06-17T01:22:57.095-04:00 DEBUG 96726 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/admin/products/all", parameters={}
+2024-06-17T01:22:57.098-04:00 DEBUG 96726 --- [demo] [http-nio-4545-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.controller.AdminProductController#findAllProduct()
+2024-06-17T01:22:57.688-04:00 DEBUG 96726 --- [demo] [http-nio-4545-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-17T01:22:57.741-04:00 DEBUG 96726 --- [demo] [http-nio-4545-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[ProductDTO(productId=1, description=Discover stylish men's pants that exude both comfort and fashio (truncated)...]
+2024-06-17T01:22:57.914-04:00 DEBUG 96726 --- [demo] [http-nio-4545-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2024-06-17T01:23:23.134-04:00  INFO 96726 --- [demo] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-17T01:23:23.141-04:00  INFO 96726 --- [demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-06-17T01:23:23.158-04:00  INFO 96726 --- [demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
