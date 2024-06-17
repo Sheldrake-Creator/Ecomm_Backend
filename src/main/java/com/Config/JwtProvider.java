@@ -1,9 +1,6 @@
 package com.Config;
 
-import javax.crypto.SecretKey;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 
 public class JwtProvider {
 

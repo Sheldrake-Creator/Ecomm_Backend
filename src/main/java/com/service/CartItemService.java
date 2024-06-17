@@ -1,7 +1,5 @@
 package com.service;
-import com.dto.CartDTO;
 import com.dto.CartItemDTO;
-import com.dto.ProductDTO;
 import com.exception.CartItemException;
 import com.exception.UserException;
 import com.model.Cart;

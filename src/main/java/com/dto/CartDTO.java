@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CartDTO {
     private long cartId;
-    private int totalDiscountedPrice;
+    private Set<CartItemDTO> cartItems;
     private int totalItems;
     private double totalPrice;
-    private Set<CartItemDTO> cartItemDTO;
+    private int totalDiscountedPrice;
 }

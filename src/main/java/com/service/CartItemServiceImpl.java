@@ -31,8 +31,8 @@ public class CartItemServiceImpl implements CartItemService{
         cartItem.setQuantity(cartItem.getQuantity());
         cartItem.setPrice(cartItem.getPrice());
 
-        cartItem.setPrice(cartItem.getPrice()*cartItem.getQuantity());
-        cartItem.setDiscountedPrice(cartItem.getDiscountedPrice()*cartItem.getQuantity());
+        cartItem.setPrice(cartItem.getProduct().getPrice()*cartItem.getQuantity());
+        cartItem.setDiscountedPrice(cartItem.getProduct().getDiscountedPrice()*cartItem.getQuantity());
 
         CartItem createdCartItem=cartItemRepository.save(cartItem);
         CartItemDTO cartItemDto = cartItemMapper.toCartItemDTO(createdCartItem);
@@ -44,20 +44,20 @@ public class CartItemServiceImpl implements CartItemService{
     @Override
     public CartItemDTO updateCartItem(Long userId, Long cartId, CartItemDTO cartItemDto) throws CartItemException, UserException {
 
-        CartItem item=findCartItemById(cartId);
+        CartItemDTO item=findCartItemById(cartId);
         User user=userService.findUserById(item.getUserId());
         if(user.getUserId().equals(userId)){
             item.setQuantity(cartItemDto.getQuantity());
-            item.setPrice(item.getQuantity()*item.getProduct().getPrice());
-            item.setDiscountedPrice(item.getProduct().getDiscountedPrice()*item.getQuantity());
+            item.setPrice(item.getQuantity()*item.getPrice());
+            item.setDiscountedPrice(item.getDiscountedPrice()*item.getQuantity());
         }
-        cartItemRepository.save(item);
+        cartItemRepository.save(cartItemMapper.toCartItem(item));
         
         return findCartItemById(cartId);
     }
 
     @Override
-    public CartItem   (CartDTO cartDto, ProductDTO productDto, String size, Long userId) {
+    public CartItem doesCartItemExist(Cart cart, Product product, String size, Long userId) {
 
         return cartItemRepository.doesCartItemExist(cart, product, size, userId);
     }
@@ -65,7 +65,7 @@ public class CartItemServiceImpl implements CartItemService{
     @Override
     public void removeCartItem(Long userId, Long cartItemId) throws CartItemException, UserException {
 
-        CartItem cartItem=findCartItemById(cartItemId);
+        CartItemDTO cartItem=findCartItemById(cartItemId);
         User user=userService.findUserById(cartItem.getUserId());
         User reqUser=userService.findUserById(userId);
 
@@ -84,11 +84,5 @@ public class CartItemServiceImpl implements CartItemService{
             CartItemDTO cartItem = cartItemMapper.toCartItemDTO(opt.get());
             return cartItem;
         }throw new CartItemException(" cartItem not found with id : " + cartItemId);
-    }
-
-    @Override
-    public CartItem doesCartItemExist(Cart cart, Product product, String size, Long userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'doesCartItemExist'");
     }
 }

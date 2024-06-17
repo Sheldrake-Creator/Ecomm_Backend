@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Cart {
 
@@ -12,7 +14,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
 
-    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)// * Recent Addition. 
+    @OneToOne // * Recent Addition. 
     @JoinColumn(name ="user_id", nullable = false)
     private User user;
 

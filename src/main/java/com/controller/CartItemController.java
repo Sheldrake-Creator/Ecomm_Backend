@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.dto.CartItemDTO;
 import com.exception.CartItemException;
 import com.exception.ProductException;
 import com.exception.UserException;
@@ -63,12 +64,12 @@ public class CartItemController {
 
     @PutMapping("/{cartItemId}")
     @Operation(description = "Update Item To Cart")
-    public ResponseEntity<CartItem> updateCartItem(
-            @RequestBody CartItem cartItem,
+    public ResponseEntity<CartItemDTO> updateCartItem(
+            @RequestBody CartItemDTO cartItem,
             @PathVariable Long cartItemId,
             @RequestHeader("Authorization") String jwt) throws UserException, CartItemException {
         User user =userService.findUserProfileByJwt(jwt);
-        CartItem updatedCartItem = cartItemService.updateCartItem(user.getUserId(), cartItemId, cartItem);
+        CartItemDTO updatedCartItem = cartItemService.updateCartItem(user.getUserId(), cartItemId, cartItem);
         return new ResponseEntity<>(updatedCartItem, HttpStatus.OK);
     }
 }

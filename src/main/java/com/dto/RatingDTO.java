@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class RatingDTO {
 
     private Long ratingId;
-    private UserDTO userDto;
-    private ProductDTO productDto;
+    // private UserDTO userDto;
+    // private ProductDTO productDto;
     private double rating;
     
 

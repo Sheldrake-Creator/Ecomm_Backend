@@ -43,10 +43,9 @@ public class UserAuthProvider {
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decoded = verifier.verify(token);
-        UserDTO user = UserDTO.builder()
-                .userName(decoded.getIssuer())
-                .email(decoded.getClaim("email").asString())
-                .build();
+        UserDTO user = new UserDTO();
+                user.setUserName(decoded.getIssuer()); 
+                user.setEmail(decoded.getClaim("email").asString());
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
     }
 

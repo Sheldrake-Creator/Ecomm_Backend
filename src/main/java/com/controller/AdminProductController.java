@@ -60,7 +60,7 @@ public class AdminProductController {
         return new ResponseEntity<>(res,HttpStatus.OK);
     }
 
-    @PutMapping("/{productId}/update")
+    @PutMapping("/{productId}/update")  
     public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductDTO req,@PathVariable Long productId)
             throws ProductException {
         ProductDTO product = productService.updateProduct(req, productId);

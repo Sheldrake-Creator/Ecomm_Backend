@@ -2,15 +2,19 @@ package com.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long ratingId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -27,11 +31,11 @@ public class Rating {
     private LocalDateTime createdAt;
 
     public Long getId() {
-        return id;
+        return ratingId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long ratingId) {
+        this.ratingId = ratingId;
     }
 
     public User getUser() {

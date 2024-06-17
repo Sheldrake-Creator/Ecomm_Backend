@@ -6,6 +6,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONPropertyIgnore;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "orders") // Rename the table to "orders"
 public class Order {
@@ -29,6 +33,7 @@ public class Order {
     private Address shippingAddress;
 
     @Embedded
+    @JsonIgnore
     private PaymentDetails paymentDetails=new PaymentDetails();
 
     private double totalPrice;

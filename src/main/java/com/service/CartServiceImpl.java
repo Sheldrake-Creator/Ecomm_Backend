@@ -1,6 +1,5 @@
 package com.service;
 import com.dto.CartDTO;
-import com.dto.CartItemDTO;
 import com.dto.UserDTO;
 import com.exception.CartException;
 import com.exception.ProductException;
@@ -30,7 +29,7 @@ public class CartServiceImpl implements CartService {
 
     public CartServiceImpl(CartRepository cartRepository, CartItemService cartItemService,
                            ProductRepository productRepository, ProductService productService,
-                           UserRepository userRepository, CartMapper cartMapper) {
+                           UserRepository userRepository, CartMapper cartMapper, CartItemMapper cartItemMapper) {
         this.cartRepository = cartRepository;
         this.cartItemService = cartItemService;
         this.productRepository = productRepository;

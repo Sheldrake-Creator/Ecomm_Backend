@@ -11,8 +11,7 @@ public interface CartMapper {
 
     CartDTO toCartDTO(Cart cart);
     
-    @Mapping(target = "user", ignore = true)
-    @Mapping(target = "cartItems", ignore = true)
-    Cart toCart(CartDTO cartDTO);
 
+    @Mapping(target = "user", ignore = true)
+    Cart toCart(CartDTO cartDTO);
 }

@@ -9,7 +9,7 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="address_id")
-    private Long id;
+    private Long addressId;
 
     @Column(name="first_name")
     private String firstName;
@@ -22,7 +22,6 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    @JsonIgnore
     private User user;
 
     @Column(name = "city")
@@ -41,8 +40,8 @@ public class Address {
 
 
 
-    public Address(Long id, String firstName, String lastName, String streetAddress, User user, String city, String state, String zipCode, String mobile) {
-        this.id = id;
+    public Address(Long addressId, String firstName, String lastName, String streetAddress, User user, String city, String state, String zipCode, String mobile) {
+        this.addressId = addressId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.streetAddress = streetAddress;
@@ -53,12 +52,12 @@ public class Address {
         this.mobile = mobile;
     }
 
-    public Long getId() {
-        return id;
+    public Long getAddressId() {
+        return addressId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
     }
 
     public String getFirstName() {
