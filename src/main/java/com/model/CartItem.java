@@ -20,6 +20,7 @@ public class CartItem {
 
     @JsonIgnore
     @ManyToOne
+    @JoinColumn(name = "cart_id")
     private Cart cart;
 
     @ManyToOne

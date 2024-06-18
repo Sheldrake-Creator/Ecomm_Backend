@@ -2,14 +2,18 @@ package com.controller;
 import com.dto.CartDTO;
 import com.dto.UserDTO;
 import com.exception.CartException;
+import com.exception.UserException;
 import com.request.CartRequest;
 import com.response.CartResponse;
 import com.response.CreateCartResponse;
-import com.response.GetCartResponse;
+import com.response.HttpResponse;
 import com.service.CartService;
+import com.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,21 +22,52 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:4200")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CartController {
 
 
     private CartService cartService;
+    private UserService userService;
 
 
     @PostMapping(value="/getCart")
     @Operation(description = "find cart by user id")
-    public ResponseEntity<CartResponse> getUserCart(@RequestBody CartRequest cartRequest) throws CartException {        
-        UserDTO userDTO =cartRequest.getUser();
-        System.out.println("UserDTO "+userDTO);
-        System.out.println("UserDTO "+userDTO.getUserId());
-        CartDTO cart = cartService.getUserCart(userDTO);
-        return ResponseEntity.ok(new GetCartResponse(cart));}
+    public ResponseEntity<HttpResponse> getUserCart(@RequestHeader("Authorization") String jwt) throws CartException, UserException {    
+        UserDTO user;
+        try {
+            user = userService.findUserProfileByJwt(jwt);
+            CartDTO cartDto = cartService.getUserCart(user);
+
+            System.out.println("New Cart Created: " + cartDto);
+            System.out.println("User Found: " + user);
+
+            return ResponseEntity.ok().body(
+                HttpResponse.builder()
+                .timeStamp(LocalDateTime.now().toString())
+                .data(Map.of("cart", cartDto))
+                .message("Cart Found")
+                .status(HttpStatus.OK)
+                .statusCode(200)
+                .build());
+        } catch (CartException e) {
+            return ResponseEntity.badRequest().body(
+                HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .message("Cart not found")
+                    .status(HttpStatus.BAD_REQUEST)
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .build());
+        }catch (UserException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .message("User Not found")
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .build());
+        }
+
+    }
         
 
     @PostMapping(value="createCart")

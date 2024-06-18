@@ -15,9 +15,10 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
 
+
     User findUserById(Long userId) throws UserException;
 
-    User findUserProfileByJwt(String jwt) throws UserException;
+    UserDTO findUserProfileByJwt(String jwt) throws UserException;
 
     User findUserByEmail(String email) throws UserException;
 
@@ -25,5 +26,5 @@ public interface UserService {
 
     UserDTO login(CredentialsDTO credentialsDTO) throws AuthException;
 
-    UserDTO register(SignUpDTO signUpDto);
+    UserDTO register(SignUpDTO signUpDto) throws AuthException;
 }

@@ -32,11 +32,12 @@ public class CartItemController {
 
     @PutMapping("/add")
     @Operation(description = "add item to cart")
-    public ResponseEntity<APIResponse>addItemToCart(@RequestBody AddItemRequest req) throws UserException, ProductException {
-        // User user = userService.findUserById();
-        System.out.println("request "+ req);
-        System.out.println("user " + req.getUser());
-        String message =this.cartService.addItemToCart(req);
+    public ResponseEntity<APIResponse>addItemToCart(@RequestHeader("Authorization") String jwt, @RequestBody AddItemRequest req) throws UserException, ProductException {
+        User user = userService.findUserProfileByJwt(jwt);
+        Long userId = user.getUserId();
+
+
+        String message =this.cartService.addItemToCart(userId, req.getQuantity(), req.getSize(), req.getProductId());
         System.out.println("Message: " + message);
 
         APIResponse res=new APIResponse();

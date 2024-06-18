@@ -3,19 +3,14 @@ package com.response;
 import com.dto.CartDTO;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
 public class GetCartResponse implements CartResponse{
 
-    private CartDTO cart;
+   @Getter @Setter private CartDTO cart;
 
-    public CartDTO getCart() {
-        return cart;
-    }
-
-    public void setCart(CartDTO cart) {
-        this.cart = cart;
-    }
 
 }
 

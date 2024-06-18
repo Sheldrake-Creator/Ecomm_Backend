@@ -1,6 +1,9 @@
 package com.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +11,9 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Cart {
 
     @Id
@@ -30,65 +36,4 @@ public class Cart {
 
     private int totalDiscountedPrice;
 
-
-    public Cart() {
-    }
-
-    public Cart(Long cartId, User user, Set<CartItem> cartItems, double totalPrice, int totalItems,
-                int totalDiscountedPrice) {
-        this.cartId = cartId;
-        this.user = user;
-
-        this.totalPrice = totalPrice;
-        this.totalItems = totalItems;
-        this.totalDiscountedPrice = totalDiscountedPrice;
-    }
-
-    public Long getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(Long cartId) {
-        this.cartId = cartId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Set<CartItem> getCartItems() {
-        return cartItems;
-    }
-
-    public void setCartItems(Set<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public int getTotalItems() {
-        return totalItems;
-    }
-
-    public void setTotalItems(int totalItems) {
-        this.totalItems = totalItems;
-    }
-
-    public int getTotalDiscountedPrice() {
-        return totalDiscountedPrice;
-    }
-
-    public void setTotalDiscountedPrice(int totalDiscountedPrice) {
-        this.totalDiscountedPrice = totalDiscountedPrice;
-    }
 }

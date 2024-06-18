@@ -11,6 +11,8 @@ import com.model.User;
 import com.repository.UserRepository;
 import com.response.UserAuthProvider;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
 
@@ -27,13 +30,6 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     private UserAuthProvider userAuthProvider;
 
-
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper, UserAuthProvider userAuthProvider) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.userMapper = userMapper;
-        this.userAuthProvider = userAuthProvider;
-    }
 
     @Override
     public User findUserById(Long userId) throws UserException {
@@ -45,11 +41,6 @@ public class UserServiceImpl implements UserService {
         }
         throw new UserException("user not found with userId - " + userId);
     }
-//    @Override
-//    public User findUserProfileByJwt(String jwt){
-//        User user = userRepository.find
-//
-//        }
 
     @Override
     public User findUserByEmail(String email) throws UserException {
@@ -77,7 +68,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDTO register(SignUpDTO signUpDto) {
+    public UserDTO register(SignUpDTO signUpDto) throws AuthException {
+
 
         System.out.println("signUpDto "+ signUpDto.userName());
         System.out.println("signUpDto "+ Arrays.toString(signUpDto.password()));
@@ -96,11 +88,11 @@ public class UserServiceImpl implements UserService {
     }
 
        @Override
-   public User findUserProfileByJwt(String jwt) throws UserException {
+   public UserDTO findUserProfileByJwt(String jwt) throws UserException {
        String userName = userAuthProvider.getUserNameFromToken(jwt);
        Optional<User> user = userRepository.findByUserName(userName);
        if(user != null){
-           return user.get();
+           return userMapper.toUserDto(user.get()) ;
         }
        throw new UserException("User Profile not found with User Name" + userName);
    }

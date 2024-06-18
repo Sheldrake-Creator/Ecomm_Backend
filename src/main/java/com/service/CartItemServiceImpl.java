@@ -1,8 +1,6 @@
 package com.service;
 
-import com.dto.CartDTO;
 import com.dto.CartItemDTO;
-import com.dto.ProductDTO;
 import com.exception.CartItemException;
 import com.exception.UserException;
 import com.mapper.CartItemMapper;
@@ -11,9 +9,12 @@ import com.model.CartItem;
 import com.model.Product;
 import com.model.User;
 import com.repository.CartItemRepository;
+import com.repository.CartRepository;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -22,23 +23,31 @@ public class CartItemServiceImpl implements CartItemService{
     private CartItemRepository cartItemRepository;
     private UserService userService;
     private CartItemMapper cartItemMapper;
+    private CartRepository cartRepository;
 
 
 
     @Override
-    public CartItemDTO createCartItem(CartItem cartItem) {
+    public CartItemDTO addCartItem(CartItem cartItem, long userId) {
+        Cart cartEntity = cartRepository.findByUserId(userId);
 
-        cartItem.setQuantity(cartItem.getQuantity());
-        cartItem.setPrice(cartItem.getPrice());
 
-        cartItem.setPrice(cartItem.getProduct().getPrice()*cartItem.getQuantity());
-        cartItem.setDiscountedPrice(cartItem.getProduct().getDiscountedPrice()*cartItem.getQuantity());
 
-        CartItem createdCartItem=cartItemRepository.save(cartItem);
-        CartItemDTO cartItemDto = cartItemMapper.toCartItemDTO(createdCartItem);
-        ///TODO This is a mess. Make sure this works properly.
-        
+        cartEntity.setTotalItems(cartEntity.getTotalItems()+ cartItem.getQuantity());
+        cartEntity.setTotalPrice(cartItem.getProduct().getPrice()*cartItem.getQuantity());
+        cartEntity.setTotalDiscountedPrice(cartItem.getProduct().getDiscountedPrice()*cartItem.getQuantity());
+
+
+        Set<CartItem> cartItems = cartEntity.getCartItems();
+        cartItems.add(cartItem);
+        cartEntity.setCartItems(cartItems);;
+        this.cartRepository.save(cartEntity);
+
+        // CartItem createdCartItem=cartItemRepository.save(cartItem);
+        CartItemDTO cartItemDto = cartItemMapper.toCartItemDTO(cartItem);
         return cartItemDto;
+        
+
     }
 
     @Override

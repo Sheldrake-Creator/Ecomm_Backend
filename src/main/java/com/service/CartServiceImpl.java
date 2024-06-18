@@ -12,10 +12,13 @@ import com.model.User;
 import com.repository.CartRepository;
 import com.repository.ProductRepository;
 import com.repository.UserRepository;
-import com.request.AddItemRequest;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
 
     private CartRepository cartRepository;
@@ -25,26 +28,14 @@ public class CartServiceImpl implements CartService {
     private ProductRepository productRepository;
     private UserRepository userRepository;
     private CartMapper cartMapper;
-    private CartItemMapper cartItemMapper;
 
-    public CartServiceImpl(CartRepository cartRepository, CartItemService cartItemService,
-                           ProductRepository productRepository, ProductService productService,
-                           UserRepository userRepository, CartMapper cartMapper, CartItemMapper cartItemMapper) {
-        this.cartRepository = cartRepository;
-        this.cartItemService = cartItemService;
-        this.productRepository = productRepository;
-        this.productService= productService;
-        this.userRepository=userRepository;
-        this.cartMapper=cartMapper;
-        this.cartItemMapper=cartItemMapper;
-    }
+
 
     @Override
-    public CartDTO createCart(UserDTO userDto) {
-        if(userDto==null){
+    public CartDTO createCart(UserDTO userDto) throws CartException{
+        if(userDto == null){ 
             throw new IllegalArgumentException("User with ID " + userDto.getUserId() + " not found.");
         }
-
         System.out.println("UserDTO "+ userDto);
         System.out.println("UserId ="+ userDto.getUserId());
         int totalPrice=0;
@@ -60,49 +51,51 @@ public class CartServiceImpl implements CartService {
         return cartMapper.toCartDTO(cart);
     }
     @Override
-    public String addItemToCart(AddItemRequest req) throws ProductException {
-        System.out.println("Request "+req);
-        System.out.println("User "+req.getUser());
-        System.out.println("Product "+req.getProduct());
-        System.out.println("CartItem "+req.getCartItem());
+    public String addItemToCart(Long userId, int quantity, String size, long productId) throws ProductException {
+        // System.out.println("Request "+);
+        // System.out.println("User "+);
+        // System.out.println("Product "+);
+        // System.out.println("CartItem "+);
 
-        Cart cart = cartRepository.findByUserId(req.getUser().getUserId());
-        Product product = productService.findProductById(req.getProduct().getProductId());
-        CartItem isPresent = cartItemService.doesCartItemExist(cart,product,req.getCartItem().getSize(),req.getUser().getUserId());
+
+        Cart cart = cartRepository.findByUserId(userId);
+        Product product = productService.findProductById(productId);
+        CartItem isPresent = cartItemService.doesCartItemExist(cart,product,size,userId);
 
         if(isPresent==null) {
             CartItem cartItem = new CartItem();
             cartItem.setProduct(product);
             cartItem.setCart(cart);
-            cartItem.setQuantity(req.getCartItem().getQuantity());
-            cartItem.setUserId(req.getUser().getUserId());
-            int price = req.getCartItem().getQuantity() * product.getDiscountedPrice();
+            cartItem.setQuantity(quantity);
+            cartItem.setUserId(userId);
+            int price = quantity * product.getPrice();
+            int discountedPrice = quantity * product.getDiscountedPrice();
             cartItem.setPrice(price);
-            cartItem.setSize(req.getCartItem().getSize());
-            cartItemService.createCartItem(cartItem);
-            
+            cartItem.setDiscountedPrice(discountedPrice);
+            cartItem.setSize(size);
             cart.getCartItems().add(cartItem);
+            this.cartRepository.save(cart);
         }
+
         return "Item Added To Cart";
     }
-
     @Override
     public Cart findUserCart(Long userId) {
 
         Cart cart=cartRepository.findByUserId(userId);
-        int totalPrice=0;
+        int totalprice=0;
         int totalDiscountedPrice=0;
-        int totalItem=0;
+        int totalItems=0;
 
         for(CartItem cartItem :cart.getCartItems()) {
-            totalPrice = totalPrice + cartItem.getPrice();
-            totalDiscountedPrice = totalDiscountedPrice + cartItem.getDiscountedPrice();
-            totalItem = totalItem+cartItem.getQuantity();
-        }
+            totalprice += (cartItem.getPrice() * cartItem.getQuantity());
+            totalDiscountedPrice += (cartItem.getDiscountedPrice() * cartItem.getQuantity());
+            totalItems += (cartItem.getQuantity());
 
+        }
         cart.setTotalDiscountedPrice(totalDiscountedPrice);
-        cart.setTotalItems(totalItem);
-        cart.setTotalPrice(totalPrice);
+        cart.setTotalItems(totalItems);
+        cart.setTotalPrice(totalprice);
         return cartRepository.save(cart);
     }
 
@@ -110,6 +103,5 @@ public class CartServiceImpl implements CartService {
     public CartDTO getUserCart(UserDTO user) throws CartException {
         Cart cart = this.cartRepository.findByUserId(user.getUserId());
         return cartMapper.toCartDTO(cart);
-
     }
 }
