@@ -27,13 +27,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrderController {
 
-
     private OrderService orderService;
     private UserService userService;
 
     @PostMapping("/")
     public ResponseEntity<OrderDTO> createOrder(@RequestBody AddressDTO shippingAddress,
-                                             @RequestHeader("Authorization") String jwt) throws UserException {
+            @RequestHeader("Authorization") String jwt) throws UserException {
         UserDTO user = userService.findUserProfileByJwt(jwt);
         OrderDTO order = orderService.createOrder(user, shippingAddress);
 
@@ -41,8 +40,8 @@ public class OrderController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<OrderDTO>>usersOrderHistory(
-            @RequestHeader(" Authorization") String jwt) throws UserException {
+    public ResponseEntity<List<OrderDTO>> usersOrderHistory(
+            @RequestHeader(" Authorization") String jwt) throws UserException, OrderException {
         UserDTO user = userService.findUserProfileByJwt(jwt);
         List<OrderDTO> orders = orderService.usersOrderHistory(user.getUserId());
         return new ResponseEntity<>(orders, HttpStatus.CREATED);
@@ -56,6 +55,5 @@ public class OrderController {
         OrderDTO order = orderService.findOrderById(orderId);
         return new ResponseEntity<>(order, HttpStatus.ACCEPTED);
     }
-
 
 }

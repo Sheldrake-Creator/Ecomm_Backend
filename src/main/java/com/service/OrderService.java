@@ -16,7 +16,7 @@ public interface OrderService {
 
     public OrderDTO findOrderById(Long orderId) throws OrderException;
 
-    public List<OrderDTO> usersOrderHistory(Long userId);
+    public List<OrderDTO> usersOrderHistory(Long userId) throws OrderException;
 
     public OrderDTO placedOrder(Long orderId) throws OrderException;
 
@@ -28,7 +28,7 @@ public interface OrderService {
 
     public OrderDTO canceledOrder(Long orderId) throws OrderException;
 
-    public List<OrderDTO> getAllOrders();
+    public List<OrderDTO> getAllOrders() throws OrderException;
 
     public void deleteOrder(Long orderId) throws OrderException;
 }

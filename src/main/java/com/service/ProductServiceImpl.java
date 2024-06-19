@@ -8,12 +8,15 @@ import com.model.Product;
 import com.repository.CategoryRepository;
 import com.repository.ProductRepository;
 import com.request.CreateProductRequest;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,41 +24,41 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
-public class ProductServiceImpl implements ProductService{
+@Transactional
+@RequiredArgsConstructor
+public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
     private ProductMapper productMapper;
 
-
     @Override
     public ProductDTO createProduct(CreateProductRequest req) {
 
-        Category firstLevel=categoryRepository.findByName(req.getTopLevelCategory());
+        Category firstLevel = categoryRepository.findByName(req.getTopLevelCategory());
 
-        if(firstLevel == null){
+        if (firstLevel == null) {
             Category firstLevelCategory = new Category();
             firstLevelCategory.setName(req.getTopLevelCategory());
             firstLevelCategory.setLevel(1);
 
-            firstLevel=categoryRepository.save(firstLevelCategory);
+            firstLevel = categoryRepository.save(firstLevelCategory);
         }
-        Category secondLevel = categoryRepository.findByNameAndParent(req.getSecondLevelCategory()
-                ,firstLevel.getName());
+        Category secondLevel = categoryRepository.findByNameAndParent(req.getSecondLevelCategory(),
+                firstLevel.getName());
 
-        if(secondLevel == null){
+        if (secondLevel == null) {
             Category secondLevelCategory = new Category();
             secondLevelCategory.setName(req.getSecondLevelCategory());
             secondLevelCategory.setLevel(2);
 
-            secondLevel=categoryRepository.save(secondLevelCategory);
+            secondLevel = categoryRepository.save(secondLevelCategory);
         }
 
-        Category thirdLevel=categoryRepository.findByNameAndParent(req.getThirdLevelCategory(),
+        Category thirdLevel = categoryRepository.findByNameAndParent(req.getThirdLevelCategory(),
                 secondLevel.getName());
 
-        if(thirdLevel==null) {
+        if (thirdLevel == null) {
             Category thirdLevelCategory = new Category();
             thirdLevelCategory.setName(req.getThirdLevelCategory());
             thirdLevelCategory.setParentCategory(secondLevel);
@@ -95,10 +98,10 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductDTO updateProduct(ProductDTO req, Long productId) throws ProductException {
-        
+
         ProductDTO product = findProductById(productId);
 
-        if(req.getNumInStock()!= 0){
+        if (req.getNumInStock() != 0) {
             product.setNumInStock(req.getNumInStock());
         }
         productRepository.save(productMapper.toProduct(product));
@@ -109,14 +112,14 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public ProductDTO findProductById(Long id) throws ProductException {
         // Optional<Product> productEntity=
-       
+
         Optional<Product> product = productRepository.findById(id);
-        if(product.isPresent()) {
-            ProductDTO productDto= productMapper.toProductDTO(product.get());
+        if (product.isPresent()) {
+            ProductDTO productDto = productMapper.toProductDTO(product.get());
             return productDto;
         }
-   
-        throw new ProductException ("Product not found with id - "+id);
+
+        throw new ProductException("Product not found with id - " + id);
     }
 
     @Override
@@ -126,34 +129,33 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Page<ProductDTO> getAllProducts(String category, List<String> colors, List<String> sizes, Integer minPrice,
-                                       Integer maxPrice, Integer minDiscount, String sort, String stock,
-                                       Integer pageNumber, Integer pageSize) {
+            Integer maxPrice, Integer minDiscount, String sort, String stock,
+            Integer pageNumber, Integer pageSize) {
 
-        Pageable pageable= PageRequest.of(pageNumber, pageSize);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-        List<Product> products=productRepository.filterProducts(category, minPrice, maxPrice, minDiscount, sort);
+        List<Product> products = productRepository.filterProducts(category, minPrice, maxPrice, minDiscount, sort);
 
-        if(!colors.isEmpty()) {
-                products=products.stream().filter(p-> colors.stream().anyMatch(c-> c.equalsIgnoreCase(p.getColor())))
-                .collect(Collectors.toList());
-                //TODO
+        if (!colors.isEmpty()) {
+            products = products.stream().filter(p -> colors.stream().anyMatch(c -> c.equalsIgnoreCase(p.getColor())))
+                    .collect(Collectors.toList());
+            // TODO
         }
-        if(stock!=null) {
-            if(stock.equals("in_stock")){
+        if (stock != null) {
+            if (stock.equals("in_stock")) {
                 products = products.stream().filter(p -> p.getNumInStock() > 0).collect(Collectors.toList());
-            }
-            else if (stock.equals("out_of_stock")){
-                    products=products.stream().filter(p -> p.getNumInStock() < 1).collect(Collectors.toList());
+            } else if (stock.equals("out_of_stock")) {
+                products = products.stream().filter(p -> p.getNumInStock() < 1).collect(Collectors.toList());
             }
         }
 
-        int startIndex=(int) pageable.getOffset();
-        int endIndex=Math.min(startIndex + pageable.getPageSize(), products.size());
+        int startIndex = (int) pageable.getOffset();
+        int endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
         List<ProductDTO> productDTOs = productMapper.toProductsDTOList(products);
 
-        List<ProductDTO> pageContent=productDTOs.subList(startIndex, endIndex);
+        List<ProductDTO> pageContent = productDTOs.subList(startIndex, endIndex);
 
-        Page<ProductDTO> filteredProducts=new PageImpl<>(pageContent,pageable,productDTOs.size());
+        Page<ProductDTO> filteredProducts = new PageImpl<>(pageContent, pageable, productDTOs.size());
 
         return filteredProducts;
     }
@@ -162,8 +164,8 @@ public class ProductServiceImpl implements ProductService{
     public List<ProductDTO> findAllProducts() {
         List<Product> products = productRepository.findAll();
         List<ProductDTO> productDtos = new ArrayList<ProductDTO>();
-        
-        for(Product product : products){
+
+        for (Product product : products) {
             productDtos.add(productMapper.toProductDTO(product));
         }
         return productDtos;

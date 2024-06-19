@@ -20,16 +20,15 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class RatingServiceImpl implements RatingService{
+public class RatingServiceImpl implements RatingService {
 
     private RatingRepository ratingRepository;
     private ProductService productService;
     private RatingMapper ratingMapper;
 
-
     @Override
     public RatingDTO createRating(RatingRequest req, UserDTO user) throws ProductException {
-        ProductDTO product=productService.findProductById(req.getProductId()) ;
+        ProductDTO product = productService.findProductById(req.getProductId());
 
         RatingDTO rating = new RatingDTO();
         rating.setRating(req.getRating());
@@ -43,9 +42,9 @@ public class RatingServiceImpl implements RatingService{
 
     @Override
     public List<RatingDTO> getAllRatings(Long productId) {
-    return ratingRepository.getAllProductsRating(productId)
-                           .stream()
-                           .map(ratingMapper::toRatingDTO)
-                           .collect(Collectors.toList());
+        return ratingRepository.getAllProductsRating(productId)
+                .stream()
+                .map(ratingMapper::toRatingDTO)
+                .collect(Collectors.toList());
     }
 }

@@ -15,6 +15,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.logging.LogManager;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +30,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CartController {
 
-    private CartService cartService;
-    private UserService userService;
+    private final CartService cartService;
+    private final UserService userService;
+    Logger logger = LoggerFactory.getLogger(CartController.class);
 
     @PostMapping(value = "/getCart")
     @Operation(description = "find cart by user id")

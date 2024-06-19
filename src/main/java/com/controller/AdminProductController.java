@@ -5,7 +5,10 @@ import com.exception.ProductException;
 import com.request.CreateProductRequest;
 import com.response.APIResponse;
 import com.service.ProductService;
-import lombok.AllArgsConstructor;
+
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,16 +18,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin/products")
 @CrossOrigin(origins = "http://localhost:4200")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AdminProductController {
 
-
     private ProductService productService;
+    Logger logger = LoggerFactory.getLogger(AdminProductController.class);
 
     @GetMapping("/all")
-    public ResponseEntity<List<ProductDTO>>findAllProduct(){
+    public ResponseEntity<List<ProductDTO>> findAllProduct() {
 
-        List<ProductDTO> products= productService.findAllProducts();
+        List<ProductDTO> products = productService.findAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
@@ -36,9 +39,9 @@ public class AdminProductController {
     }
 
     @PostMapping("/creates")
-    public ResponseEntity<APIResponse> createMultipleProduct(@RequestBody CreateProductRequest[] req){
+    public ResponseEntity<APIResponse> createMultipleProduct(@RequestBody CreateProductRequest[] req) {
 
-        for(CreateProductRequest product : req){
+        for (CreateProductRequest product : req) {
             productService.createProduct(product);
         }
 
@@ -46,7 +49,7 @@ public class AdminProductController {
         res.setMessage("multiple Products Added");
         res.setStatus(true);
 
-        return new ResponseEntity<>(res,HttpStatus.CREATED);
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{productId}/delete")
@@ -55,16 +58,14 @@ public class AdminProductController {
         APIResponse res = new APIResponse();
         res.setMessage("product deleted successfully");
         res.setStatus(true);
-        return new ResponseEntity<>(res,HttpStatus.OK);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @PutMapping("/{productId}/update")  
-    public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductDTO req,@PathVariable Long productId)
+    @PutMapping("/{productId}/update")
+    public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductDTO req, @PathVariable Long productId)
             throws ProductException {
         ProductDTO product = productService.updateProduct(req, productId);
         return new ResponseEntity<ProductDTO>(product, HttpStatus.CREATED);
     }
-
-
 
 }

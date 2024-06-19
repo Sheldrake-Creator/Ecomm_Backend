@@ -1,4 +1,5 @@
 package com.service;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
 
     private ReviewRepository reviewRepository;
     private ProductService productService;
@@ -30,7 +31,7 @@ public class ReviewServiceImpl implements ReviewService{
     public ReviewDTO createReview(ReviewRequest req, UserDTO user) throws ProductException {
         ProductDTO product = productService.findProductById(req.getProductId());
 
-        ReviewDTO review= new ReviewDTO();
+        ReviewDTO review = new ReviewDTO();
         review.setReview(req.getReview());
         review.setUser(user);
         review.setCreatedAt(LocalDateTime.now());
@@ -41,9 +42,9 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public List<ReviewDTO> getAllReviews(Long productId) {
-        List<Review> reviews = reviewRepository.getAllProductReview(productId);     
-        List<ReviewDTO>reviewDtos =  new ArrayList<>();
-        for(Review review : reviews) {
+        List<Review> reviews = reviewRepository.getAllProductReview(productId);
+        List<ReviewDTO> reviewDtos = new ArrayList<>();
+        for (Review review : reviews) {
             reviewDtos.add(reviewMapper.toReviewDTO(review));
         }
         return reviewDtos;
