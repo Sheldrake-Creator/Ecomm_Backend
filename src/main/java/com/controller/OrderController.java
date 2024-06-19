@@ -1,59 +1,144 @@
 package com.controller;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.dto.AddressDTO;
 import com.dto.OrderDTO;
 import com.dto.UserDTO;
 import com.exception.OrderException;
 import com.exception.UserException;
+import com.response.HttpResponse;
 import com.service.OrderService;
 import com.service.UserService;
-
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
 public class OrderController {
 
-    private OrderService orderService;
-    private UserService userService;
+    private final OrderService orderService;
+    private final UserService userService;
+    private final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
     @PostMapping("/")
-    public ResponseEntity<OrderDTO> createOrder(@RequestBody AddressDTO shippingAddress,
-            @RequestHeader("Authorization") String jwt) throws UserException {
-        UserDTO user = userService.findUserProfileByJwt(jwt);
-        OrderDTO order = orderService.createOrder(user, shippingAddress);
-
-        return new ResponseEntity<OrderDTO>(order, HttpStatus.CREATED);
+    public ResponseEntity<HttpResponse> createOrder(@RequestBody AddressDTO shippingAddress,
+            @RequestHeader("Authorization") String jwt) {
+        try {
+            UserDTO user = userService.findUserProfileByJwt(jwt);
+            OrderDTO order = orderService.createOrder(user, shippingAddress);
+            logger.debug("Order created: {}", order);
+            return ResponseEntity.status(HttpStatus.CREATED).body(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .data(Map.of("order", order))
+                    .message("Order created")
+                    .status(HttpStatus.CREATED)
+                    .statusCode(HttpStatus.CREATED.value())
+                    .build());
+        } catch (UserException e) {
+            logger.error("Error creating order: User exception", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .message("Error creating order: User exception")
+                    .status(HttpStatus.BAD_REQUEST)
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .build());
+        } catch (Exception e) {
+            logger.error("Unexpected error creating order", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .message("Unexpected error creating order")
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .build());
+        }
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<OrderDTO>> usersOrderHistory(
-            @RequestHeader(" Authorization") String jwt) throws UserException, OrderException {
-        UserDTO user = userService.findUserProfileByJwt(jwt);
-        List<OrderDTO> orders = orderService.usersOrderHistory(user.getUserId());
-        return new ResponseEntity<>(orders, HttpStatus.CREATED);
+    public ResponseEntity<HttpResponse> usersOrderHistory(@RequestHeader("Authorization") String jwt) {
+        try {
+            UserDTO user = userService.findUserProfileByJwt(jwt);
+            List<OrderDTO> orders = orderService.usersOrderHistory(user.getUserId());
+            logger.debug("User order history retrieved: {}", orders);
+            return ResponseEntity.ok(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .data(Map.of("orders", orders))
+                    .message("User order history retrieved")
+                    .status(HttpStatus.OK)
+                    .statusCode(HttpStatus.OK.value())
+                    .build());
+        } catch (UserException e) {
+            logger.error("Error retrieving order history: User exception", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .message("Error retrieving order history: User exception")
+                    .status(HttpStatus.BAD_REQUEST)
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .build());
+        } catch (OrderException e) {
+            logger.error("Error retrieving order history: Order exception", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .message("Error retrieving order history: Order exception")
+                    .status(HttpStatus.BAD_REQUEST)
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .build());
+        } catch (Exception e) {
+            logger.error("Unexpected error retrieving order history", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .message("Unexpected error retrieving order history")
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .build());
+        }
     }
 
     @GetMapping("/{Id}")
-    public ResponseEntity<OrderDTO> findOrderById(
-            @PathVariable("Id") Long orderId,
-            @RequestHeader("Authorization") String jwt) throws UserException, OrderException {
-        // User user =userService.findUserProfileByJwt(jwt);
-        OrderDTO order = orderService.findOrderById(orderId);
-        return new ResponseEntity<>(order, HttpStatus.ACCEPTED);
+    public ResponseEntity<HttpResponse> findOrderById(@PathVariable("Id") Long orderId,
+            @RequestHeader("Authorization") String jwt) {
+        try {
+            UserDTO user = userService.findUserProfileByJwt(jwt);
+            OrderDTO order = orderService.findOrderById(orderId);
+            logger.debug("Order retrieved: {}", order);
+            return ResponseEntity.ok(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .data(Map.of("order", order))
+                    .message("Order retrieved")
+                    .status(HttpStatus.OK)
+                    .statusCode(HttpStatus.OK.value())
+                    .build());
+        } catch (UserException e) {
+            logger.error("Error retrieving order: User exception", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .message("Error retrieving order: User exception")
+                    .status(HttpStatus.BAD_REQUEST)
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .build());
+        } catch (OrderException e) {
+            logger.error("Error retrieving order: Order exception", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .message("Error retrieving order: Order exception")
+                    .status(HttpStatus.BAD_REQUEST)
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .build());
+        } catch (Exception e) {
+            logger.error("Unexpected error retrieving order", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .message("Unexpected error retrieving order")
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .build());
+        }
     }
-
 }

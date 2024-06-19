@@ -6,12 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class CreditCardDTO {
 
+    private long cardId;
     private String cardHolderName;
     private String cardNumber;
     private LocalDate expirationDate;

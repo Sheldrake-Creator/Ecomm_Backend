@@ -26,10 +26,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-    private UserMapper userMapper;
-    private UserAuthProvider userAuthProvider;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
+    private final UserAuthProvider userAuthProvider;
 
     @Override
     public User findUserById(Long userId) throws UserException {

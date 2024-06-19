@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,16 +19,20 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderItemId;
 
-    @JsonIgnore
     @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
     @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product product;
     private String size;
     private int quantity;
     private Integer orderPrice;
     private Integer discountedPrice;
-    private Long userId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     private LocalDateTime deliveryDate;
 }

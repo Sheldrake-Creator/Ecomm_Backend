@@ -19,6 +19,6 @@ public class OrderItemDTO {
     private int quantity;
     private Integer orderPrice;
     private Integer discountedPrice;
-    private Long userId;
+    private UserDTO user;
     private LocalDateTime deliveryDate;
 }

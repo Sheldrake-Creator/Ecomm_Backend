@@ -11,5 +11,4 @@ public interface CategoryMapper {
     CategoryDTO toCategoryDTO(Category category);
 
     Category toCategory(CategoryDTO categoryDto);
-
 }

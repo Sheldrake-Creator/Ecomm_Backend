@@ -13,7 +13,7 @@ public class PaymentDetailsDTO {
 
     private String paymentMethod;
     private String status;
-    private String paymentId;
+    private long paymentId;
     private String razorpayPaymentLinkId;
     private String razorpayPaymentLinkReferenceId;
     private String razorpayPaymentLinkStatus;
