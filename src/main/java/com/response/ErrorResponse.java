@@ -16,7 +16,7 @@ public class ErrorResponse {
         return errors;
     }
 
-    public void setError(ErrorsDTO error) {
+    public void setError(ErrorsDTO errors) {
         this.errors = errors;
     }
 }

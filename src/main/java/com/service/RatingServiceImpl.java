@@ -1,42 +1,51 @@
 package com.service;
 
-import com.exception.ProductException;
-import com.model.Product;
-import com.model.Rating;
-import com.model.User;
-import com.repository.RatingRepository;
-import com.request.RatingRequest;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.dto.ProductDTO;
+import com.dto.RatingDTO;
+import com.dto.UserDTO;
+import com.exception.ProductException;
+import com.mapper.RatingMapper;
+import com.repository.RatingRepository;
+import com.request.RatingRequest;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class RatingServiceImpl implements RatingService{
 
     private RatingRepository ratingRepository;
     private ProductService productService;
+    private RatingMapper ratingMapper;
 
-    public RatingServiceImpl(RatingRepository ratingRepository, ProductService productService) {
-        this.ratingRepository = ratingRepository;
-        this.productService = productService;
-    }
 
     @Override
-    public Rating createRating(RatingRequest req, User user) throws ProductException {
-        Product product=productService.findProductById(req.getProductId());
+    public RatingDTO createRating(RatingRequest req, UserDTO user) throws ProductException {
+        ProductDTO product=productService.findProductById(req.getProductId()) ;
 
-        Rating rating = new Rating();
+        RatingDTO rating = new RatingDTO();
         rating.setRating(req.getRating());
         rating.setProduct(product);
         rating.setCreatedAt(LocalDateTime.now());
         rating.setUser(user);
-        return ratingRepository.save(rating);
+        this.ratingRepository.save(ratingMapper.toRating(rating));
+
+        return rating;
     }
 
     @Override
-    public List<Rating> getProductsRating(Long productId) {
-
-        return ratingRepository.getAllProductsRating(productId);
+    public List<RatingDTO> getAllRatings(Long productId) {
+    return ratingRepository.getAllProductsRating(productId)
+                           .stream()
+                           .map(ratingMapper::toRatingDTO)
+                           .collect(Collectors.toList());
     }
 }

@@ -1,29 +1,38 @@
 package com.service;
 
+import java.util.Optional;
+import java.util.Set;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.dto.CartDTO;
 import com.dto.CartItemDTO;
+import com.dto.ProductDTO;
 import com.exception.CartItemException;
 import com.exception.UserException;
 import com.mapper.CartItemMapper;
+import com.mapper.CartMapper;
+import com.mapper.ProductMapper;
 import com.model.Cart;
 import com.model.CartItem;
-import com.model.Product;
 import com.model.User;
 import com.repository.CartItemRepository;
 import com.repository.CartRepository;
 
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-import java.util.Optional;
-import java.util.Set;
+import lombok.RequiredArgsConstructor;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Transactional
 public class CartItemServiceImpl implements CartItemService{
 
     private CartItemRepository cartItemRepository;
     private UserService userService;
     private CartItemMapper cartItemMapper;
     private CartRepository cartRepository;
+    private CartMapper cartMapper;
+    private ProductMapper productMapper;
 
 
 
@@ -66,9 +75,9 @@ public class CartItemServiceImpl implements CartItemService{
     }
 
     @Override
-    public CartItem doesCartItemExist(Cart cart, Product product, String size, Long userId) {
-
-        return cartItemRepository.doesCartItemExist(cart, product, size, userId);
+    public CartItemDTO doesCartItemExist(CartDTO cart, ProductDTO product, String size, Long userId) {
+        CartItem cartItem= this.cartItemRepository.doesCartItemExist(cartMapper.toCart(cart),productMapper.toProduct(product), size, userId);
+        return cartItemMapper.toCartItemDTO(cartItem);
     }
 
     @Override

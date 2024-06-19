@@ -12,6 +12,17 @@ public interface UserMapper {
 
     UserDTO toUserDto(User user);
 
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "cart", ignore = true)
+    @Mapping(target = "username", ignore = true)
+    @Mapping(target = "address", ignore = true)
+    @Mapping(target = "paymentInformation", ignore = true)
+    @Mapping(target = "ratings", ignore = true)
+    @Mapping(target = "reviews", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "token", ignore = true)
+    User toUser(UserDTO userDto);
+
    
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "cart", ignore = true)

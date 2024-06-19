@@ -1,14 +1,8 @@
 package com.request;
 
-import com.dto.CartItemDTO;
-import com.dto.ProductDTO;
-import com.dto.UserDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

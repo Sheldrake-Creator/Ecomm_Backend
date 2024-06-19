@@ -1,9 +1,9 @@
 package com.controller;
 
+import com.dto.RatingDTO;
+import com.dto.UserDTO;
 import com.exception.ProductException;
 import com.exception.UserException;
-import com.model.Rating;
-import com.model.User;
 import com.request.RatingRequest;
 import com.service.RatingService;
 import com.service.UserService;
@@ -25,19 +25,19 @@ public class RatingController {
     private UserService userService;
 
     @PostMapping("/create")
-    public ResponseEntity<Rating> createRating(@RequestBody RatingRequest req,
+    public ResponseEntity<RatingDTO> createRating(@RequestBody RatingRequest req,
                                                @RequestHeader("Authorization") String jwt) throws UserException, ProductException {
-        User user = userService.findUserProfileByJwt(jwt);
-        Rating rating = ratingService.createRating(req, user);
-        return new ResponseEntity<Rating>(rating, HttpStatus.CREATED);
+        UserDTO user = userService.findUserProfileByJwt(jwt);
+        RatingDTO rating = ratingService.createRating(req, user);
+        return new ResponseEntity<RatingDTO>(rating, HttpStatus.CREATED);
 
     }
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<List<Rating>> getProductsRating(@PathVariable Long productId,
+    public ResponseEntity<List<RatingDTO>> getProductsRating(@PathVariable Long productId,
                                                           @RequestHeader("Authorization") String jwt) throws UserException, ProductException{
         // User user=userService.findUserProfileByJwt(jwt);
-        List<Rating> ratings=ratingService.getProductsRating(productId);
-        return new ResponseEntity<>(ratings,HttpStatus.CREATED);
+        List<RatingDTO> ratings=ratingService.getAllRatings(productId);
+        return new ResponseEntity<List<RatingDTO>>(ratings,HttpStatus.CREATED);
     }
 }

@@ -1,21 +1,21 @@
 package com.service;
+import org.springframework.stereotype.Service;
+
 import com.dto.CartDTO;
+import com.dto.CartItemDTO;
+import com.dto.ProductDTO;
 import com.dto.UserDTO;
 import com.exception.CartException;
 import com.exception.ProductException;
-import com.mapper.CartItemMapper;
 import com.mapper.CartMapper;
 import com.model.Cart;
 import com.model.CartItem;
-import com.model.Product;
 import com.model.User;
 import com.repository.CartRepository;
 import com.repository.ProductRepository;
 import com.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +34,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartDTO createCart(UserDTO userDto) throws CartException{
         if(userDto == null){ 
-            throw new IllegalArgumentException("User with ID " + userDto.getUserId() + " not found.");
+            throw new IllegalArgumentException("User with ID not found.");
         }
         System.out.println("UserDTO "+ userDto);
         System.out.println("UserId ="+ userDto.getUserId());
@@ -58,12 +58,12 @@ public class CartServiceImpl implements CartService {
         // System.out.println("CartItem "+);
 
 
-        Cart cart = cartRepository.findByUserId(userId);
-        Product product = productService.findProductById(productId);
-        CartItem isPresent = cartItemService.doesCartItemExist(cart,product,size,userId);
+        CartDTO cart = this.findUserCart(userId);
+        ProductDTO product = productService.findProductById(productId);
+        CartItemDTO isPresent = cartItemService.doesCartItemExist(cart,product,size,userId);
 
         if(isPresent==null) {
-            CartItem cartItem = new CartItem();
+            CartItemDTO cartItem = new CartItemDTO();
             cartItem.setProduct(product);
             cartItem.setCart(cart);
             cartItem.setQuantity(quantity);
@@ -74,13 +74,13 @@ public class CartServiceImpl implements CartService {
             cartItem.setDiscountedPrice(discountedPrice);
             cartItem.setSize(size);
             cart.getCartItems().add(cartItem);
-            this.cartRepository.save(cart);
+            this.cartRepository.save(cartMapper.toCart(cart));
         }
 
         return "Item Added To Cart";
     }
     @Override
-    public Cart findUserCart(Long userId) {
+    public CartDTO findUserCart(Long userId) {
 
         Cart cart=cartRepository.findByUserId(userId);
         int totalprice=0;
@@ -96,7 +96,10 @@ public class CartServiceImpl implements CartService {
         cart.setTotalDiscountedPrice(totalDiscountedPrice);
         cart.setTotalItems(totalItems);
         cart.setTotalPrice(totalprice);
-        return cartRepository.save(cart);
+        cartRepository.save(cart);
+
+        return cartMapper.toCartDTO(cart); 
+        
     }
 
     @Override

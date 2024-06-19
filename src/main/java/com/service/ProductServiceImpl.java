@@ -86,9 +86,9 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public String deleteProduct(Long productId) throws ProductException {
 
-        Product product = findProductById(productId);
+        ProductDTO product = findProductById(productId);
         product.getSizes().clear();
-        productRepository.delete(product);
+        productRepository.delete(productMapper.toProduct(product));
 
         return "Product Deleted";
     }
@@ -96,22 +96,26 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public ProductDTO updateProduct(ProductDTO req, Long productId) throws ProductException {
         
-        Product product = findProductById(productId);
+        ProductDTO product = findProductById(productId);
 
         if(req.getNumInStock()!= 0){
             product.setNumInStock(req.getNumInStock());
         }
-        productRepository.save(product);
+        productRepository.save(productMapper.toProduct(product));
 
-        return productMapper.toProductDTO(product);
+        return product;
     }
 
     @Override
-    public Product findProductById(Long id) throws ProductException {
-        Optional<Product> product=productRepository.findById(id);
+    public ProductDTO findProductById(Long id) throws ProductException {
+        // Optional<Product> productEntity=
+       
+        Optional<Product> product = productRepository.findById(id);
         if(product.isPresent()) {
-            return product.get();
+            ProductDTO productDto= productMapper.toProductDTO(product.get());
+            return productDto;
         }
+   
         throw new ProductException ("Product not found with id - "+id);
     }
 
@@ -121,7 +125,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Page<Product> getAllProducts(String category, List<String> colors, List<String> sizes, Integer minPrice,
+    public Page<ProductDTO> getAllProducts(String category, List<String> colors, List<String> sizes, Integer minPrice,
                                        Integer maxPrice, Integer minDiscount, String sort, String stock,
                                        Integer pageNumber, Integer pageSize) {
 
@@ -145,9 +149,11 @@ public class ProductServiceImpl implements ProductService{
 
         int startIndex=(int) pageable.getOffset();
         int endIndex=Math.min(startIndex + pageable.getPageSize(), products.size());
+        List<ProductDTO> productDTOs = productMapper.toProductsDTOList(products);
 
-        List<Product> pageContent=products.subList(startIndex, endIndex);
-        Page<Product> filteredProducts=new PageImpl<>(pageContent,pageable,products.size());
+        List<ProductDTO> pageContent=productDTOs.subList(startIndex, endIndex);
+
+        Page<ProductDTO> filteredProducts=new PageImpl<>(pageContent,pageable,productDTOs.size());
 
         return filteredProducts;
     }

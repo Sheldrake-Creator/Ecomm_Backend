@@ -4,8 +4,6 @@ import com.dto.CartDTO;
 import com.dto.UserDTO;
 import com.exception.CartException;
 import com.exception.ProductException;
-import com.model.Cart;
-import com.request.AddItemRequest;
 
 public interface CartService {
 
@@ -15,5 +13,5 @@ public interface CartService {
 
     String addItemToCart(Long userId, int quantity, String size, long productId) throws ProductException;
 
-    Cart findUserCart(Long userId);
+    CartDTO findUserCart(Long userId);
 }

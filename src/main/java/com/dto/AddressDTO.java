@@ -18,4 +18,5 @@ public class AddressDTO {
     private String state;
     private String zipCode;
     private String mobile;
+    private UserDTO user;
 }

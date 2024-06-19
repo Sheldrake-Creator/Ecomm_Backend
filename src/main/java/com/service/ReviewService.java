@@ -1,15 +1,15 @@
 package com.service;
 
-import com.exception.ProductException;
-import com.model.Review;
-import com.model.User;
-import com.request.ReviewRequest;
-
 import java.util.List;
+
+import com.dto.ReviewDTO;
+import com.dto.UserDTO;
+import com.exception.ProductException;
+import com.request.ReviewRequest;
 
 public interface ReviewService {
 
-    Review createReview(ReviewRequest request, User user) throws ProductException;
+    List<ReviewDTO> getAllReviews(Long ProductId);
 
-    List<Review> getAllReviews(Long ProductId);
+    ReviewDTO createReview(ReviewRequest req, UserDTO user)throws ProductException;
 }

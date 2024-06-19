@@ -1,5 +1,7 @@
 package com.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +14,9 @@ import lombok.NoArgsConstructor;
 public class RatingDTO {
 
     private Long ratingId;
-    // private UserDTO userDto;
-    // private ProductDTO productDto;
+    private UserDTO user;
+    private ProductDTO product;
     private double rating;
+    private LocalDateTime createdAt;
     
-
 }

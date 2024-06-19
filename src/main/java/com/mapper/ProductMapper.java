@@ -1,5 +1,6 @@
 package com.mapper;
 
+import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -16,4 +17,5 @@ public interface ProductMapper {
     @Mapping(target = "createdAt", ignore = true)
     Product toProduct(ProductDTO productDTO);
 
+    List<ProductDTO> toProductsDTOList(List<Product> products);
 }

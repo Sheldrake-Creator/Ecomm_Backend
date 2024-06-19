@@ -15,6 +15,5 @@ public interface RatingMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "product", ignore = true)
     @Mapping(target = "user", ignore = true)
-    @Mapping(target = "id", ignore = true)
     Rating toRating(RatingDTO ratingDTO);  
 }
