@@ -1,5 +1,7 @@
 package com.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.dto.CartDTO;
@@ -13,7 +15,7 @@ import com.model.Cart;
 import com.model.CartItem;
 import com.model.User;
 import com.repository.CartRepository;
-import com.repository.ProductRepository;
+
 import com.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
@@ -24,13 +26,12 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class CartServiceImpl implements CartService {
 
-    private CartRepository cartRepository;
-    private CartItemService cartItemService;
-    private ProductService productService;
-    @SuppressWarnings("unused")
-    private ProductRepository productRepository;
-    private UserRepository userRepository;
-    private CartMapper cartMapper;
+    private final CartRepository cartRepository;
+    private final CartItemService cartItemService;
+    private final ProductService productService;
+    private final UserRepository userRepository;
+    private final CartMapper cartMapper;
+    private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
 
     @Override
     public CartDTO createCart(UserDTO userDto) throws CartException {

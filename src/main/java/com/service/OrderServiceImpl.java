@@ -6,6 +6,9 @@ import com.model.*;
 import com.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.exception.OrderException;
 
@@ -28,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
     private final UserMapper userMapper;
     private final OrderItemMapper orderItemMapper;
     private final OrderMapper orderMapper;
+    private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
 
     @Override
     public OrderDTO createOrder(UserDTO userDto, AddressDTO shippingAddress) {

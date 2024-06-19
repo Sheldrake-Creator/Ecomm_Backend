@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +24,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RatingServiceImpl implements RatingService {
 
-    private RatingRepository ratingRepository;
-    private ProductService productService;
-    private RatingMapper ratingMapper;
+    private final RatingRepository ratingRepository;
+    private final ProductService productService;
+    private final RatingMapper ratingMapper;
+    private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
 
     @Override
     public RatingDTO createRating(RatingRequest req, UserDTO user) throws ProductException {
