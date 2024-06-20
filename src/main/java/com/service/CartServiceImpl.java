@@ -12,6 +12,7 @@ import com.dto.CartItemDTO;
 import com.dto.ProductDTO;
 import com.dto.UserDTO;
 import com.exception.CartException;
+import com.exception.CartItemException;
 import com.exception.ProductException;
 import com.exception.UserException;
 import com.mapper.CartMapper;
@@ -42,13 +43,19 @@ public class CartServiceImpl implements CartService {
         if (userDto == null) {
             throw new IllegalArgumentException("User with ID not found.");
         }
-        System.out.println("UserDTO " + userDto);
-        System.out.println("UserId =" + userDto.getUserId());
+
         int totalPrice = 0;
         int totalDiscountedPrice = 0;
         int totalItem = 0;
+
+        Optional<User> optionalUser = userRepository.findUserByUserId(userDto.getUserId());
+        if (optionalUser == null) {
+            throw new CartException("UserId not found ");
+        }
+        User user = optionalUser.get();
+
         Cart cart = new Cart();
-        User user = userRepository.findUserByUserId(userDto.getUserId());
+
         cart.setUser(user);
         cart.setTotalDiscountedPrice(totalDiscountedPrice);
         cart.setTotalItems(totalItem);
@@ -58,15 +65,14 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public String addItemToCart(Long userId, int quantity, String size, long productId) throws ProductException {
-        // System.out.println("Request "+);
-        // System.out.println("User "+);
-        // System.out.println("Product "+);
-        // System.out.println("CartItem "+);
+    public String addItemToCart(Long userId, int quantity, String size, long productId)
+            throws ProductException, CartException, CartItemException {
 
         CartDTO cart = this.findUserCart(userId);
         ProductDTO product = productService.findProductById(productId);
-        CartItemDTO isPresent = cartItemService.doesCartItemExist(cart, product, size, userId);
+        CartItemDTO isPresent;
+
+        isPresent = cartItemService.doesCartItemExist(cart, product, size, userId);
 
         if (isPresent == null) {
             CartItemDTO cartItem = new CartItemDTO();
@@ -94,7 +100,7 @@ public class CartServiceImpl implements CartService {
 
             // Handle case when cart is not found
             if (!optionalCart.isPresent()) {
-
+                throw new CartException("UserId not found ");
             }
 
             Cart cart = optionalCart.get();
@@ -119,9 +125,6 @@ public class CartServiceImpl implements CartService {
         } catch (DataAccessException e) {
             logger.error("Data access error while finding cart for user with ID: {}", userId, e);
             throw new CartException("An unexpected error occurred while retrieving the cart for user with ID: ", e);
-        } catch (Exception e) {
-            logger.error("Unexpected error occurred while finding cart for user with ID: {}", userId, e);
-
         }
     }
 
@@ -135,9 +138,9 @@ public class CartServiceImpl implements CartService {
             }
             Cart cart = optionalCart.get();
             return cartMapper.toCartDTO(cart);
-        } catch (DAOException e) {
+        } catch (DataAccessException e) {
             logger.error("Unexpected error occurred while getting user cart: ", e);
-            throw new DAOException("Unexpected error occurred while getting user cart", e);
+            throw new CartException("Unexpected error occurred while getting user cart", e);
         }
     }
 }

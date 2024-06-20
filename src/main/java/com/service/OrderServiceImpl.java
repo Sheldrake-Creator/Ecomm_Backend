@@ -9,7 +9,10 @@ import lombok.RequiredArgsConstructor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
+import com.exception.CartException;
 import com.exception.OrderException;
 
 import java.time.LocalDateTime;
@@ -34,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
 
     @Override
-    public OrderDTO createOrder(UserDTO userDto, AddressDTO shippingAddress) {
+    public OrderDTO createOrder(UserDTO userDto, AddressDTO shippingAddress) throws CartException {
 
         shippingAddress.setUser(userDto);
         userDto.getAddress().add(shippingAddress);
@@ -137,9 +140,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> usersOrderHistory(Long userId) {
-        List<Order> orderEntity = orderRepository.getUsersOrders(userId);
+    public List<OrderDTO> usersOrderHistory(Long userId) throws OrderException {
+        Optional<List<Order>> optionalOrder = orderRepository.getUsersOrders(userId);
         List<OrderDTO> orderDtos = new ArrayList<>();
+        if (!optionalOrder.isPresent()) {
+            throw new OrderException("Order not found for UserID " + userId);
+        }
+        List<Order> orderEntity = optionalOrder.get();
         for (Order order : orderEntity) {
             orderDtos.add(orderMapper.toOrderDTO(order));
         }

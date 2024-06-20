@@ -3,6 +3,7 @@ package com.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import com.dto.ProductDTO;
 import com.dto.ReviewDTO;
 import com.dto.UserDTO;
 import com.exception.ProductException;
+import com.exception.ReviewException;
 import com.mapper.ReviewMapper;
 import com.model.Review;
 import com.repository.ReviewRepository;
@@ -44,10 +46,15 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewDTO> getAllReviews(Long productId) {
-        List<Review> reviews = reviewRepository.getAllProductReview(productId);
+    public List<ReviewDTO> getAllReviews(Long productId) throws ReviewException {
+        Optional<List<Review>> oReviews = reviewRepository.getAllProductReview(productId);
         List<ReviewDTO> reviewDtos = new ArrayList<>();
-        for (Review review : reviews) {
+        if (!oReviews.isPresent()) {
+            throw new ReviewException("Product ID did not return any reviews");
+        }
+        List<Review> reviewEntities = oReviews.get();
+
+        for (Review review : reviewEntities) {
             reviewDtos.add(reviewMapper.toReviewDTO(review));
         }
         return reviewDtos;

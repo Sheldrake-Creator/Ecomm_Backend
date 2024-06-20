@@ -1,45 +1,91 @@
 package com.controller;
 
-import java.util.List;
-
+import com.dto.ProductDTO;
+import com.exception.ProductException;
+import com.response.HttpResponse;
+import com.service.ProductService;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.dto.ProductDTO;
-import com.exception.ProductException;
-import com.service.ProductService;
-
-import lombok.AllArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductController {
 
-
-    private ProductService productService;
+    private final ProductService productService;
+    private final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     @GetMapping("/products")
-    public ResponseEntity<Page<ProductDTO>> findProductByCategoryHandler(@RequestParam String category,
-                                                                      @RequestParam List<String> color, @RequestParam List<String> size, @RequestParam Integer minPrice,
-                                                                      @RequestParam Integer maxPrice, @RequestParam Integer minDiscount, @RequestParam String sort,
-                                                                      @RequestParam String stock, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
-        Page<ProductDTO> res= productService.getAllProducts(
-                category, color, size, minPrice, maxPrice,
-                minDiscount, sort, stock,pageNumber,pageSize);
-        System.out.println("complete products");
-        return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
+    public ResponseEntity<HttpResponse> findProductByCategoryHandler(
+            @RequestParam String category,
+            @RequestParam List<String> color,
+            @RequestParam List<String> size,
+            @RequestParam Integer minPrice,
+            @RequestParam Integer maxPrice,
+            @RequestParam Integer minDiscount,
+            @RequestParam String sort,
+            @RequestParam String stock,
+            @RequestParam Integer pageNumber,
+            @RequestParam Integer pageSize) {
+        try {
+            Page<ProductDTO> products = productService.getAllProducts(
+                    category, color, size, minPrice, maxPrice, minDiscount, sort, stock, pageNumber, pageSize);
+            logger.debug("Products fetched: {}", products);
+            return ResponseEntity.ok(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .data(Map.of("products", products))
+                    .message("Products fetched successfully")
+                    .status(HttpStatus.OK)
+                    .statusCode(HttpStatus.OK.value())
+                    .build());
+        } catch (Exception e) {
+            logger.error("Unexpected error fetching products by category", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .message("Unexpected error fetching products")
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .build());
+        }
     }
 
     @GetMapping("/products/id/{productId}")
-    public ResponseEntity<ProductDTO> findProductByIdHandler(@PathVariable Long productId) throws ProductException {
-        ProductDTO product = productService.findProductById(productId);
-        return new ResponseEntity<ProductDTO> (product, HttpStatus.ACCEPTED);
+    public ResponseEntity<HttpResponse> findProductByIdHandler(@PathVariable Long productId) {
+        try {
+            ProductDTO product = productService.findProductById(productId);
+            logger.debug("Product fetched: {}", product);
+            return ResponseEntity.ok(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .data(Map.of("product", product))
+                    .message("Product fetched successfully")
+                    .status(HttpStatus.OK)
+                    .statusCode(HttpStatus.OK.value())
+                    .build());
+        } catch (ProductException e) {
+            logger.error("Error fetching product by ID", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .message(e.getMessage())
+                    .status(HttpStatus.BAD_REQUEST)
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .build());
+        } catch (Exception e) {
+            logger.error("Unexpected error fetching product by ID", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(HttpResponse.builder()
+                    .timeStamp(LocalDateTime.now().toString())
+                    .message("Unexpected error fetching product")
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .build());
+        }
     }
 }

@@ -1,10 +1,9 @@
 package com.service;
 
 import java.util.Optional;
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,26 +34,20 @@ public class CartItemServiceImpl implements CartItemService {
     private final CartRepository cartRepository;
     private final CartMapper cartMapper;
     private final ProductMapper productMapper;
-    private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(CartItemServiceImpl.class);
 
-    @Override
-    public CartItemDTO addCartItem(CartItem cartItem, long userId) {
-        Cart cartEntity = cartRepository.findByUserId(userId);
+    public CartItemDTO addCartItem(CartItem cartItem, long userId) throws CartItemException {
+        Cart cartEntity = cartRepository.findByUserId(userId)
+                .orElseThrow(() -> {
+                    logger.error("No Cart Found with UserId: {}", userId);
+                    return new CartItemException("No Cart Found with UserId: " + userId);
+                });
 
-        cartEntity.setTotalItems(cartEntity.getTotalItems() + cartItem.getQuantity());
-        cartEntity.setTotalPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
-        cartEntity.setTotalDiscountedPrice(cartItem.getProduct().getDiscountedPrice() * cartItem.getQuantity());
+        updateCartTotals(cartEntity, cartItem);
+        cartEntity.getCartItems().add(cartItem);
+        cartRepository.save(cartEntity);
 
-        Set<CartItem> cartItems = cartEntity.getCartItems();
-        cartItems.add(cartItem);
-        cartEntity.setCartItems(cartItems);
-        ;
-        this.cartRepository.save(cartEntity);
-
-        // CartItem createdCartItem=cartItemRepository.save(cartItem);
-        CartItemDTO cartItemDto = cartItemMapper.toCartItemDTO(cartItem);
-        return cartItemDto;
-
+        return cartItemMapper.toCartItemDTO(cartItem);
     }
 
     @Override
@@ -74,10 +67,24 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CartItemDTO doesCartItemExist(CartDTO cart, ProductDTO product, String size, Long userId) {
-        CartItem cartItem = this.cartItemRepository.doesCartItemExist(cartMapper.toCart(cart),
-                productMapper.toProduct(product), size, userId);
-        return cartItemMapper.toCartItemDTO(cartItem);
+    public CartItemDTO doesCartItemExist(CartDTO cart, ProductDTO product, String size, Long userId)
+            throws CartItemException {
+        try {
+            CartItem cartItem = this.cartItemRepository.doesCartItemExist(
+                    cartMapper.toCart(cart),
+                    productMapper.toProduct(product),
+                    size,
+                    userId).orElseThrow(() -> {
+                        logger.error("No CartItem Found for UserId: {}, Product: {}, Size: {}", userId,
+                                product.getProductId(), size);
+                        return new CartItemException("No CartItem Found for UserId: " + userId + ", Product: "
+                                + product.getProductId() + ", Size: " + size);
+                    });
+            return cartItemMapper.toCartItemDTO(cartItem);
+        } catch (DataAccessException e) {
+            logger.error("Data access error while finding cart for user with ID: {}", userId, e);
+            throw new CartItemException("An unexpected error occurred while retrieving the cart for user with ID: ", e);
+        }
     }
 
     @Override
@@ -102,5 +109,13 @@ public class CartItemServiceImpl implements CartItemService {
             return cartItem;
         }
         throw new CartItemException(" cartItem not found with id : " + cartItemId);
+    }
+
+    // * Helper Methods
+    private void updateCartTotals(Cart cart, CartItem cartItem) {
+        cart.setTotalItems(cart.getTotalItems() + cartItem.getQuantity());
+        cart.setTotalPrice(cart.getTotalPrice() + cartItem.getProduct().getPrice() * cartItem.getQuantity());
+        cart.setTotalDiscountedPrice(
+                cart.getTotalDiscountedPrice() + cartItem.getProduct().getDiscountedPrice() * cartItem.getQuantity());
     }
 }
