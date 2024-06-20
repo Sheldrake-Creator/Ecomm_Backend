@@ -13,7 +13,6 @@ public interface UserMapper {
 
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "cart", ignore = true)
-    @Mapping(target = "userName", ignore = true)
     @Mapping(target = "address", ignore = true)
     @Mapping(target = "paymentInformation", ignore = true)
     @Mapping(target = "ratings", ignore = true)
@@ -24,8 +23,6 @@ public interface UserMapper {
 
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "cart", ignore = true)
-    @Mapping(target = "userId", ignore = true)
-    @Mapping(target = "userName", ignore = true)
     @Mapping(target = "address", ignore = true)
     @Mapping(target = "paymentInformation", ignore = true)
     @Mapping(target = "ratings", ignore = true)

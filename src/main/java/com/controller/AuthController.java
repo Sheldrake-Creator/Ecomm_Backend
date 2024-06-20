@@ -30,12 +30,14 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<HttpResponse> loginHandler(@RequestBody CredentialsDTO credentialsDto) {
         try {
+            logger.debug("credentialsDto: ", credentialsDto);
             UserDTO userDTO = userService.login(credentialsDto);
+            logger.debug("userdDto", userDTO);
             userDTO.setToken(userAuth.createToken(userDTO));
             logger.debug("User logged in: {}", userDTO);
             return ResponseEntity.ok(HttpResponse.builder()
                     .timeStamp(LocalDateTime.now().toString())
-                    .data(Map.of("user", new UserResponse(userDTO)))
+                    .data(Map.of("user", userDTO))
                     .message("Login successful")
                     .status(HttpStatus.OK)
                     .statusCode(HttpStatus.OK.value())
@@ -67,7 +69,7 @@ public class AuthController {
             logger.debug("User registered: {}", userDTO);
             return ResponseEntity.ok(HttpResponse.builder()
                     .timeStamp(LocalDateTime.now().toString())
-                    .data(Map.of("user", new UserResponse(userDTO)))
+                    .data(Map.of("user", userDTO))
                     .message("Registration successful")
                     .status(HttpStatus.OK)
                     .statusCode(HttpStatus.OK.value())

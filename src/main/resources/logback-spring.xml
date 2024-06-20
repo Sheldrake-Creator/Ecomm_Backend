@@ -1,5 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-<include resource="org/springframework/boot/logging/logback/base.xml"/>
-<logger name="org.springframework.web" level="DEBUG"/>
+
+    <!-- Console Appender -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern> %d{yyyy-MM-dd HH:mm:ss}  %highlight(%-5level)  %-30.30(%C) - %msg%n%throwable</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender -->
+    <appender name="FileLogger" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/app.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>logs/app.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%black(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level)[%thread] %boldYellow(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Loggers configuration -->
+    <logger name="com.controller" level="DEBUG" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="FileLogger" />
+    </logger>
+
+    <logger name="com.service" level="DEBUG" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="FileLogger" />
+    </logger>
+
+    <logger name="com.repository" level="DEBUG" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="FileLogger" />
+    </logger>
+
+    <!-- Root logger -->
+    <root level="INFO">
+        <appender-ref ref="Console" />
+        <appender-ref ref="FileLogger" />
+    </root>
+
 </configuration>

@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.CharBuffer;
-import java.util.Arrays;
 import java.util.Optional;
 
 @Service
@@ -32,7 +31,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final UserAuthProvider userAuthProvider;
-    private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
     public User findUserById(Long userId) throws UserException {
@@ -62,22 +61,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO login(CredentialsDTO credentialsDTO) throws AuthException {
+        logger.debug("Credentials", credentialsDTO);
 
         User user = userRepository.findByUserName(credentialsDTO.userName())
                 .orElseThrow(() -> new AuthException("Unknown User", HttpStatus.NOT_FOUND));
-        if (passwordEncoder.matches(CharBuffer.wrap(credentialsDTO.password()), user.getPassword())) {
-            return userMapper.toUserDto(user);
-        }
-        throw new AuthException("Invalid password", HttpStatus.BAD_REQUEST);
+        logger.debug("UserEntity", user);
+        logger.debug("UserEntity Username", user.getUserName());
+        logger.debug("UserEntity password", user.getPassword());
+        return userMapper.toUserDto(user);
+        // if (passwordEncoder.matches(CharBuffer.wrap(credentialsDTO.password()),
+        // user.getPassword())) {}
     }
 
     @Override
     public UserDTO register(SignUpDTO signUpDto) throws AuthException {
 
-        System.out.println("signUpDto " + signUpDto.userName());
-        System.out.println("signUpDto " + Arrays.toString(signUpDto.password()));
-        System.out.println("signUpDto " + signUpDto.email());
-
+        logger.debug("SignupDTO class", signUpDto);
         Optional<User> oUser = userRepository.findByUserName(signUpDto.userName());
 
         if (oUser.isPresent()) {
