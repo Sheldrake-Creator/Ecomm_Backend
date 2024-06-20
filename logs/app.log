@@ -3471,3 +3471,41 @@ This generated password is for development use only. Your security configuration
 [30m2024-06-19 21:57:41[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat started on port 4545 (http) with context path ''
 [30m2024-06-19 21:57:41[0;39m [34mINFO [0;39m[restartedMain] [1;33mcom.DemoApplication[0;39m - Started DemoApplication in 7.984 seconds (process running for 15294.923)
 [30m2024-06-19 21:57:41[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.s.b.d.a.ConditionEvaluationDeltaLoggingListener[0;39m - Condition evaluation unchanged
+[30m2024-06-19 22:07:22[0;39m [34mINFO [0;39m[File Watcher] [1;33mo.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener[0;39m - Restarting due to 14 class path changes (0 additions, 0 deletions, 14 modifications)
+[30m2024-06-19 22:07:22[0;39m [34mINFO [0;39m[Thread-103] [1;33mo.a.coyote.http11.Http11NioProtocol[0;39m - Stopping ProtocolHandler ["http-nio-4545"]
+[30m2024-06-19 22:07:22[0;39m [34mINFO [0;39m[Thread-103] [1;33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+[30m2024-06-19 22:07:22[0;39m [34mINFO [0;39m[Thread-103] [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-26 - Shutdown initiated...
+[30m2024-06-19 22:07:22[0;39m [34mINFO [0;39m[Thread-103] [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-26 - Shutdown completed.
+[30m2024-06-19 22:07:24[0;39m [34mINFO [0;39m[restartedMain] [1;33mcom.DemoApplication[0;39m - Starting DemoApplication using Java 17.0.11 with PID 20052 (/Users/silaspacheco/Ecomm_Backend/Ecomm_Backend/target/classes started by silaspacheco in /Users/silaspacheco/Ecomm_Backend/Ecomm_Backend)
+[30m2024-06-19 22:07:24[0;39m [34mINFO [0;39m[restartedMain] [1;33mcom.DemoApplication[0;39m - No active profile set, falling back to 1 default profile: "default"
+[30m2024-06-19 22:07:25[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[30m2024-06-19 22:07:26[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Finished Spring Data repository scanning in 1338 ms. Found 10 JPA repository interfaces.
+[30m2024-06-19 22:07:26[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat initialized with port 4545 (http)
+[30m2024-06-19 22:07:26[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.a.coyote.http11.Http11NioProtocol[0;39m - Initializing ProtocolHandler ["http-nio-4545"]
+[30m2024-06-19 22:07:26[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.a.catalina.core.StandardService[0;39m - Starting service [Tomcat]
+[30m2024-06-19 22:07:26[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.a.catalina.core.StandardEngine[0;39m - Starting Servlet engine: [Apache Tomcat/10.1.24]
+[30m2024-06-19 22:07:26[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.a.c.c.C.[Tomcat].[localhost].[/][0;39m - Initializing Spring embedded WebApplicationContext
+[30m2024-06-19 22:07:26[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m - Root WebApplicationContext: initialization completed in 2299 ms
+[30m2024-06-19 22:07:26[0;39m [39mDEBUG[0;39m[restartedMain] [1;33mo.s.w.f.ServerHttpObservationFilter[0;39m - Filter 'webMvcObservationFilter' configured for use
+[30m2024-06-19 22:07:26[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m - No LoadTimeWeaver setup: ignoring JPA class transformer
+[30m2024-06-19 22:07:26[0;39m [34mINFO [0;39m[restartedMain] [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-27 - Starting...
+[30m2024-06-19 22:07:27[0;39m [34mINFO [0;39m[restartedMain] [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-27 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5ab28c8d
+[30m2024-06-19 22:07:27[0;39m [34mINFO [0;39m[restartedMain] [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-27 - Start completed.
+[30m2024-06-19 22:07:29[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[30m2024-06-19 22:07:30[0;39m [31mWARN [0;39m[restartedMain] [1;33mo.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[0;39m - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[30m2024-06-19 22:07:31[0;39m [31mWARN [0;39m[restartedMain] [1;33mo.s.b.a.s.s.UserDetailsServiceAutoConfiguration[0;39m - 
+
+Using generated security password: f0386805-fb31-4217-89ce-11f56270572e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+[30m2024-06-19 22:07:31[0;39m [39mDEBUG[0;39m[restartedMain] [1;33mo.s.w.s.m.m.a.RequestMappingHandlerMapping[0;39m - 31 mappings in 'requestMappingHandlerMapping'
+[30m2024-06-19 22:07:31[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.s.b.a.e.web.EndpointLinksResolver[0;39m - Exposing 1 endpoint(s) beneath base path '/actuator'
+[30m2024-06-19 22:07:31[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.s.s.web.DefaultSecurityFilterChain[0;39m - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@a1579bd, org.springframework.security.web.session.ForceEagerSessionCreationFilter@3f29abfa, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@fd22077, org.springframework.security.web.context.SecurityContextHolderFilter@416b4a57, org.springframework.security.web.header.HeaderWriterFilter@63a89fc0, org.springframework.web.filter.CorsFilter@12d200dd, org.springframework.security.web.authentication.logout.LogoutFilter@56cc6407, com.Config.JwtAuthFilter@332b5bab, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2148a45a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@178cac9d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@412f404f, org.springframework.security.web.session.SessionManagementFilter@6b0f6102, org.springframework.security.web.access.ExceptionTranslationFilter@49ab6a74, org.springframework.security.web.access.intercept.AuthorizationFilter@6c1b324f]
+[30m2024-06-19 22:07:31[0;39m [39mDEBUG[0;39m[restartedMain] [1;33mo.s.w.s.m.m.a.RequestMappingHandlerAdapter[0;39m - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[30m2024-06-19 22:07:31[0;39m [39mDEBUG[0;39m[restartedMain] [1;33mo.s.w.s.m.m.a.ExceptionHandlerExceptionResolver[0;39m - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+[30m2024-06-19 22:07:31[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.s.b.d.a.OptionalLiveReloadServer[0;39m - LiveReload server is running on port 35729
+[30m2024-06-19 22:07:31[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.a.coyote.http11.Http11NioProtocol[0;39m - Starting ProtocolHandler ["http-nio-4545"]
+[30m2024-06-19 22:07:31[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat started on port 4545 (http) with context path ''
+[30m2024-06-19 22:07:31[0;39m [34mINFO [0;39m[restartedMain] [1;33mcom.DemoApplication[0;39m - Started DemoApplication in 7.465 seconds (process running for 15885.456)
+[30m2024-06-19 22:07:31[0;39m [34mINFO [0;39m[restartedMain] [1;33mo.s.b.d.a.ConditionEvaluationDeltaLoggingListener[0;39m - Condition evaluation unchanged

@@ -7,10 +7,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface RatingRepository extends JpaRepository<Rating,Long> {
+public interface RatingRepository extends JpaRepository<Rating, Long> {
 
     @Query("SELECT r From Rating r Where r.product.id=:productId")
-    List<Rating> getAllProductsRating(@Param("productId") Long productId);
+    Optional<List<Rating>> getAllProductsRating(@Param("productId") Long productId);
 }
