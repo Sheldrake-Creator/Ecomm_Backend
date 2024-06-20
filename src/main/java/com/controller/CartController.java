@@ -40,8 +40,11 @@ public class CartController {
             throws CartException, UserException {
         UserDTO user;
         try {
+            logger.debug("TOKEN: {} " + jwt);
             user = userService.findUserProfileByJwt(jwt);
+            logger.debug("USER: {} ", user);
             CartDTO cartDto = cartService.getUserCart(user);
+            logger.debug("CART: {} ", cartDto);
 
             System.out.println("New Cart Created: " + cartDto);
             System.out.println("User Found: " + user);

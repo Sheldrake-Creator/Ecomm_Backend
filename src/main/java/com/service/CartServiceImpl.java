@@ -1,7 +1,10 @@
 package com.service;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dto.CartDTO;
@@ -10,6 +13,7 @@ import com.dto.ProductDTO;
 import com.dto.UserDTO;
 import com.exception.CartException;
 import com.exception.ProductException;
+import com.exception.UserException;
 import com.mapper.CartMapper;
 import com.model.Cart;
 import com.model.CartItem;
@@ -31,7 +35,7 @@ public class CartServiceImpl implements CartService {
     private final ProductService productService;
     private final UserRepository userRepository;
     private final CartMapper cartMapper;
-    private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
 
     @Override
     public CartDTO createCart(UserDTO userDto) throws CartException {
@@ -83,31 +87,57 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartDTO findUserCart(Long userId) {
+    public CartDTO findUserCart(Long userId) throws CartException {
+        try {
+            logger.debug("Finding cart for user with ID: {}", userId);
+            Optional<Cart> optionalCart = cartRepository.findByUserId(userId);
 
-        Cart cart = cartRepository.findByUserId(userId);
-        int totalprice = 0;
-        int totalDiscountedPrice = 0;
-        int totalItems = 0;
+            // Handle case when cart is not found
+            if (!optionalCart.isPresent()) {
 
-        for (CartItem cartItem : cart.getCartItems()) {
-            totalprice += (cartItem.getPrice() * cartItem.getQuantity());
-            totalDiscountedPrice += (cartItem.getDiscountedPrice() * cartItem.getQuantity());
-            totalItems += (cartItem.getQuantity());
+            }
+
+            Cart cart = optionalCart.get();
+            int totalprice = 0;
+            int totalDiscountedPrice = 0;
+            int totalItems = 0;
+
+            for (CartItem cartItem : cart.getCartItems()) {
+                totalprice += (cartItem.getPrice() * cartItem.getQuantity());
+                totalDiscountedPrice += (cartItem.getDiscountedPrice() * cartItem.getQuantity());
+                totalItems += cartItem.getQuantity();
+            }
+
+            cart.setTotalDiscountedPrice(totalDiscountedPrice);
+            cart.setTotalItems(totalItems);
+            cart.setTotalPrice(totalprice);
+            cartRepository.save(cart);
+
+            logger.debug("Cart details: {}", cart);
+            return cartMapper.toCartDTO(cart);
+
+        } catch (DataAccessException e) {
+            logger.error("Data access error while finding cart for user with ID: {}", userId, e);
+            throw new CartException("An unexpected error occurred while retrieving the cart for user with ID: ", e);
+        } catch (Exception e) {
+            logger.error("Unexpected error occurred while finding cart for user with ID: {}", userId, e);
 
         }
-        cart.setTotalDiscountedPrice(totalDiscountedPrice);
-        cart.setTotalItems(totalItems);
-        cart.setTotalPrice(totalprice);
-        cartRepository.save(cart);
-
-        return cartMapper.toCartDTO(cart);
-
     }
 
     @Override
     public CartDTO getUserCart(UserDTO user) throws CartException {
-        Cart cart = this.cartRepository.findByUserId(user.getUserId());
-        return cartMapper.toCartDTO(cart);
+        try {
+            logger.debug("Fetching cart for user: {}", user);
+            Optional<Cart> optionalCart = cartRepository.findByUserId(user.getUserId());
+            if (optionalCart == null) {
+
+            }
+            Cart cart = optionalCart.get();
+            return cartMapper.toCartDTO(cart);
+        } catch (DAOException e) {
+            logger.error("Unexpected error occurred while getting user cart: ", e);
+            throw new DAOException("Unexpected error occurred while getting user cart", e);
+        }
     }
 }
