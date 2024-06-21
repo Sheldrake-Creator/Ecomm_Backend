@@ -63,7 +63,7 @@ public class ReviewController {
     }
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<HttpResponse> getProductsReview(@PathVariable Long productId)
+    public ResponseEntity<HttpResponse> getProductReviews(@PathVariable Long productId)
             throws ProductException, UserException {
         try {
             List<ReviewDTO> reviews = reviewService.getAllReviews(productId);

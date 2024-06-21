@@ -131,10 +131,13 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartDTO getUserCart(UserDTO user) throws CartException {
         try {
+
             logger.debug("Fetching cart for user: {}", user);
             Optional<Cart> optionalCart = cartRepository.findByUserId(user.getUserId());
-            if (optionalCart == null) {
-
+            if (!optionalCart.isPresent()) {
+                logger.debug("User has no cart. Creating Cart instead");
+                CartDTO cart = this.createCart(user);
+                return cart;
             }
             Cart cart = optionalCart.get();
             return cartMapper.toCartDTO(cart);

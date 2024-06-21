@@ -96,6 +96,7 @@ public class CartItemController {
             @RequestBody CartItemDTO cartItem,
             @PathVariable Long cartItemId,
             @RequestHeader("Authorization") String jwt) throws UserException, CartItemException {
+        // TODO: Might need to add a wrapper class to format data differently
         UserDTO user = userService.findUserProfileByJwt(jwt);
         CartItemDTO updatedCartItem = cartItemService.updateCartItem(user.getUserId(), cartItemId, cartItem);
         return new ResponseEntity<>(updatedCartItem, HttpStatus.OK);

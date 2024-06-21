@@ -34,7 +34,7 @@ public class CartController {
     private final UserService userService;
     Logger logger = LoggerFactory.getLogger(CartController.class);
 
-    @PostMapping(value = "/getCart")
+    @GetMapping(value = "/getCart")
     @Operation(description = "find cart by user id")
     public ResponseEntity<HttpResponse> getUserCart(@RequestHeader("Authorization") String jwt)
             throws CartException, UserException {
