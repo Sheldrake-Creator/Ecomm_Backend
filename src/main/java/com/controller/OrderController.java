@@ -59,7 +59,7 @@ public class OrderController {
         try {
             UserDTO user = userService.findUserProfileByJwt(jwt);
             List<OrderDTO> orders = orderService.usersOrderHistory(user.getUserId());
-            logger.debug("User order history retrieved: {}", orders);
+            logger.debug("User order history retrieved: [] {}", orders);
             return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                     .data(Map.of("orders", orders)).message("User order history retrieved").status(HttpStatus.OK)
                     .statusCode(HttpStatus.OK.value()).build());

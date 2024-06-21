@@ -3,7 +3,6 @@ package com.controller;
 import com.dto.UserDTO;
 import com.exception.UserException;
 import com.model.User;
-import com.repository.UserRepository;
 import com.response.HttpResponse;
 import com.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +34,7 @@ public class UserController {
 
             logger.debug("UserName: {}", userDTO.getUserName());
 
-            User profile = userService.findUserById(userDTO.getUserId());
+            UserDTO profile = userService.findUserById(userDTO.getUserId());
 
             if (profile == null) {
                 throw new UserException("User UserId not found");

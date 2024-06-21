@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dto.CartDTO;
 import com.dto.CartItemDTO;
 import com.dto.ProductDTO;
+import com.dto.UserDTO;
 import com.exception.CartItemException;
 import com.exception.UserException;
 import com.mapper.CartItemMapper;
@@ -17,7 +18,6 @@ import com.mapper.CartMapper;
 import com.mapper.ProductMapper;
 import com.model.Cart;
 import com.model.CartItem;
-import com.model.User;
 import com.repository.CartItemRepository;
 import com.repository.CartRepository;
 
@@ -55,7 +55,7 @@ public class CartItemServiceImpl implements CartItemService {
             throws CartItemException, UserException {
 
         CartItemDTO item = findCartItemById(cartId);
-        User user = userService.findUserById(item.getUserId());
+        UserDTO user = userService.findUserById(item.getUserId());
         if (user.getUserId().equals(userId)) {
             item.setQuantity(cartItemDto.getQuantity());
             item.setPrice(item.getQuantity() * item.getPrice());
@@ -91,8 +91,8 @@ public class CartItemServiceImpl implements CartItemService {
     public void removeCartItem(Long userId, Long cartItemId) throws CartItemException, UserException {
 
         CartItemDTO cartItem = findCartItemById(cartItemId);
-        User user = userService.findUserById(cartItem.getUserId());
-        User reqUser = userService.findUserById(userId);
+        UserDTO user = userService.findUserById(cartItem.getUserId());
+        UserDTO reqUser = userService.findUserById(userId);
 
         if (user.getUserId().equals(reqUser.getUserId())) {
             cartItemRepository.deleteById(cartItemId);

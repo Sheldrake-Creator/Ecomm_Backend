@@ -16,6 +16,7 @@ import com.exception.CartItemException;
 import com.exception.ProductException;
 import com.exception.RatingException;
 import com.mapper.RatingMapper;
+import com.model.Rating;
 import com.repository.RatingRepository;
 import com.request.RatingRequest;
 
@@ -33,13 +34,27 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public RatingDTO createRating(RatingRequest req, UserDTO user) throws ProductException {
+        logger.debug("req: {}", req);
+        logger.debug("userDTO in Request: {}", user);
+
         ProductDTO product = productService.findProductById(req.getProductId());
+        logger.debug("Product Id: {}", product.getProductId());
 
         RatingDTO rating = new RatingDTO();
         rating.setRating(req.getRating());
         rating.setProduct(product);
         rating.setCreatedAt(LocalDateTime.now());
         rating.setUser(user);
+        Rating ratingEntity = ratingMapper.toRating(rating);
+        System.out.println(" ");
+        logger.debug("User: {}", user);
+        logger.debug("UserID: {}", user.getUserId());
+
+        
+        System.out.println(" ");
+        logger.debug("Product: {}", ratingEntity.getProduct());
+        logger.debug("ProductId: {}", ratingEntity.getProduct().getProductId());
+
         this.ratingRepository.save(ratingMapper.toRating(rating));
 
         return rating;

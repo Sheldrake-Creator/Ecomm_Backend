@@ -34,13 +34,13 @@ public class UserServiceImpl implements UserService {
     private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
-    public User findUserById(Long userId) throws UserException {
+    public UserDTO findUserById(Long userId) throws UserException {
         logger.debug("User ID : {}", userId);
-        System.out.println("userId =" + userId);
+
         Optional<User> user = userRepository.findUserByUserId(userId);
 
         if (user.isPresent()) {
-            return user.get();
+            return userMapper.toUserDto(user.get());
         }
         throw new UserException("user not found with userId - " + userId);
     }

@@ -1,6 +1,5 @@
 package com.service;
 
-
 import com.dto.CredentialsDTO;
 import com.dto.SignUpDTO;
 import com.exception.AuthException;
@@ -8,15 +7,13 @@ import com.exception.UserException;
 import com.model.User;
 import com.dto.UserDTO;
 
-
 import org.springframework.stereotype.Service;
 
 //import org.springframework.security.core.userdetails.UserDetails;
 @Service
 public interface UserService {
 
-
-    User findUserById(Long userId) throws UserException;
+    UserDTO findUserById(Long userId) throws UserException;
 
     UserDTO findUserProfileByJwt(String jwt) throws UserException;
 

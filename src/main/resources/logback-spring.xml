@@ -18,26 +18,59 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%black(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level)[%thread] %boldYellow(%logger{36}) - %msg%n</pattern>
+            <pattern>%black(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level)[%thread] %boldYellow(%logger{36}) - %msg%n%throwable</pattern>
         </encoder>
     </appender>
 
     <!-- Loggers configuration -->
-    <logger name="com.controller" level="DEBUG" additivity="false">
-        <appender-ref ref="Console" />
-        <appender-ref ref="FileLogger" />
-    </logger>
+    <springProfile name="default">
+        <!-- Loggers configuration for default profile -->
+        <logger name="com.controller" level="INFO" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="FileLogger" />
+        </logger>
 
-    <logger name="com.service" level="DEBUG" additivity="false">
-        <appender-ref ref="Console" />
-        <appender-ref ref="FileLogger" />
-    </logger>
+        <logger name="com.service" level="INFO" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="FileLogger" />
+        </logger>
 
-    <logger name="com.repository" level="DEBUG" additivity="false">
-        <appender-ref ref="Console" />
-        <appender-ref ref="FileLogger" />
-    </logger>
+        <logger name="com.repository" level="INFO" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="FileLogger" />
+        </logger>
+    </springProfile>
 
+    <!-- Debug logging configuration -->
+    <springProfile name="debug">
+        <!-- Loggers configuration for debug profile -->
+        <logger name="com.controller" level="DEBUG" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="FileLogger" />
+        </logger>
+
+        <logger name="com.service" level="DEBUG" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="FileLogger" />
+        </logger>
+
+        <logger name="com.repository" level="DEBUG" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="FileLogger" />
+        </logger>
+
+        <logger name="com.Config" level="DEBUG" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="FileLogger" />
+        </logger>
+
+
+        <logger name="com.mapper" level="DEBUG" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="FileLogger" />
+        </logger>
+
+    </springProfile>
     <!-- Root logger -->
     <root level="INFO">
         <appender-ref ref="Console" />

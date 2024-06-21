@@ -63,6 +63,7 @@ public class OrderServiceImpl implements OrderService {
             OrderItem createdOrderItem = orderItemRepository.save(orderItemMapper.toOrderItem(orderItem));
             orderItems.add(createdOrderItem);
         }
+        LocalDateTime now = LocalDateTime.now();
 
         Order createdOrder = new Order();
         createdOrder.setUser(user);
@@ -74,7 +75,8 @@ public class OrderServiceImpl implements OrderService {
         createdOrder.setOrderDate(LocalDateTime.now());
         createdOrder.setOrderStatus("PENDING");
         createdOrder.getPaymentDetails().setStatus("PENDING");
-        createdOrder.setCreatedAt(LocalDateTime.now());
+        createdOrder.setCreatedAt(now);
+        createdOrder.setDeliveryDate(now.plusDays(5));
 
         Order savedOrder = orderRepository.save(createdOrder);
 
@@ -82,7 +84,6 @@ public class OrderServiceImpl implements OrderService {
             item.setOrder(savedOrder);
             orderItemRepository.save(item);
         }
-
         return orderMapper.toOrderDTO(savedOrder);
     }
 
@@ -141,6 +142,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDTO> usersOrderHistory(Long userId) throws OrderException {
+        logger.debug("UserID in UserOrderHistory() : {}", userId);
         Optional<List<Order>> optionalOrder = orderRepository.getUsersOrders(userId);
         List<OrderDTO> orderDtos = new ArrayList<>();
         if (!optionalOrder.isPresent()) {
@@ -148,6 +150,7 @@ public class OrderServiceImpl implements OrderService {
         }
         List<Order> orderEntity = optionalOrder.get();
         for (Order order : orderEntity) {
+            logger.debug("Orders: {}",order);
             orderDtos.add(orderMapper.toOrderDTO(order));
         }
         return orderDtos;

@@ -8,10 +8,12 @@ import org.springframework.context.annotation.Configuration;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.web.SecurityFilterChain;
 //import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 
 @Configuration
-@ComponentScan(basePackages = {"com.service", "com.mapper", "com.dto", "com.model", "com.Config", "com.controller", "com.exception", "com.request","com.response" })
+@EnableAspectJAutoProxy
+@ComponentScan(basePackages = {"com.service", "com.mapper", "com.dto", "com.model", "com.Config", "com.controller", "com.exception", "com.request","com.response","com.repository"})
 public class AppConfig {
 
 //    @Bean
