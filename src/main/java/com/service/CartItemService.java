@@ -1,5 +1,7 @@
 package com.service;
 
+import java.util.Optional;
+
 import com.dto.CartDTO;
 import com.dto.CartItemDTO;
 import com.dto.ProductDTO;
@@ -14,9 +16,10 @@ public interface CartItemService {
     CartItemDTO updateCartItem(Long userId, Long cartId, CartItemDTO cartItemDto)
             throws CartItemException, UserException;
 
-    CartItemDTO doesCartItemExist(CartDTO cart, ProductDTO product, String size, Long userId) throws CartItemException;
+    Optional<CartItem> doesCartItemExist(CartDTO cart, ProductDTO product, String size, Long userId) throws CartItemException;
 
     void removeCartItem(Long userId, Long cartItemId) throws CartItemException, UserException;
 
     CartItemDTO findCartItemById(Long cartItemId) throws CartItemException;
+
 }

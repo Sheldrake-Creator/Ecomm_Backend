@@ -4,6 +4,8 @@ import com.dto.UserDTO;
 import com.exception.UserException;
 import com.model.User;
 import com.response.HttpResponse;
+import com.service.CartItemService;
+import com.service.TestService;
 import com.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UserController {
 
     private final UserService userService;
+    private final TestService testService;
+
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/id")
@@ -60,8 +64,14 @@ public class UserController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity<HttpResponse> hi() {
+    public ResponseEntity<HttpResponse> hi(@RequestHeader("Authorization") String jwt) {
         try {
+
+
+            this.testService.testEverything(jwt);
+
+
+
             return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                     .data(Map.of("message", "This is working!")).message("Test endpoint").status(HttpStatus.OK)
                     .statusCode(HttpStatus.OK.value()).build());

@@ -1,6 +1,7 @@
 package com.service;
 
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -19,7 +20,6 @@ import com.mapper.ProductMapper;
 import com.model.Cart;
 import com.model.CartItem;
 import com.repository.CartItemRepository;
-import com.repository.CartRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,24 +31,23 @@ public class CartItemServiceImpl implements CartItemService {
     private final CartItemRepository cartItemRepository;
     private final UserService userService;
     private final CartItemMapper cartItemMapper;
-    private final CartRepository cartRepository;
     private final CartMapper cartMapper;
     private final ProductMapper productMapper;
     private final Logger logger = LoggerFactory.getLogger(CartItemServiceImpl.class);
 
-    public CartItemDTO addCartItem(CartItem cartItem, long userId) throws CartItemException {
-        Cart cartEntity = cartRepository.findByUserId(userId)
-                .orElseThrow(() -> {
-                    logger.error("No Cart Found with UserId: {}", userId);
-                    return new CartItemException("No Cart Found with UserId: " + userId);
-                });
+    // public CartItemDTO addCartItem(CartItem cartItem, long userId) throws CartItemException {
+    //     Cart cartEntity = cartRepository.findByUserId(userId)
+    //             .orElseThrow(() -> {
+    //                 logger.error("No Cart Found with UserId: {}", userId);
+    //                 return new CartItemException("No Cart Found with UserId: " + userId);
+    //             });
 
-        updateCartTotals(cartEntity, cartItem);
-        cartEntity.getCartItems().add(cartItem);
-        cartRepository.save(cartEntity);
+    //     updateCartTotals(cartEntity, cartItem);
+    //     cartEntity.getCartItems().add(cartItem);
+    //     cartRepository.save(cartEntity);
 
-        return cartItemMapper.toCartItemDTO(cartItem);
-    }
+    //     return cartItemMapper.toCartItemDTO(cartItem);
+    // }
 
     @Override
     public CartItemDTO updateCartItem(Long userId, Long cartId, CartItemDTO cartItemDto)
@@ -67,20 +66,16 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CartItemDTO doesCartItemExist(CartDTO cart, ProductDTO product, String size, Long userId)
+    public Optional<CartItem> doesCartItemExist(CartDTO cart, ProductDTO product, String size, Long userId)
             throws CartItemException {
         try {
-            CartItem cartItem = this.cartItemRepository.doesCartItemExist(
+            Optional<CartItem> cartItem = this.cartItemRepository.doesCartItemExist(
                     cartMapper.toCart(cart),
                     productMapper.toProduct(product),
                     size,
-                    userId).orElseThrow(() -> {
-                        logger.error("No CartItem Found for UserId: {}, Product: {}, Size: {}", userId,
-                                product.getProductId(), size);
-                        return new CartItemException("No CartItem Found for UserId: " + userId + ", Product: "
-                                + product.getProductId() + ", Size: " + size);
-                    });
-            return cartItemMapper.toCartItemDTO(cartItem);
+                    userId);
+                    logger.debug("CARTITEMSERVICE: {}", cartItem);
+                    return cartItem;                    
         } catch (DataAccessException e) {
             logger.error("Data access error while finding cart for user with ID: {}", userId, e);
             throw new CartItemException("An unexpected error occurred while retrieving the cart for user with ID: ", e);
@@ -117,5 +112,11 @@ public class CartItemServiceImpl implements CartItemService {
         cart.setTotalPrice(cart.getTotalPrice() + cartItem.getProduct().getPrice() * cartItem.getQuantity());
         cart.setTotalDiscountedPrice(
                 cart.getTotalDiscountedPrice() + cartItem.getProduct().getDiscountedPrice() * cartItem.getQuantity());
+    }
+
+    @Override
+    public CartItemDTO addCartItem(CartItem cartItem, long userId) throws CartItemException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addCartItem'");
     }
 }

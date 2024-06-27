@@ -18,5 +18,5 @@ public class CartItemDTO {
     private Integer discountedPrice;
     private Long userId;
     private ProductDTO product;
-    private CartDTO cart;
+    private Long cartId;
 }

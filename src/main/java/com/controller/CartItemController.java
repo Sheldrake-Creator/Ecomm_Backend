@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +20,10 @@ import com.exception.CartItemException;
 import com.exception.ProductException;
 import com.exception.UserException;
 import com.request.AddItemRequest;
-import com.response.APIResponse;
 import com.response.HttpResponse;
 import com.service.CartItemService;
 import com.service.CartService;
 import com.service.UserService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 
@@ -45,13 +44,14 @@ public class CartItemController {
         try {
             UserDTO user = userService.findUserProfileByJwt(jwt);
             Long userId = user.getUserId();
-            String message = this.cartService.addItemToCart(userId, req.getQuantity(), req.getSize(),
+            String data = this.cartService.addItemToCart(userId, req.getQuantity(), req.getSize(),
                     req.getProductId());
 
             return ResponseEntity.ok().body(
                     HttpResponse.builder()
                             .timeStamp(LocalDateTime.now().toString())
                             .message("Item Successfully Added to cart")
+                            .data(Map.of("cartItem",data))
                             .status(HttpStatus.OK)
                             .statusCode(200)
                             .build());
@@ -72,33 +72,42 @@ public class CartItemController {
                             .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
                             .build());
         }
-        // @RequestHeader("Authorization")String jwt
     }
 
     @DeleteMapping("/{cartItemId}")
     @Operation(description = "Remove Cart Item From Cart")
-    public ResponseEntity<APIResponse> deleteCartItem(@PathVariable Long cartItemId,
+    public ResponseEntity<HttpResponse> deleteCartItem(@PathVariable Long cartItemId,
             @RequestHeader("Authorization") String jwt) throws UserException, CartItemException {
 
         UserDTO user = userService.findUserProfileByJwt(jwt);
 
         cartItemService.removeCartItem(user.getUserId(), cartItemId);
-
-        APIResponse res = new APIResponse();
-        res.setMessage("delete item from cart");
-        res.setStatus(true);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return ResponseEntity.ok().body(
+            HttpResponse.builder()
+                .timeStamp(LocalDateTime.now().toString())
+                .data(Map.of("cartItem","Item Removed from cart"))
+                .message("CartItem Removed from Cart")
+                .status(HttpStatus.OK)
+                .statusCode(200)
+                .build());
     }
 
     @PutMapping("/{cartItemId}")
     @Operation(description = "Update Item To Cart")
-    public ResponseEntity<CartItemDTO> updateCartItem(
+    public ResponseEntity<HttpResponse> updateCartItem(
             @RequestBody CartItemDTO cartItem,
             @PathVariable Long cartItemId,
             @RequestHeader("Authorization") String jwt) throws UserException, CartItemException {
-        // TODO: Might need to add a wrapper class to format data differently
+
         UserDTO user = userService.findUserProfileByJwt(jwt);
         CartItemDTO updatedCartItem = cartItemService.updateCartItem(user.getUserId(), cartItemId, cartItem);
-        return new ResponseEntity<>(updatedCartItem, HttpStatus.OK);
+        return ResponseEntity.ok().body(
+            HttpResponse.builder()
+                .timeStamp(jwt)
+                .message(jwt)
+                .status(null)
+                .statusCode(200)
+                .data(Map.of("cartItem",updatedCartItem))
+                .build());
     }
 }

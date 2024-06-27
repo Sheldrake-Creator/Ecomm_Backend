@@ -26,7 +26,7 @@ public class SecurityConfig {
                                 .sessionManagement(customizer -> customizer
                                                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                                 .authorizeHttpRequests((requests) -> requests
-                                                .requestMatchers(HttpMethod.GET, "api/orders/{orderId}",
+                                                .requestMatchers(HttpMethod.GET, "/api/users/test","/api/orders/{orderId}",
                                                                 "/api/reviews/product/{productId}",
                                                                 "/api/ratings/product/{productId}",
                                                                 "/api/ratings/product/{productId}", "/api/users/id",

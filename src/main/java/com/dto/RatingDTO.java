@@ -10,13 +10,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class RatingDTO {
-
     private Long ratingId;
-    private UserDTO user;
-    private ProductDTO product;
     private double rating;
-    private LocalDateTime createdAt;
-    
+    private ProductDTO product;
+    private UserDTO user;
+    private LocalDateTime createdAt;  
 }

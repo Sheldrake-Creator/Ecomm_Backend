@@ -19,4 +19,5 @@ public class CartDTO {
     private int totalItems;
     private double totalPrice;
     private int totalDiscountedPrice;
+    private long userId; 
 }

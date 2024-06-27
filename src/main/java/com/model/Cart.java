@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.HashSet;
+
+import java.util.Objects;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -20,11 +23,12 @@ public class Cart {
 
     @OneToOne // * Recent Addition. 
     @JoinColumn(name ="user_id", nullable = false)
+    @JsonManagedReference
     private User user;
 
     @OneToMany(mappedBy ="cart", cascade = CascadeType.ALL, orphanRemoval = true)
     @Column(name ="cart_items")
-    private Set<CartItem> cartItems = new HashSet<>();
+    private Set<CartItem> cartItems;
 
     @Column(name ="total_price")
     private double totalPrice;
@@ -33,5 +37,18 @@ public class Cart {
     private int totalItems;
 
     private int totalDiscountedPrice;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cartId, totalPrice, totalItems, totalDiscountedPrice);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cart cart = (Cart) o;
+        return cartId.equals(cart.cartId);
+    }
 
 }

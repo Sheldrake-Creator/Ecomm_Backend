@@ -14,7 +14,6 @@ import com.dto.UserDTO;
 import com.exception.CartException;
 import com.exception.CartItemException;
 import com.exception.ProductException;
-import com.exception.UserException;
 import com.mapper.CartMapper;
 import com.model.Cart;
 import com.model.CartItem;
@@ -68,28 +67,44 @@ public class CartServiceImpl implements CartService {
     public String addItemToCart(Long userId, int quantity, String size, long productId)
             throws ProductException, CartException, CartItemException {
 
-        CartDTO cart = this.findUserCart(userId);
-        ProductDTO product = productService.findProductById(productId);
-        CartItemDTO isPresent;
+        try {
+            CartDTO cart = this.findUserCart(userId);
+            logger.debug("CARTSERVICE cartDTO: {}", cart);
+            ProductDTO product = productService.findProductById(productId);
+            logger.debug("CARTSERVICE ProductDTO: {}", product);
+            Optional<CartItem> cartItemEntity = cartItemService.doesCartItemExist(cart, product, size, userId);
+            logger.debug("CARTSERVICE CartItemDTO: {}", cartItemEntity);
+            
+            if(!cartItemEntity.isPresent()){
+                CartItemDTO cartItem = new CartItemDTO();
+                cartItem.setProduct(product);
+                cartItem.setCartId(cart.getCartId());
+                cartItem.setQuantity(quantity);
+                cartItem.setUserId(userId);
+                int price = quantity * product.getPrice();
+                int discountedPrice = quantity * product.getDiscountedPrice();
+                cartItem.setPrice(price);
+                cartItem.setDiscountedPrice(discountedPrice);
+                cartItem.setSize(size);
+                logger.debug(" CARTSERVICE cartITEM DTO: {}", cartItem);
+                cart.getCartItems().add(cartItem);
+                this.cartRepository.save(cartMapper.toCart(cart));
 
-        isPresent = cartItemService.doesCartItemExist(cart, product, size, userId);
+            }else{
+                return "Item already exists in cart";
+            }
 
-        if (isPresent == null) {
-            CartItemDTO cartItem = new CartItemDTO();
-            cartItem.setProduct(product);
-            cartItem.setCart(cart);
-            cartItem.setQuantity(quantity);
-            cartItem.setUserId(userId);
-            int price = quantity * product.getPrice();
-            int discountedPrice = quantity * product.getDiscountedPrice();
-            cartItem.setPrice(price);
-            cartItem.setDiscountedPrice(discountedPrice);
-            cartItem.setSize(size);
-            cart.getCartItems().add(cartItem);
-            this.cartRepository.save(cartMapper.toCart(cart));
+            return "Item Added To Cart";
+        } catch (CartException e) {
+            throw new CartException("Error creating Cart",e);
+
+        } catch (ProductException e) {
+            throw new CartException("Error find Product with Product Id",e);
+
+        } catch (CartItemException e) {
+            throw new CartException("Error finding CartItem that matches ProductId",e);
+
         }
-
-        return "Item Added To Cart";
     }
 
     @Override
@@ -102,24 +117,30 @@ public class CartServiceImpl implements CartService {
             if (!optionalCart.isPresent()) {
                 throw new CartException("UserId not found ");
             }
-
+            
+            logger.debug("Mapping Explosion!:");
             Cart cart = optionalCart.get();
+
             int totalprice = 0;
             int totalDiscountedPrice = 0;
             int totalItems = 0;
-
+            logger.debug("Right Before The loop:");
             for (CartItem cartItem : cart.getCartItems()) {
                 totalprice += (cartItem.getPrice() * cartItem.getQuantity());
                 totalDiscountedPrice += (cartItem.getDiscountedPrice() * cartItem.getQuantity());
                 totalItems += cartItem.getQuantity();
+                cartItem.setCart(cart);
             }
+            logger.debug("Right After The loop:");
 
             cart.setTotalDiscountedPrice(totalDiscountedPrice);
             cart.setTotalItems(totalItems);
             cart.setTotalPrice(totalprice);
+         
+            logger.debug("userID inside of Cart Entity: {}");
             cartRepository.save(cart);
 
-            logger.debug("Cart details: {}", cart);
+
             return cartMapper.toCartDTO(cart);
 
         } catch (DataAccessException e) {

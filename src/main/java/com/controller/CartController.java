@@ -4,9 +4,6 @@ import com.dto.CartDTO;
 import com.dto.UserDTO;
 import com.exception.CartException;
 import com.exception.UserException;
-import com.request.CartRequest;
-import com.response.CartResponse;
-import com.response.CreateCartResponse;
 import com.response.HttpResponse;
 import com.service.CartService;
 import com.service.UserService;
@@ -15,8 +12,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.logging.LogManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -76,12 +71,12 @@ public class CartController {
         }
     }
 
-    @PostMapping(value = "createCart")
-    public ResponseEntity<CartResponse> createCart(@RequestBody CartRequest cartRequest) throws CartException {
-        UserDTO userDTO = cartRequest.getUser();
-        System.out.println("CreateCartAction UserDTO " + userDTO);
-        System.out.println("CreateCartAction UserDTO " + userDTO.getUserId());
-        CartDTO cart = cartService.createCart(userDTO);
-        return ResponseEntity.ok(new CreateCartResponse(cart));
-    }
+    // @PostMapping(value = "createCart")
+    // public ResponseEntity<CartResponse> createCart(@RequestBody CartRequest cartRequest) throws CartException {
+    //     UserDTO userDTO = cartRequest.getUser();
+    //     System.out.println("CreateCartAction UserDTO " + userDTO);
+    //     System.out.println("CreateCartAction UserDTO " + userDTO.getUserId());
+    //     CartDTO cart = cartService.createCart(userDTO);
+    //     return ResponseEntity.ok(new CreateCartResponse(cart));
+    // }
 }

@@ -39,7 +39,7 @@ public class Order {
     private User user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private List<OrderItem> orderItems;
 
     private LocalDateTime orderDate;
     private LocalDateTime deliveryDate;
@@ -49,7 +49,7 @@ public class Order {
 
     @Embedded
     @JsonIgnore
-    private PaymentDetails paymentDetails = new PaymentDetails();
+    private PaymentDetails paymentDetails;
 
     private double totalPrice;
     private Integer totalDiscountedPrice;
