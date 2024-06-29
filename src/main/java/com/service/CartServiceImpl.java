@@ -34,11 +34,11 @@ public class CartServiceImpl implements CartService {
     private final Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
 
     @Override
-    public CartDTO createCart(UserDTO userDto) throws CartException, UserException, DataAccessException {
+    public CartDTO createCart(UserDTO userDto) throws CartException, DataAccessException {
         try {
             Optional<User> optionalUser = userRepository.findUserByUserId(userDto.getUserId());
             if (!optionalUser.isPresent()) {
-                throw new UserException("User not found");
+                throw new CartException("User not found");
             }
 
             int totalPrice = 0;
@@ -60,9 +60,17 @@ public class CartServiceImpl implements CartService {
         }
     }
 
+    public CartDTO findCartByCartId(Long cartId) throws CartException {
+        Optional<Cart> optionalCart = cartRepository.findById(cartId);
+        if (!optionalCart.isPresent()) {
+            throw new CartException("Cart with ID: " + cartId + " not found");
+        }
+        CartDTO cart = cartMapper.toCartDTO(optionalCart.get());
+        return cart;
+    }
+
     @Override
     public CartDTO findUserCart(Long userId) throws CartException {
-        LogUtils.entry();
         try {
 
             logger.debug("Enter: findUserCart");
@@ -86,7 +94,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartDTO getUserCart(UserDTO user) throws CartException, UserException {
+    public CartDTO getUserCart(UserDTO user) throws CartException {
         try {
             CartDTO cart;
             logger.debug("Fetching cart for user: {}", user);

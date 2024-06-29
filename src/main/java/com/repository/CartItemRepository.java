@@ -1,5 +1,6 @@
 package com.repository;
 
+import com.exception.RepositoryException;
 import com.model.Cart;
 import com.model.CartItem;
 import com.model.Product;
@@ -14,5 +15,5 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     @Query("SELECT ci From CartItem ci Where ci.cart=:cart And ci.product=:product AND ci.size=:size")
     Optional<CartItem> doesCartItemExist(@Param("cart") Cart cart, @Param("product") Product product,
-            @Param("size") String size);
+            @Param("size") String size) throws RepositoryException;
 }

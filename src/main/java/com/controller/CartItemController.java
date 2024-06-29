@@ -25,7 +25,6 @@ import com.exception.UserException;
 import com.request.AddItemRequest;
 import com.response.HttpResponse;
 import com.service.CartItemService;
-import com.service.CartService;
 import com.service.UserService;
 import com.util.LogUtils;
 
@@ -95,8 +94,7 @@ public class CartItemController {
                         throws UserException, CartItemException {
                 try {
                         UserDTO user = userService.findUserProfileByJwt(jwt);
-                        CartItemDTO updatedCartItem = cartItemService.updateCartItem(user.getUserId(), cartItemId,
-                                        cartItem);
+                        CartItemDTO updatedCartItem = cartItemService.updateCartItem(user.getUserId(), cartItem);
                         return ResponseEntity.ok().body(HttpResponse.builder().timeStamp(jwt).message(jwt).status(null)
                                         .statusCode(200).data(Map.of("cartItem", updatedCartItem)).build());
                 } catch (CartItemException | UserException | CartException e) {

@@ -1,5 +1,6 @@
 package com.repository;
 
+import com.exception.RepositoryException;
 import com.model.Cart;
 
 import java.util.Optional;
@@ -12,5 +13,5 @@ import org.springframework.data.repository.query.Param;
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
     @Query("SELECT c From Cart c Where c.user.id=:userId")
-    Optional<Cart> findByUserId(@Param("userId") Long userId) throws DataAccessException;
+    Optional<Cart> findByUserId(@Param("userId") Long userId) throws DataAccessException, RepositoryException;
 }

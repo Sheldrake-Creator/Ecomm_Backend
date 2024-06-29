@@ -91,19 +91,12 @@ public class OrderController {
         try {
             logger.debug("OrderID: {}" + orderId);
             logger.debug("Token; {}" + jwt);
-            UserDTO user = userService.findUserProfileByJwt(jwt);
             OrderDTO order = orderService.findOrderById(orderId);
             logger.debug("Order retrieved: {}", order);
             return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                     .data(Map.of("order", order)).message("Order retrieved").status(HttpStatus.OK)
                     .statusCode(HttpStatus.OK.value()).build());
-        } catch (UserException e) {
-            logger.error("Error retrieving order: User exception", e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
-                            .message("Error retrieving order: User exception").status(HttpStatus.BAD_REQUEST)
-                            .statusCode(HttpStatus.BAD_REQUEST.value()).build());
-        } catch (OrderException e) {
+        }catch (OrderException e) {
             logger.error("Error retrieving order: Order exception", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())

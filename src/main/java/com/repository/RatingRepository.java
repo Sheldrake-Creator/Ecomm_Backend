@@ -1,5 +1,6 @@
 package com.repository;
 
+import com.exception.RepositoryException;
 import com.model.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,5 +14,5 @@ import java.util.Optional;
 public interface RatingRepository extends JpaRepository<Rating, Long> {
 
     @Query("SELECT r From Rating r Where r.product.id=:productId")
-    Optional<List<Rating>> getAllProductsRating(@Param("productId") Long productId);
+    Optional<List<Rating>> getAllProductsRating(@Param("productId") Long productId) throws RepositoryException;
 }

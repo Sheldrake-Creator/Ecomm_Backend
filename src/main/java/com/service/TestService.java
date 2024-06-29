@@ -1,10 +1,9 @@
 package com.service;
-import org.springframework.stereotype.Service;
 
+import com.exception.ServiceException;
 
 public interface TestService {
 
-    void testEverything(String jwt) throws Exception;
-
+    void testEverything(String jwt) throws ServiceException;
 
 }

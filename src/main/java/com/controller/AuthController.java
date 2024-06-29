@@ -6,7 +6,6 @@ import com.dto.UserDTO;
 import com.exception.AuthException;
 import com.response.HttpResponse;
 import com.response.UserAuthProvider;
-import com.response.UserResponse;
 import com.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -35,29 +34,20 @@ public class AuthController {
             logger.debug("userdDto", userDTO);
             userDTO.setToken(userAuth.createToken(userDTO));
             logger.debug("User logged in: {}", userDTO);
-            return ResponseEntity.ok(HttpResponse.builder()
-                    .timeStamp(LocalDateTime.now().toString())
-                    .data(Map.of("user", userDTO))
-                    .message("Login successful")
-                    .status(HttpStatus.OK)
-                    .statusCode(HttpStatus.OK.value())
-                    .build());
+            return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                    .data(Map.of("user", userDTO)).message("Login successful").status(HttpStatus.OK)
+                    .statusCode(HttpStatus.OK.value()).build());
         } catch (AuthException e) {
             logger.error("Error during login", e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(HttpResponse.builder()
-                    .timeStamp(LocalDateTime.now().toString())
-                    .message("Error during login")
-                    .status(HttpStatus.BAD_REQUEST)
-                    .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .build());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString()).message("Error during login")
+                            .status(HttpStatus.BAD_REQUEST).statusCode(HttpStatus.BAD_REQUEST.value()).build());
         } catch (Exception e) {
             logger.error("Unexpected error during login", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(HttpResponse.builder()
-                    .timeStamp(LocalDateTime.now().toString())
-                    .message("Unexpected error during login")
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .build());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                            .message("Unexpected error during login").status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build());
         }
     }
 
@@ -67,29 +57,21 @@ public class AuthController {
             UserDTO userDTO = userService.register(signUpDto);
             userDTO.setToken(userAuth.createToken(userDTO));
             logger.debug("User registered: {}", userDTO);
-            return ResponseEntity.ok(HttpResponse.builder()
-                    .timeStamp(LocalDateTime.now().toString())
-                    .data(Map.of("user", userDTO))
-                    .message("Registration successful")
-                    .status(HttpStatus.OK)
-                    .statusCode(HttpStatus.OK.value())
-                    .build());
+            return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                    .data(Map.of("user", userDTO)).message("Registration successful").status(HttpStatus.OK)
+                    .statusCode(HttpStatus.OK.value()).build());
         } catch (AuthException e) {
             logger.error("Error during registration", e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(HttpResponse.builder()
-                    .timeStamp(LocalDateTime.now().toString())
-                    .message("Error during registration")
-                    .status(HttpStatus.BAD_REQUEST)
-                    .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .build());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                            .message("Error during registration").status(HttpStatus.BAD_REQUEST)
+                            .statusCode(HttpStatus.BAD_REQUEST.value()).build());
         } catch (Exception e) {
             logger.error("Unexpected error during registration", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(HttpResponse.builder()
-                    .timeStamp(LocalDateTime.now().toString())
-                    .message("Unexpected error during registration")
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .build());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                            .message("Unexpected error during registration").status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build());
         }
     }
 }

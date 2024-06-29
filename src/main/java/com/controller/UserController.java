@@ -2,9 +2,7 @@ package com.controller;
 
 import com.dto.UserDTO;
 import com.exception.UserException;
-import com.model.User;
 import com.response.HttpResponse;
-import com.service.CartItemService;
 import com.service.TestService;
 import com.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -67,10 +65,7 @@ public class UserController {
     public ResponseEntity<HttpResponse> hi(@RequestHeader("Authorization") String jwt) {
         try {
 
-
             this.testService.testEverything(jwt);
-
-
 
             return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                     .data(Map.of("message", "This is working!")).message("Test endpoint").status(HttpStatus.OK)
