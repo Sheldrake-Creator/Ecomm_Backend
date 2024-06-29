@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class RatingDTO {
     private Long ratingId;
     private double rating;
-    private ProductDTO product;
-    private UserDTO user;
-    private LocalDateTime createdAt;  
+    private Long productId;
+    private Long userId;
+    private LocalDateTime createdAt;
 }

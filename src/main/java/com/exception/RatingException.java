@@ -1,6 +1,6 @@
 package com.exception;
 
-public class RatingException extends Exception {
+public class RatingException extends ServiceException {
 
     // Default constructor
     public RatingException() {

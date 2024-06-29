@@ -1,6 +1,6 @@
 package com.exception;
 
-public class ProductException extends Exception {
+public class ProductException extends ServiceException {
 
     // Default constructor
     public ProductException() {

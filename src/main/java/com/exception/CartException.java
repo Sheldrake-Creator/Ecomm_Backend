@@ -1,6 +1,8 @@
 package com.exception;
 
-public class CartException extends Exception {
+import com.dto.UserDTO;
+
+public class CartException extends ServiceException {
 
     // Default constructor
     public CartException() {
@@ -13,13 +15,18 @@ public class CartException extends Exception {
     }
 
     // Constructor with message and cause
-    public CartException(String message, Throwable cause) {
-        super(message, cause);
+    public CartException(String message, UserDTO user) {
+        super(message);
     }
 
     // Constructor with cause
     public CartException(Throwable cause) {
         super(cause);
+    }
+
+    // Constructor with cause
+    public CartException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }

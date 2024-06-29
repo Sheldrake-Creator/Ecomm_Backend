@@ -1,5 +1,7 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +20,7 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
+    @JsonManagedReference
     private Cart cart;
 
     @ManyToOne
@@ -27,6 +30,5 @@ public class CartItem {
     private int quantity;
     private Integer price;
     private Integer discountedPrice;
-    private Long userId;
 
 }

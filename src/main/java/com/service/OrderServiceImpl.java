@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.exception.CartException;
@@ -150,7 +149,7 @@ public class OrderServiceImpl implements OrderService {
         }
         List<Order> orderEntity = optionalOrder.get();
         for (Order order : orderEntity) {
-            logger.debug("Orders: {}",order);
+            logger.debug("Orders: {}", order);
             orderDtos.add(orderMapper.toOrderDTO(order));
         }
         return orderDtos;

@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,7 +29,7 @@ public class Product {
     @Column(name = "discounted_price")
     private int discountedPrice;
 
-    @Column(name="discount_present")
+    @Column(name = "discount_present")
     private int discountPresent;
 
     @Column(name = "num_in_Stock")
@@ -47,17 +49,19 @@ public class Product {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @OneToMany(mappedBy= "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Rating>ratings;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference // Prevent infinite recursion for ratings
+    private List<Rating> ratings;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Review>reviews;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference // Prevent infinite recursion for reviews
+    private List<Review> reviews;
 
     @Column(name = "num_ratings")
     private int numRatings;
 
     @ManyToOne()
-    @JoinColumn(name="category_id")
+    @JoinColumn(name = "category_id")
     private Category category;
 
     private LocalDateTime createdAt;

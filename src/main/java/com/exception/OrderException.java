@@ -1,6 +1,6 @@
 package com.exception;
 
-public class OrderException extends Exception {
+public class OrderException extends ServiceException {
 
     // Default constructor
     public OrderException() {

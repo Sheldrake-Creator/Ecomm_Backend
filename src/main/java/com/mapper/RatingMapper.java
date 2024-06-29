@@ -9,7 +9,11 @@ import com.model.Rating;
 @Mapper(componentModel = "spring")
 public interface RatingMapper {
 
+    @Mapping(target = "productId", source = "product.productId")
+    @Mapping(target = "userId", source = "user.userId")
     RatingDTO toRatingDTO(Rating rating);
 
-    Rating toRating(RatingDTO ratingDTO);  
+    @Mapping(target = "product.productId", source = "productId")
+    @Mapping(target = "user.userId", source = "userId")
+    Rating toRating(RatingDTO ratingDTO);
 }

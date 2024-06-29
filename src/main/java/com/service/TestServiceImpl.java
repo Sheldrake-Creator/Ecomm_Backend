@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dto.CartDTO;
 import com.dto.CartItemDTO;
+import com.dto.ProductDTO;
 import com.dto.RatingDTO;
 import com.dto.ReviewDTO;
 import com.dto.UserDTO;
@@ -24,6 +25,7 @@ import com.mapper.ProductMapper;
 import com.mapper.UserMapper;
 import com.model.Cart;
 import com.model.CartItem;
+import com.model.Product;
 import com.model.Review;
 import com.model.User;
 import com.repository.CartItemRepository;
@@ -50,7 +52,6 @@ public class TestServiceImpl implements TestService {
     private final ReviewRepository reviewsRep;
     private final ReviewRepository RatingsRep;
 
-
     // Services
     private final UserService userService;
     private final CartService cartService;
@@ -59,7 +60,6 @@ public class TestServiceImpl implements TestService {
     private final OrderService orderService;
     private final ReviewService reviewService;
     private final RatingService ratingService;
-    
 
     private final UserMapper userMapper;
     private final CartMapper cartMapper;
@@ -68,85 +68,85 @@ public class TestServiceImpl implements TestService {
     private final CartService cartServices;
     private final Logger logger = LoggerFactory.getLogger(TestServiceImpl.class);
 
-    
-    
-    public void testEverything(String jwt) throws UserException, CartException, CartItemException, ReviewException, RatingException{
-        System.out.println("CALLING User");
-        UserDTO user = this.userService.findUserProfileByJwt(jwt);
-        System.out.println("CALLING CART");
-        CartDTO cartDTO = this.cartService.findUserCart(user.getUserId());
-        System.out.println("CALLING CARTITEMS");
-        CartItemDTO cartItem = this.cartItemService.findCartItemById(6L);
+    public void testEverything(String jwt)
+            throws UserException, CartException, CartItemException, ReviewException, RatingException {
+        Optional<Product> product = this.productRepository.findById(1L);
+        logger.debug("Product: {}", product.get());
 
-        System.out.println("CALLING CART REPO ENTITY");
-        Optional<Cart> ocartEntity = this.cartRepository.findById(1L);
-        System.out.println("CALLING USER REPO ENTITY");
-        Optional<User> ouserEntity = this.userRepository.findById(5L);
-        System.out.println("CALLING CART ITEM REPO ENTITY");
-        Optional<CartItem> ocartItemEntity = this.cartItemRepository.findById(6L);
+        ProductDTO prodDTO = productMapper.toProductDTO(product.get());
+        logger.debug("ProductDTO: {}", prodDTO);
 
-        System.out.println(" ");
-        System.out.println("TESTING SERVICES & DTO CLASSES");
-        System.out.println(" ");
-        logger.debug("Token {}",jwt);
-        System.out.println(" ");
+        // System.out.println("CALLING User");
+        // UserDTO user = this.userService.findUserProfileByJwt(jwt);
+        // System.out.println("CALLING CART");
+        // CartDTO cartDTO = this.cartService.findUserCart(user.getUserId());
+        // System.out.println("CALLING CARTITEMS");
+        // CartItemDTO cartItem = this.cartItemService.findCartItemById(6L);
 
-        System.out.println("User Information");
-        logger.debug("UserDTO {}",user);
-        System.out.println(" ");
+        // System.out.println("CALLING CART REPO ENTITY");
+        // Optional<Cart> ocartEntity = this.cartRepository.findById(1L);
+        // System.out.println("CALLING USER REPO ENTITY");
+        // Optional<User> ouserEntity = this.userRepository.findById(5L);
+        // System.out.println("CALLING CART ITEM REPO ENTITY");
+        // Optional<CartItem> ocartItemEntity = this.cartItemRepository.findById(6L);
 
+        // System.out.println(" ");
+        // System.out.println("TESTING SERVICES & DTO CLASSES");
+        // System.out.println(" ");
+        // logger.debug("Token {}",jwt);
+        // System.out.println(" ");
 
-        System.out.println("Cart Information");
-        System.out.println(" ");
-        
-        logger.debug("CartDTO {}",cartDTO);
-        int index = 0;
-        for (CartItemDTO cartItemDTO : cartDTO.getCartItems()){ 
-            logger.debug("CartItemDTO (inside Cart) [{}]: {}", index++, cartItemDTO);}
+        // System.out.println("User Information");
+        // logger.debug("UserDTO {}",user);
+        // System.out.println(" ");
 
+        // System.out.println("Cart Information");
+        // System.out.println(" ");
 
-        System.out.println(" ");
-        System.out.println("CartItem DTO Information");
-        logger.debug("CartItemDTO {}",cartItem);
-        logger.debug("ProductDTO {}",cartItem.getProduct());
+        // logger.debug("CartDTO {}",cartDTO);
+        // int index = 0;
+        // for (CartItemDTO cartItemDTO : cartDTO.getCartItems()){
+        // logger.debug("CartItemDTO (inside Cart) [{}]: {}", index++, cartItemDTO);}
 
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println("REPOSITORY & ENTITY CLASSES");
-        System.out.println(" ");
-        User userEntity = ouserEntity.get();
-        Cart cartEntity = ocartEntity.get();
-        CartItem cartItemEntity = ocartItemEntity.get();
-        
+        // System.out.println(" ");
+        // System.out.println("CartItem DTO Information");
+        // logger.debug("CartItemDTO {}",cartItem);
+        // logger.debug("ProductDTO {}",cartItem.getProduct());
 
+        // System.out.println(" ");
+        // System.out.println(" ");
+        // System.out.println(" ");
+        // System.out.println("REPOSITORY & ENTITY CLASSES");
+        // System.out.println(" ");
+        // User userEntity = ouserEntity.get();
+        // Cart cartEntity = ocartEntity.get();
+        // CartItem cartItemEntity = ocartItemEntity.get();
 
+        // logger.debug("UserENTITY {}",userMapper.toUserDto(userEntity));
+        // logger.debug("CartEntity {}",cartMapper.toCartDTO(cartEntity));
+        // int index2 = 0;
 
-        logger.debug("UserENTITY {}",userMapper.toUserDto(userEntity));
-        logger.debug("CartEntity {}",cartMapper.toCartDTO(cartEntity));
-        int index2 = 0;
+        // for (CartItem cartItemloop : cartEntity.getCartItems()) {
+        // logger.debug("CartItemDTO (inside Cart) [{}]: {}", index2++,
+        // cartItemMapper.toCartItemDTO(cartItemloop));}
 
+        // logger.debug("CartItemEntities
+        // {}",cartItemMapper.toCartItemDTO(cartItemEntity));
+        // logger.debug("ProductEntity
+        // {}",productMapper.toProductDTO(cartItemEntity.getProduct()));
 
-        for (CartItem cartItemloop : cartEntity.getCartItems()) {
-            logger.debug("CartItemDTO (inside Cart) [{}]: {}", index2++, cartItemMapper.toCartItemDTO(cartItemloop));}
-        
-        logger.debug("CartItemEntities {}",cartItemMapper.toCartItemDTO(cartItemEntity));
-        logger.debug("ProductEntity {}",productMapper.toProductDTO(cartItemEntity.getProduct()));
+        // logger.info("---");
 
-        logger.info("---");
+        // List<ReviewDTO> reviewsDTOs = reviewService.getAllReviews(4L);
+        // List<RatingDTO> ratingsDTOs = ratingService.getAllRatings(4L);
 
-        List<ReviewDTO> reviewsDTOs = reviewService.getAllReviews(4L);
-        List<RatingDTO> ratingsDTOs = ratingService.getAllRatings(4L);
+        // for(RatingDTO rating : ratingsDTOs){
+        // logger.debug("Rating: {}",rating);
+        // }
 
-        for(RatingDTO rating : ratingsDTOs){
-            logger.debug("Rating: {}",rating);
-        }
+        // for(ReviewDTO review : reviewsDTOs){
+        // logger.debug("review: {}",review);
 
-        for(ReviewDTO review : reviewsDTOs){
-            logger.debug("review: {}",review);
-
-        }
+        // }
     }
 }
-
-

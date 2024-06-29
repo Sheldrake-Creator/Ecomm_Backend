@@ -2,6 +2,8 @@ package com.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,11 +41,11 @@ public class User {
     private List<CreditCardInformation> paymentInformation = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonManagedReference // This breaks the infinite recursion
     private List<Rating> ratings = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference // This breaks the infinite recursion
     private List<Review> reviews = new ArrayList<>();
 
     @CreationTimestamp
@@ -60,8 +62,10 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         User user = (User) o;
         return userId.equals(user.userId);
     }

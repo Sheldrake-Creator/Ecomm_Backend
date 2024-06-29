@@ -7,12 +7,14 @@ import com.dto.ReviewDTO;
 import com.model.Review;
 
 @Mapper(componentModel = "spring")
-public interface ReviewMapper {   
+public interface ReviewMapper {
 
+    @Mapping(target = "productId", source = "product.productId")
+    @Mapping(target = "userId", source = "user.userId")
     ReviewDTO toReviewDTO(Review review);
-    
-    // @Mapping(target="id", ignore=true)
-    Review toReview(ReviewDTO reviewDto);
 
-    //TODO: Add Annotations
+    // @Mapping(target="id", ignore=true)
+    @Mapping(target = "product.productId", source = "productId")
+    @Mapping(target = "user.userId", source = "userId")
+    Review toReview(ReviewDTO reviewDto);
 }

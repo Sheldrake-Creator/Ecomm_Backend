@@ -13,6 +13,8 @@ public interface ProductMapper {
     ProductDTO toProductDTO(Product product);
 
     @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "ratings", ignore = true)
+    @Mapping(target = "reviews", ignore = true)
     Product toProduct(ProductDTO productDTO);
 
     List<ProductDTO> toProductsDTOList(List<Product> products);

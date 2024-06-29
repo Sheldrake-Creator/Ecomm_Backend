@@ -1,6 +1,6 @@
 package com.exception;
 
-public class CartItemException extends Exception {
+public class CartItemException extends ServiceException {
 
     // Default constructor
     public CartItemException() {

@@ -38,9 +38,9 @@ public class ReviewServiceImpl implements ReviewService {
 
         ReviewDTO review = new ReviewDTO();
         review.setReview(req.getReview());
-        review.setUser(user);
+        review.setUserId(user.getUserId());
         review.setCreatedAt(LocalDateTime.now());
-        review.setProduct(product);
+        review.setProductId(product.getProductId());
         this.reviewRepository.save(reviewMapper.toReview(review));
         return review;
     }

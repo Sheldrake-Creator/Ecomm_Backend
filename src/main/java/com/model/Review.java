@@ -1,5 +1,6 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,17 +21,17 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    @JsonIgnore
+    @JsonBackReference // Break the infinite recursion
     private Product product;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference // This breaks the infinite recursion
     private User user;
 
     private String review;
-    
+
     @JsonIgnore
     private LocalDateTime createdAt;
-
 
 }

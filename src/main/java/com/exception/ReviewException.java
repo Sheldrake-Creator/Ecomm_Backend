@@ -1,6 +1,6 @@
 package com.exception;
 
-public class ReviewException extends Exception {
+public class ReviewException extends ServiceException {
 
     // Default constructor
     public ReviewException() {

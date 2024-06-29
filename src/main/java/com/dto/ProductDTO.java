@@ -1,9 +1,7 @@
 package com.dto;
 
+import java.util.List;
 import java.util.Set;
-
-import com.model.Category;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +25,6 @@ public class ProductDTO {
     // private List<RatingDTO> ratings;
     // private List<ReviewDTO> reviews;
     private int numRatings;
-    private Category category;
-
+    private CategoryDTO category;
 
 }

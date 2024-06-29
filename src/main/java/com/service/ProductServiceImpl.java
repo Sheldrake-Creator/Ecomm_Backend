@@ -114,11 +114,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO findProductById(Long id) throws ProductException {
-        // Optional<Product> productEntity=
+        logger.debug("ProductId: {}", id);
 
         Optional<Product> product = productRepository.findById(id);
         if (product.isPresent()) {
             ProductDTO productDto = productMapper.toProductDTO(product.get());
+            logger.debug("ProductDTO: {}", productDto);
             return productDto;
         }
 
@@ -132,8 +133,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<ProductDTO> getAllProducts(String category, List<String> colors, List<String> sizes, Integer minPrice,
-            Integer maxPrice, Integer minDiscount, String sort, String stock,
-            Integer pageNumber, Integer pageSize) {
+            Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize) {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
@@ -144,20 +144,15 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = optionalProducts.orElse(Collections.emptyList());
 
         if (!colors.isEmpty()) {
-            products = products.stream()
-                    .filter(p -> colors.stream().anyMatch(c -> c.equalsIgnoreCase(p.getColor())))
+            products = products.stream().filter(p -> colors.stream().anyMatch(c -> c.equalsIgnoreCase(p.getColor())))
                     .collect(Collectors.toList());
         }
 
         if (stock != null) {
             if (stock.equals("in_stock")) {
-                products = products.stream()
-                        .filter(p -> p.getNumInStock() > 0)
-                        .collect(Collectors.toList());
+                products = products.stream().filter(p -> p.getNumInStock() > 0).collect(Collectors.toList());
             } else if (stock.equals("out_of_stock")) {
-                products = products.stream()
-                        .filter(p -> p.getNumInStock() < 1)
-                        .collect(Collectors.toList());
+                products = products.stream().filter(p -> p.getNumInStock() < 1).collect(Collectors.toList());
             }
         }
 
