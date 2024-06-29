@@ -9,9 +9,10 @@ import com.model.Address;
 @Mapper(componentModel = "spring")
 public interface AddressMapper {
 
+    @Mapping(target = "userId", source = "user.userId")
     AddressDTO toAddressDTO(Address address);
-    
-    @Mapping(target = "user", ignore = true)
+
+    @Mapping(target = "user.userId", source = "userId")
     Address toAddress(AddressDTO addressDTO);
-    
+
 }

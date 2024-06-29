@@ -9,9 +9,12 @@ import com.model.OrderItem;
 @Mapper(componentModel = "spring")
 public interface OrderItemMapper {
 
+    @Mapping(target = "productId", source = "product.productId")
+    @Mapping(target = "orderId", source = "order.orderId")
     OrderItemDTO toOrderItemDTO(OrderItem orderItem);
 
-    @Mapping(target = "product", ignore = true)
+    @Mapping(target = "product.productId", source = "productId")
+    @Mapping(target = "order.orderId", source = "orderId")
     OrderItem toOrderItem(OrderItemDTO orderItemDto);
 
 }

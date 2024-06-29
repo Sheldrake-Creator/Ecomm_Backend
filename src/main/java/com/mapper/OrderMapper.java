@@ -6,17 +6,17 @@ import org.mapstruct.Mapping;
 import com.dto.OrderDTO;
 import com.model.Order;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { OrderItemMapper.class, AddressMapper.class })
 public interface OrderMapper {
 
-    @Mapping(target = "address", source = "shippingAddress")
+    @Mapping(target = "orderItems", source = "orderItems")
+    @Mapping(target = "userId", source = "user.userId")
     OrderDTO toOrderDTO(Order order);
 
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "shippingAddress", source = "address")
-    @Mapping(target = "orderItems", ignore = true)
     @Mapping(target = "paymentDetails", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "orderItems", source = "orderItems")
+    @Mapping(target = "user.userId", source = "userId")
     Order toOrder(OrderDTO orderDto);
-
 
 }

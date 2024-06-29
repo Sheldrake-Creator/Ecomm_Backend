@@ -1,31 +1,22 @@
 
 package com.mapper;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
 
 import com.dto.CartDTO;
 import com.model.Cart;
-import com.model.User;
 
-
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { CartItemMapper.class })
 public interface CartMapper {
 
-    CartMapper INSTANCE = Mappers.getMapper(CartMapper.class);
-
     // Mapping from CartDTO to Cart
-    @Mapping(target = "user", source = "userId", qualifiedByName = "userIdToUser")
+    @Mapping(target = "user.userId", source = "userId")
+    @Mapping(target = "cartItems", source = "cartItems") // Add this line
     Cart toCart(CartDTO cartDTO);
 
-    @Named("userIdToUser")
-    default User userIdToUser(Long userId) {
-        User user = new User();
-        user.setUserId(userId);
-        return user;
-    }
     // Reverse mapping from Cart to CartDTO
     @Mapping(target = "userId", source = "user.userId")
+    @Mapping(target = "cartItems", source = "cartItems") // Add this line
     CartDTO toCartDTO(Cart cart);
 }

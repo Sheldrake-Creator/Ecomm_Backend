@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDTO createOrder(UserDTO userDto, AddressDTO shippingAddress) throws CartException {
 
-        shippingAddress.setUser(userDto);
+        shippingAddress.setUserId(userDto.getUserId());
         userDto.getAddress().add(shippingAddress);
 
         Address address = addressMapper.toAddress(shippingAddress);
@@ -53,10 +53,9 @@ public class OrderServiceImpl implements OrderService {
             OrderItemDTO orderItem = new OrderItemDTO();
 
             orderItem.setOrderPrice(item.getPrice());
-            orderItem.setProduct(item.getProduct());
+            orderItem.setProductId(item.getProductId());
             orderItem.setQuantity(item.getQuantity());
             orderItem.setSize(item.getSize());
-            orderItem.setUser(userDto);
             orderItem.setDiscountedPrice(item.getDiscountedPrice());
 
             OrderItem createdOrderItem = orderItemRepository.save(orderItemMapper.toOrderItem(orderItem));

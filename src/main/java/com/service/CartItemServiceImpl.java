@@ -119,7 +119,7 @@ public class CartItemServiceImpl implements CartItemService {
                 logger.debug("existingCartItems: {}", existingCartItems);
                 CartItemDTO newCartItem = new CartItemDTO();
 
-                newCartItem.setProduct(product);
+                newCartItem.setProductId(product.getProductId());
                 newCartItem.setCartId(existingCart.getCartId());
                 newCartItem.setQuantity(quantity);
                 int price = quantity * product.getPrice();

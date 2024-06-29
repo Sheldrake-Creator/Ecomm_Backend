@@ -1,15 +1,15 @@
 package com.dto;
 
 import java.time.LocalDateTime;
-import java.util.concurrent.atomic.LongAdder;
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ReviewDTO {
     private Long reviewId;
     private String review;

@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OrderItemDTO {
     private Long orderItemId;
-    private OrderDTO order;
-    private ProductDTO product;
+    private Long orderId;
+    private Long productId;
     private String size;
     private int quantity;
     private Integer orderPrice;
     private Integer discountedPrice;
-    private UserDTO user;
     private LocalDateTime deliveryDate;
+    // test
 }

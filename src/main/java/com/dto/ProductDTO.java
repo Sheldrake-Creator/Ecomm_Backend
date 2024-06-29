@@ -25,6 +25,6 @@ public class ProductDTO {
     // private List<RatingDTO> ratings;
     // private List<ReviewDTO> reviews;
     private int numRatings;
-    private CategoryDTO category;
+    private Long categoryId;
 
 }
