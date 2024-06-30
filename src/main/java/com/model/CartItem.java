@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "cart_items")
@@ -20,6 +21,7 @@ public class CartItem {
     @ManyToOne
     @JoinColumn(name = "cart_id")
     @JsonBackReference
+    @ToString.Exclude
     private Cart cart;
 
     @ManyToOne

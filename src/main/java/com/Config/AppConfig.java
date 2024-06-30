@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Configuration;
 //import org.springframework.security.web.SecurityFilterChain;
 //import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@EnableTransactionManagement
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = { "com.service", "com.mapper", "com.dto", "com.model", "com.Config", "com.controller",
         "com.exception", "com.request", "com.response", "com.repository", "com.util" })

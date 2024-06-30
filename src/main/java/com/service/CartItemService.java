@@ -3,14 +3,11 @@ package com.service;
 import com.dto.CartDTO;
 import com.dto.CartItemDTO;
 import com.dto.ProductDTO;
-import com.dto.UserDTO;
-import com.exception.CartException;
 import com.exception.CartItemException;
-import com.exception.ProductException;
 
 public interface CartItemService {
 
-        CartItemDTO updateCartItem(Long cartId, CartItemDTO cartItemDto) throws CartItemException, CartException;
+        CartItemDTO updateCartItem(Long cartId, CartItemDTO cartItemDto) throws CartItemException;
 
         boolean doesCartItemExist(CartDTO cart, ProductDTO product, String size) throws CartItemException;
 
@@ -18,7 +15,6 @@ public interface CartItemService {
 
         CartItemDTO findCartItemById(Long cartItemId) throws CartItemException;
 
-        CartDTO addItemToCart(UserDTO user, int quantity, String size, long productId)
-                        throws CartItemException, CartException, ProductException;
+        CartDTO addItemToCart(Long userId, int quantity, String size, long productId) throws CartItemException;
 
 }

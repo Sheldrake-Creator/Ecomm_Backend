@@ -17,6 +17,8 @@ public interface UserService {
 
     UserDTO findUserProfileByJwt(String jwt) throws UserException;
 
+    Long getUserIdByJwt(String jwt) throws UserException;
+
     User findUserByEmail(String email) throws UserException;
 
     User loadUserByUsername(String username);

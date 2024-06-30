@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -38,11 +40,13 @@ public class User {
     private List<CreditCardInformation> paymentInformation = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference // This breaks the infinite recursion
+    @JsonManagedReference // This breaks the infinite
+    @ToString.Exclude
     private List<Rating> ratings = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference // This breaks the infinite recursion
+    @ToString.Exclude
     private List<Review> reviews = new ArrayList<>();
 
     @CreationTimestamp
@@ -50,6 +54,7 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
+    @ToString.Exclude
     private Cart cart;
 
     @Override

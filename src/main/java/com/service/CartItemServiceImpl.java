@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dto.CartDTO;
 import com.dto.CartItemDTO;
 import com.dto.ProductDTO;
-import com.dto.UserDTO;
 import com.exception.CartException;
 import com.exception.CartItemException;
 import com.exception.ProductException;
@@ -37,20 +36,34 @@ public class CartItemServiceImpl implements CartItemService {
     private final Logger logger = LoggerFactory.getLogger(CartItemServiceImpl.class);
 
     @Override
-    public CartItemDTO updateCartItem(Long cartId, CartItemDTO newCartItemDto) throws CartItemException, CartException {
+    public CartItemDTO updateCartItem(Long cartItemId, CartItemDTO newCartItemDto) throws CartItemException {
         try {
 
-            CartItemDTO existingCartItem = this.findCartItemById(cartId);
+            logger.debug("cartItemId: {}", cartItemId);
+            logger.debug("newCartItemDto: {}", newCartItemDto);
 
-            newCartItemDto.setPrice(existingCartItem.getPrice() * newCartItemDto.getQuantity());
-            newCartItemDto.setDiscountedPrice(existingCartItem.getDiscountedPrice() * newCartItemDto.getQuantity());
-            cartItemRepository.save(cartItemMapper.toCartItem(newCartItemDto));
+            CartItem existingCartItem = cartItemRepository.findCartItemById(cartItemId)
+                    .orElseThrow(() -> new CartItemException("CartItem not found with id: " + cartItemId));
+            logger.debug("existingCartItem: {}", existingCartItem);
 
-            CartDTO cart = this.cartService.findCartByCartId(cartId);
+            existingCartItem.setQuantity(newCartItemDto.getQuantity());
+            existingCartItem.setPrice(existingCartItem.getProduct().getPrice() * newCartItemDto.getQuantity());
+            existingCartItem.setDiscountedPrice(
+                    existingCartItem.getProduct().getDiscountedPrice() * newCartItemDto.getQuantity());
+            logger.debug("existingCartItem: {}", existingCartItem);
+
+            cartItemRepository.save(existingCartItem);
+
+            CartDTO cart = this.cartService.findCartByCartId(existingCartItem.getCart().getCartId());
+            logger.debug("cart: {}", cart);
             this.cartService.syncCartWithCartItems(cart);
+            CartItemDTO newCartItem = cartItemMapper.toCartItemDTO(existingCartItem);
+            logger.debug("cart: {}", newCartItem);
 
-            return newCartItemDto;
+            return newCartItem;
         } catch (DataAccessException e) {
+            throw new CartItemException("CartItem Exception Thrown", e);
+        } catch (CartException e) {
             throw new CartItemException("CartItem Exception Thrown", e);
         }
     }
@@ -58,17 +71,17 @@ public class CartItemServiceImpl implements CartItemService {
     @Override
     public void removeCartItem(Long userId, Long cartItemId) throws CartItemException {
         try {
-            this.cartItemRepository.deleteById(cartItemId);
+            this.cartItemRepository.deleteCartItemById(cartItemId);
             CartDTO cart = cartService.findUserCart(userId);
             CartDTO newCart = this.cartService.syncCartWithCartItems(cart);
             // return newCart;
         } catch (CartException e) {
             throw new CartItemException("Cart Item not Found", e);
-
         }
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean doesCartItemExist(CartDTO cart, ProductDTO product, String size) throws CartItemException {
         try {
             logger.debug("CARTITEMSERVICE: {}", cart);
@@ -84,6 +97,7 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CartItemDTO findCartItemById(Long cartItemId) throws CartItemException {
         Optional<CartItem> opt = cartItemRepository.findById(cartItemId);
 
@@ -98,11 +112,10 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CartDTO addItemToCart(UserDTO user, int quantity, String size, long productId)
-            throws ProductException, CartItemException {
+    public CartDTO addItemToCart(Long userId, int quantity, String size, long productId) throws CartItemException {
         try {
 
-            CartDTO existingCart = cartService.getUserCart(user);
+            CartDTO existingCart = cartService.findUserCart(userId);
             logger.debug("Existing Cart: {}", existingCart);
             logger.debug("ProductId: {}", productId);
 
@@ -118,6 +131,7 @@ public class CartItemServiceImpl implements CartItemService {
 
                 newCartItem.setProductId(product.getProductId());
                 newCartItem.setCartId(existingCart.getCartId());
+                logger.debug("cartId: {}", existingCart.getCartId());
                 newCartItem.setQuantity(quantity);
                 int price = quantity * product.getPrice();
                 int discountedPrice = quantity * product.getDiscountedPrice();
@@ -135,7 +149,7 @@ public class CartItemServiceImpl implements CartItemService {
             throw new CartItemException("CartItem Already Exists in Cart");
 
         } catch (ProductException e) {
-            throw new ProductException("Error find Product with Product Id: ", e);
+            throw new CartItemException("Error find Product with Product Id: ", e);
 
         } catch (CartItemException e) {
             throw new CartItemException("Error finding CartItem that matches ProductId", e);

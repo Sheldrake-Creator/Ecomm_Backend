@@ -94,10 +94,22 @@ public class UserServiceImpl implements UserService {
     public UserDTO findUserProfileByJwt(String jwt) throws UserException {
         String userName = userAuthProvider.getUserNameFromToken(jwt);
         Optional<User> user = userRepository.findByUserName(userName);
-        if (user != null) {
+        if (user.isPresent()) {
             return userMapper.toUserDto(user.get());
         }
         throw new UserException("User Profile not found with User Name" + userName);
     }
 
+    @Override
+    public Long getUserIdByJwt(String jwt) throws UserException {
+        String userName = userAuthProvider.getUserNameFromToken(jwt);
+
+        logger.debug("userName: {}", userName);
+        Optional<Long> userId = userRepository.findUserIdByUserName(userName);
+        logger.debug("userName: {}", userId.get());
+        if (userId.isPresent()) {
+            return userId.get();
+        }
+        throw new UserException("UserId not found with User Name" + userName);
+    }
 }

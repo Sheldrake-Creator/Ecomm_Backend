@@ -19,7 +19,7 @@ import com.repository.CartRepository;
 import com.repository.UserRepository;
 import com.util.LogUtils;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -53,6 +53,7 @@ public class CartServiceImpl implements CartService {
             cart.setTotalItems(totalItem);
             cart.setTotalPrice(totalPrice);
             this.cartRepository.save(cartMapper.toCart(cart));
+
             return cart;
         } catch (DataAccessException e) {
             logger.error("Data access error while finding cart for user with ID: {}", e);
@@ -70,6 +71,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CartDTO findUserCart(Long userId) throws CartException {
         try {
 
@@ -94,6 +96,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CartDTO getUserCart(UserDTO user) throws CartException {
         try {
             CartDTO cart;
@@ -115,6 +118,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartDTO syncCartWithCartItems(CartDTO cart) throws CartException {
         try {
+
             Set<CartItemDTO> cartItems = cart.getCartItems();
             int newTotalPrice = 0;
             int newTotalItems = 0;
@@ -122,14 +126,17 @@ public class CartServiceImpl implements CartService {
 
             for (CartItemDTO cartItem : cartItems) {
                 newTotalItems += cartItem.getQuantity();
-                newTotalPrice += (cartItem.getDiscountedPrice() * cartItem.getQuantity());
-                newTotalDiscountedPrice += (cartItem.getPrice() * cartItem.getQuantity());
+                newTotalPrice += (cartItem.getPrice() * cartItem.getQuantity());
+                newTotalDiscountedPrice += (cartItem.getDiscountedPrice() * cartItem.getQuantity());
             }
-            cart.setTotalDiscountedPrice(newTotalItems);
-            cart.setTotalItems(newTotalPrice);
-            cart.setTotalPrice(newTotalDiscountedPrice);
+
+            cart.setTotalDiscountedPrice(newTotalDiscountedPrice);
+            cart.setTotalItems(newTotalItems);
+            cart.setTotalPrice(newTotalPrice);
             cart.setCartItems(cartItems);
+
             this.cartRepository.save(cartMapper.toCart(cart));
+
             return cart;
 
         } catch (DataAccessException e) {

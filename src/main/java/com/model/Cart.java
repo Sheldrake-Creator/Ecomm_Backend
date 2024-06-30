@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Objects;
 import java.util.Set;
@@ -23,6 +24,7 @@ public class Cart {
     @OneToOne // * Recent Addition.
     @JoinColumn(name = "user_id", nullable = false)
     @JsonManagedReference
+    @ToString.Exclude
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
