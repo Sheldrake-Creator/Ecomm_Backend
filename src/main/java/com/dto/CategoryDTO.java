@@ -13,7 +13,7 @@ public class CategoryDTO {
 
     private Long categoryId;
     private String name;
-    private CategoryDTO parentCategory;
-    private int level;
+    private Long parentCategoryId;
+    private Integer level;
 
 }

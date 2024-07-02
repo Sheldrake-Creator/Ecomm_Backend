@@ -19,10 +19,10 @@ public class Category {
     @NotNull
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER) // Check this for possible lockdown
     @JoinColumn(name = "parent_category_id")
     private Category parentCategory;
 
-    private int level;
+    private Integer level;
 
 }

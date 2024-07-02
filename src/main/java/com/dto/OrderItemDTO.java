@@ -16,7 +16,7 @@ public class OrderItemDTO {
     private Long orderId;
     private Long productId;
     private String size;
-    private int quantity;
+    private Integer quantity;
     private Integer orderPrice;
     private Integer discountedPrice;
     private LocalDateTime deliveryDate;

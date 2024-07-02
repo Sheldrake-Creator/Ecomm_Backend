@@ -22,6 +22,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "orders") // Rename the table to "orders"
@@ -50,14 +51,15 @@ public class Order {
     @OneToOne
     private Address shippingAddress;
 
-    @Embedded
-    @JsonIgnore
-    private PaymentDetails paymentDetails;
+    // @Embedded
+    // @JsonIgnore
+    // @ToString.Exclude
+    // private PaymentDetails paymentDetails;
 
-    private double totalPrice;
+    private Integer totalPrice;
     private Integer totalDiscountedPrice;
     private Integer discount;
     private String orderStatus;
-    private int totalItems;
+    private Integer totalItems;
     private LocalDateTime createdAt;
 }

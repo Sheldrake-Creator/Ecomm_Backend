@@ -54,9 +54,9 @@ public class RatingServiceImpl implements RatingService {
         logger.debug("Product: {}", ratingEntity.getProduct());
         logger.debug("ProductId: {}", ratingEntity.getProduct().getProductId());
 
-        this.ratingRepository.save(ratingMapper.toRating(rating));
+        Rating newRating = this.ratingRepository.save(ratingMapper.toRating(rating));
 
-        return rating;
+        return ratingMapper.toRatingDTO(newRating);
     }
 
     @Override

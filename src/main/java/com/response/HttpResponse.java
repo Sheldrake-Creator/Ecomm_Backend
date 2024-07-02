@@ -9,13 +9,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
-
 @SuperBuilder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class HttpResponse {
     protected String timeStamp;
-    protected int statusCode;
+    protected Integer statusCode;
     protected HttpStatus status;
     protected String reason;
     protected String message;

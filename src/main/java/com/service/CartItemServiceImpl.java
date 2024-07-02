@@ -69,19 +69,19 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public void removeCartItem(Long userId, Long cartItemId) throws CartItemException {
+    public CartDTO removeCartItem(Long userId, Long cartItemId) throws CartItemException {
         try {
             this.cartItemRepository.deleteCartItemById(cartItemId);
             CartDTO cart = cartService.findUserCart(userId);
             CartDTO newCart = this.cartService.syncCartWithCartItems(cart);
-            // return newCart;
+            return newCart;
         } catch (CartException e) {
             throw new CartItemException("Cart Item not Found", e);
         }
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public boolean doesCartItemExist(CartDTO cart, ProductDTO product, String size) throws CartItemException {
         try {
             logger.debug("CARTITEMSERVICE: {}", cart);
@@ -112,15 +112,14 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CartDTO addItemToCart(Long userId, int quantity, String size, long productId) throws CartItemException {
+    public CartDTO addItemToCart(Long userId, Integer quantity, String size, long productId) throws CartItemException {
         try {
 
             CartDTO existingCart = cartService.findUserCart(userId);
             logger.debug("Existing Cart: {}", existingCart);
-            logger.debug("ProductId: {}", productId);
 
             ProductDTO product = productService.findProductById(productId);
-            logger.debug("ProductId: {}", product);
+            logger.debug("ProductDTO: {}", product);
 
             if (!this.doesCartItemExist(existingCart, product, size)) {
                 // *This is Definitely the issue. This is definitely throwing a null value.
@@ -133,8 +132,8 @@ public class CartItemServiceImpl implements CartItemService {
                 newCartItem.setCartId(existingCart.getCartId());
                 logger.debug("cartId: {}", existingCart.getCartId());
                 newCartItem.setQuantity(quantity);
-                int price = quantity * product.getPrice();
-                int discountedPrice = quantity * product.getDiscountedPrice();
+                Integer price = (quantity * product.getPrice());
+                Integer discountedPrice = (quantity * product.getDiscountedPrice());
                 newCartItem.setPrice(price);
                 newCartItem.setDiscountedPrice(discountedPrice);
                 newCartItem.setSize(size);

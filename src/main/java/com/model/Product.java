@@ -2,6 +2,7 @@ package com.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class Product {
 
     @Id
@@ -25,15 +27,16 @@ public class Product {
     @Column(name = "title")
     private String title;
 
-    private int price;
+    private Integer price;
+
     @Column(name = "discounted_price")
-    private int discountedPrice;
+    private Integer discountedPrice;
 
     @Column(name = "discount_present")
-    private int discountPresent;
+    private Integer discountPresent;
 
     @Column(name = "num_in_Stock")
-    private int numInStock;
+    private Integer numInStock;
 
     @Column(name = "brand")
     private String brand;
@@ -58,7 +61,7 @@ public class Product {
     private List<Review> reviews;
 
     @Column(name = "num_ratings")
-    private int numRatings;
+    private Integer numRatings;
 
     @ManyToOne()
     @JoinColumn(name = "category_id")

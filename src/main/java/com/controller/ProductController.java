@@ -25,36 +25,23 @@ public class ProductController {
     private final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     @GetMapping("/products")
-    public ResponseEntity<HttpResponse> findProductByCategoryHandler(
-            @RequestParam String category,
-            @RequestParam List<String> color,
-            @RequestParam List<String> size,
-            @RequestParam Integer minPrice,
-            @RequestParam Integer maxPrice,
-            @RequestParam Integer minDiscount,
-            @RequestParam String sort,
-            @RequestParam String stock,
-            @RequestParam Integer pageNumber,
-            @RequestParam Integer pageSize) {
+    public ResponseEntity<HttpResponse> findProductByCategoryHandler(@RequestParam String category,
+            @RequestParam List<String> color, @RequestParam List<String> size, @RequestParam Integer minPrice,
+            @RequestParam Integer maxPrice, @RequestParam Integer minDiscount, @RequestParam String sort,
+            @RequestParam String stock, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         try {
-            Page<ProductDTO> products = productService.getAllProducts(
-                    category, color, size, minPrice, maxPrice, minDiscount, sort, stock, pageNumber, pageSize);
+            Page<ProductDTO> products = productService.getAllProducts(category, color, size, minPrice, maxPrice,
+                    minDiscount, sort, stock, pageNumber, pageSize);
             logger.debug("Products fetched: {}", products);
-            return ResponseEntity.ok(HttpResponse.builder()
-                    .timeStamp(LocalDateTime.now().toString())
-                    .data(Map.of("products", products))
-                    .message("Products fetched successfully")
-                    .status(HttpStatus.OK)
-                    .statusCode(HttpStatus.OK.value())
-                    .build());
+            return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                    .data(Map.of("products", products)).message("Products fetched successfully").status(HttpStatus.OK)
+                    .statusCode(HttpStatus.OK.value()).build());
         } catch (Exception e) {
             logger.error("Unexpected error fetching products by category", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(HttpResponse.builder()
-                    .timeStamp(LocalDateTime.now().toString())
-                    .message("Unexpected error fetching products")
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .build());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                            .message("Unexpected error fetching products").status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build());
         }
     }
 
@@ -63,29 +50,20 @@ public class ProductController {
         try {
             ProductDTO product = productService.findProductById(productId);
             logger.debug("Product fetched: {}", product);
-            return ResponseEntity.ok(HttpResponse.builder()
-                    .timeStamp(LocalDateTime.now().toString())
-                    .data(Map.of("product", product))
-                    .message("Product fetched successfully")
-                    .status(HttpStatus.OK)
-                    .statusCode(HttpStatus.OK.value())
-                    .build());
+            return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                    .data(Map.of("product", product)).message("Product fetched successfully").status(HttpStatus.OK)
+                    .statusCode(HttpStatus.OK.value()).build());
         } catch (ProductException e) {
             logger.error("Error fetching product by ID", e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(HttpResponse.builder()
-                    .timeStamp(LocalDateTime.now().toString())
-                    .message(e.getMessage())
-                    .status(HttpStatus.BAD_REQUEST)
-                    .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .build());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString()).message(e.getMessage())
+                            .status(HttpStatus.BAD_REQUEST).statusCode(HttpStatus.BAD_REQUEST.value()).build());
         } catch (Exception e) {
             logger.error("Unexpected error fetching product by ID", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(HttpResponse.builder()
-                    .timeStamp(LocalDateTime.now().toString())
-                    .message("Unexpected error fetching product")
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .build());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                            .message("Unexpected error fetching product").status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build());
         }
     }
 }

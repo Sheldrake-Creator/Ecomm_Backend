@@ -104,7 +104,7 @@ public class TestServiceImpl implements TestService {
         // System.out.println(" ");
 
         // logger.debug("CartDTO {}",cartDTO);
-        // int index = 0;
+        // Integer index = 0;
         // for (CartItemDTO cartItemDTO : cartDTO.getCartItems()){
         // logger.debug("CartItemDTO (inside Cart) [{}]: {}", index++, cartItemDTO);}
 
@@ -124,7 +124,7 @@ public class TestServiceImpl implements TestService {
 
         // logger.debug("UserENTITY {}",userMapper.toUserDto(userEntity));
         // logger.debug("CartEntity {}",cartMapper.toCartDTO(cartEntity));
-        // int index2 = 0;
+        // Integer index2 = 0;
 
         // for (CartItem cartItemloop : cartEntity.getCartItems()) {
         // logger.debug("CartItemDTO (inside Cart) [{}]: {}", index2++,

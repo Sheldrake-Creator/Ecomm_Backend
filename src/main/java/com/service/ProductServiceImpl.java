@@ -2,6 +2,7 @@ package com.service;
 
 import com.dto.ProductDTO;
 import com.exception.ProductException;
+import com.mapper.CategoryMapper;
 import com.mapper.ProductMapper;
 import com.model.Category;
 import com.model.Product;
@@ -34,57 +35,103 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
-    private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
+    private final CategoryMapper categoryMapper;
+    private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     @Override
     public ProductDTO createProduct(CreateProductRequest req) {
 
-        Optional<Category> oFirstLevel = categoryRepository.findByName(req.getTopLevelCategory());
-
-        Category firstLevel = oFirstLevel.orElseGet(() -> {
+        // Fetch or create top-level category
+        Category firstLevel = categoryRepository.findByName(req.getTopLevelCategory()).orElseGet(() -> {
             Category firstLevelCategory = new Category();
             firstLevelCategory.setName(req.getTopLevelCategory());
             firstLevelCategory.setLevel(1);
             return categoryRepository.save(firstLevelCategory);
         });
+        logger.debug("firstLevel: {}", firstLevel);
 
-        Optional<Category> oSecondLevel = categoryRepository.findByNameAndParent(req.getSecondLevelCategory(),
-                firstLevel.getName());
+        // Fetch or create second-level category
+        Category secondLevel = categoryRepository
+                .findByNameAndParent(req.getSecondLevelCategory(), firstLevel.getName()).orElseGet(() -> {
+                    Category secondLevelCategory = new Category();
+                    secondLevelCategory.setName(req.getSecondLevelCategory());
+                    secondLevelCategory.setLevel(2);
+                    secondLevelCategory.setParentCategory(firstLevel);
+                    return categoryRepository.save(secondLevelCategory);
+                });
+        logger.debug("secondLevel: {}", secondLevel);
 
-        Category secondLevel = oSecondLevel.orElseGet(() -> {
-            Category secondLevelCategory = new Category();
-            secondLevelCategory.setName(req.getSecondLevelCategory());
-            secondLevelCategory.setLevel(2);
-            secondLevelCategory.setParentCategory(firstLevel);
-            return categoryRepository.save(secondLevelCategory);
-        });
+        // Fetch or create third-level category
+        Category thirdLevel = categoryRepository.findByNameAndParent(req.getThirdLevelCategory(), secondLevel.getName())
+                .orElseGet(() -> {
+                    Category thirdLevelCategory = new Category();
+                    thirdLevelCategory.setName(req.getThirdLevelCategory());
+                    thirdLevelCategory.setLevel(3);
+                    thirdLevelCategory.setParentCategory(secondLevel);
+                    return categoryRepository.save(thirdLevelCategory);
+                });
+        logger.debug("thirdLevel: {}", thirdLevel);
 
-        Optional<Category> oThirdLevel = categoryRepository.findByNameAndParent(req.getThirdLevelCategory(),
-                secondLevel.getName());
+        // Optional<Category> oFirstLevel =
+        // categoryRepository.findByName(req.getTopLevelCategory());
 
-        Category thirdLevel = oThirdLevel.orElseGet(() -> {
-            Category thirdLevelCategory = new Category();
-            thirdLevelCategory.setName(req.getThirdLevelCategory());
-            thirdLevelCategory.setLevel(3);
-            thirdLevelCategory.setParentCategory(secondLevel);
-            return categoryRepository.save(thirdLevelCategory);
-        });
+        // Category firstLevel = oFirstLevel.orElseGet(() -> {
+        // CategoryDTO firstLevelCategory = new CategoryDTO();
+        // firstLevelCategory.setName(req.getTopLevelCategory());
+        // firstLevelCategory.setLevel(1);
+        // return
+        // categoryRepository.save(categoryMapper.toCategory(firstLevelCategory));
+        // });
+        // logger.debug("firstLevel: {}", firstLevel);
 
-        Product product = new Product();
-        product.setTitle(req.getTitle());
-        product.setColor(req.getColor());
-        product.setDescription(req.getDescription());
-        product.setDiscountedPrice(req.getDiscountedPrice());
-        product.setDiscountPresent(req.getDiscountPresent());
-        product.setImageUrl(req.getImageUrl());
-        product.setBrand(req.getBrand());
-        product.setPrice(req.getPrice());
-        product.setSizes(req.getSize());
-        product.setNumInStock(req.getQuantity());
-        product.setCategory(thirdLevel);
-        product.setCreatedAt(LocalDateTime.now());
+        // Optional<Category> oSecondLevel =
+        // categoryRepository.findByNameAndParent(req.getSecondLevelCategory(),
+        // req.getTopLevelCategory());
+
+        // Category secondLevel = oSecondLevel.orElseGet(() -> {
+        // CategoryDTO secondLevelCategory = new CategoryDTO();
+        // secondLevelCategory.setName(req.getSecondLevelCategory());
+        // secondLevelCategory.setLevel(2);
+        // secondLevelCategory.setParentCategoryId(firstLevel.getCategoryId());
+        // return
+        // categoryRepository.save(categoryMapper.toCategory(secondLevelCategory));
+        // });
+
+        // logger.debug("secondLevel: {}", secondLevel);
+
+        // Optional<Category> oThirdLevel =
+        // categoryRepository.findByNameAndParent(req.getThirdLevelCategory(),
+        // secondLevel.getName());
+
+        // Category thirdLevel = oThirdLevel.orElseGet(() -> {
+        // Category thirdLevelCategory = new Category();
+        // thirdLevelCategory.setName(req.getThirdLevelCategory());
+        // thirdLevelCategory.setLevel(3);
+        // thirdLevelCategory.setParentCategory(secondLevel);
+        // return categoryRepository.save(thirdLevelCategory);
+        // });
+
+        Product product = Product.builder().title(req.getTitle()).color(req.getColor())
+                .description(req.getDescription()).discountedPrice(req.getDiscountedPrice())
+                .discountPresent(req.getDiscountPresent()).imageUrl(req.getImageUrl()).brand(req.getBrand())
+                .price(req.getPrice()).sizes(req.getSize()).numInStock(req.getQuantity()).category(thirdLevel)
+                .createdAt(LocalDateTime.now()).build();
+
+        // ProductDTO productDTO =
+        // ProductDTO.builder().title(req.getTitle()).color(req.getColor())
+        // .description(req.getDescription()).discountedPrice(req.getDiscountedPrice())
+        // .discountPresent(req.getDiscountPresent()).imageUrl(req.getImageUrl()).brand(req.getBrand())
+        // .price(req.getPrice())
+        // .sizes(req.getSize().stream().map(size -> new SizeDTO(size.getName(),
+        // size.getQuantity()))
+        // .collect(Collectors.toSet()))
+        // .numInStock(req.getQuantity()).categoryId(thirdLevel.getCategoryId()).build();
+
+        logger.debug("productEntity: {}", product);
 
         Product savedProduct = productRepository.save(product);
+
+        logger.debug("savedProduct: {}", savedProduct);
 
         return productMapper.toProductDTO(savedProduct);
     }
@@ -156,8 +203,8 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
-        int startIndex = (int) pageable.getOffset();
-        int endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
+        Integer startIndex = (int) pageable.getOffset();
+        Integer endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
 
         List<ProductDTO> productDTOs = productMapper.toProductsDTOList(products);
         List<ProductDTO> pageContent = productDTOs.subList(startIndex, endIndex);

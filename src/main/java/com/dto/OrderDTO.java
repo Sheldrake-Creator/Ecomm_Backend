@@ -22,7 +22,7 @@ public class OrderDTO {
     private Integer totalDiscountedPrice;
     private Integer discount;
     private String orderStatus;
-    private int totalItems;
+    private Integer totalItems;
     private LocalDateTime deliveryDate;
     private LocalDateTime orderDate;
     private Long userId;

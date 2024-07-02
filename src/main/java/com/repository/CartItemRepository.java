@@ -15,15 +15,19 @@ import org.springframework.data.repository.query.Param;
 
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
-        @Query("SELECT ci From CartItem ci Where ci.cart=:cart And ci.product=:product AND ci.size=:size")
+        @Query("SELECT ci From CartItem ci WHERE ci.cart=:cart And ci.product=:product AND ci.size=:size")
         Optional<CartItem> doesCartItemExist(@Param("cart") Cart cart, @Param("product") Product product,
                         @Param("size") String size) throws RepositoryException;
 
-        @Query("SELECT ci From CartItem ci Where ci.cartItemId=:cartItemId")
+        @Query("SELECT ci From CartItem ci WHERE ci.cartItemId=:cartItemId")
         Optional<CartItem> findCartItemById(@Param("cartItemId") Long cartItemId)
                         throws DataAccessException, RepositoryException;
 
         @Modifying
-        @Query("DELETE FROM CartItem c WHERE c.cartItemId = :cartItemId")
-        void deleteCartItemById(@Param("cartItemId") Long cartItemId);
+        @Query("DELETE FROM CartItem c WHERE c.cartItemId=:cartItemId")
+        void deleteCartItemById(@Param("cartItemId") Long cartItemId) throws RepositoryException;
+
+        @Modifying
+        @Query("DELETE FROM CartItem ci WHERE ci.cart.cartId = :cartId")
+        void deleteCartItemsByCartId(@Param("cartId") Long cartId);
 }

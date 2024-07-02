@@ -9,11 +9,12 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
+    @Mapping(target = "addressId", source = "address.addressId")
     UserDTO toUserDto(User user);
 
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "cart", ignore = true)
-    @Mapping(target = "address", ignore = true)
+    @Mapping(target = "address.addressId", source = "addressId")
     @Mapping(target = "paymentInformation", ignore = true)
     @Mapping(target = "ratings", ignore = true)
     @Mapping(target = "reviews", ignore = true)
@@ -29,6 +30,7 @@ public interface UserMapper {
     @Mapping(target = "reviews", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "token", ignore = true)
+    @Mapping(target = "userId", ignore = true)
     User signUpDTOToUser(SignUpDTO signUpDTO);
 
 }

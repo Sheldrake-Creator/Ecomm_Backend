@@ -11,10 +11,10 @@ public interface CartItemService {
 
         boolean doesCartItemExist(CartDTO cart, ProductDTO product, String size) throws CartItemException;
 
-        void removeCartItem(Long userId, Long cartItemId) throws CartItemException;
+        CartDTO removeCartItem(Long userId, Long cartItemId) throws CartItemException;
 
         CartItemDTO findCartItemById(Long cartItemId) throws CartItemException;
 
-        CartDTO addItemToCart(Long userId, int quantity, String size, long productId) throws CartItemException;
+        CartDTO addItemToCart(Long userId, Integer quantity, String size, long productId) throws CartItemException;
 
 }

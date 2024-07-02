@@ -8,15 +8,13 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import com.dto.CartDTO;
 import com.dto.CartItemDTO;
-import com.dto.UserDTO;
 import com.exception.CartException;
+import com.exception.RepositoryException;
 import com.exception.UserException;
 import com.mapper.CartMapper;
-import com.mapper.UserMapper;
 import com.model.Cart;
-import com.model.User;
+import com.repository.CartItemRepository;
 import com.repository.CartRepository;
-import com.repository.UserRepository;
 import com.util.LogUtils;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -28,36 +26,27 @@ import lombok.RequiredArgsConstructor;
 public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    private final CartItemRepository cartItemRepository;
     private final CartMapper cartMapper;
     private final Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
 
     @Override
-    public CartDTO createCart(UserDTO userDto) throws CartException, DataAccessException {
+    public CartDTO createCart(Long userId) {
         try {
-            Optional<User> optionalUser = userRepository.findUserByUserId(userDto.getUserId());
-            if (!optionalUser.isPresent()) {
-                throw new CartException("User not found");
-            }
 
-            int totalPrice = 0;
-            int totalDiscountedPrice = 0;
-            int totalItem = 0;
+            CartDTO cartDTO = new CartDTO();
 
-            UserDTO user = userMapper.toUserDto(optionalUser.get());
-            CartDTO cart = new CartDTO();
+            cartDTO.setUserId(userId);
+            cartDTO.setTotalDiscountedPrice(0);
+            cartDTO.setTotalItems(0);
+            cartDTO.setTotalPrice(0);
+            Cart cartEntity = this.cartRepository.save(cartMapper.toCart(cartDTO));
 
-            cart.setUserId(user.getUserId());
-            cart.setTotalDiscountedPrice(totalDiscountedPrice);
-            cart.setTotalItems(totalItem);
-            cart.setTotalPrice(totalPrice);
-            this.cartRepository.save(cartMapper.toCart(cart));
-
-            return cart;
-        } catch (DataAccessException e) {
-            logger.error("Data access error while finding cart for user with ID: {}", e);
-            throw new CartException("An unexpected error occurred while retrieving the cart for user with ID: ", e);
+            return cartMapper.toCartDTO(cartEntity);
+        } catch (IllegalArgumentException e) {
+            logger.error("Cart Repository Error: {}", e);
+            throw new IllegalArgumentException(
+                    "An unexpected error occurred while retrieving the cart for user with ID: ", e);
         }
     }
 
@@ -96,15 +85,15 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public CartDTO getUserCart(UserDTO user) throws CartException {
+    @Transactional
+    public CartDTO getUserCart(Long userId) throws CartException {
         try {
             CartDTO cart;
-            logger.debug("Fetching cart for user: {}", user);
-            Optional<Cart> optionalCart = cartRepository.findByUserId(user.getUserId());
+            logger.debug("Fetching cart for user: {}", userId);
+            Optional<Cart> optionalCart = cartRepository.findByUserId(userId);
             if (!optionalCart.isPresent()) {
                 logger.debug("User has no cart. Creating Cart instead");
-                cart = this.createCart(user);
+                cart = this.createCart(userId);
             } else {
                 cart = cartMapper.toCartDTO(optionalCart.get());
             }
@@ -120,9 +109,9 @@ public class CartServiceImpl implements CartService {
         try {
 
             Set<CartItemDTO> cartItems = cart.getCartItems();
-            int newTotalPrice = 0;
-            int newTotalItems = 0;
-            int newTotalDiscountedPrice = 0;
+            Integer newTotalPrice = 0;
+            Integer newTotalItems = 0;
+            Integer newTotalDiscountedPrice = 0;
 
             for (CartItemDTO cartItem : cartItems) {
                 newTotalItems += cartItem.getQuantity();
@@ -142,6 +131,19 @@ public class CartServiceImpl implements CartService {
         } catch (DataAccessException e) {
             e.getStackTrace();
             throw new CartException("Cart not found");
+        }
+    }
+
+    @Override
+    public void checkoutCart(Long cartId) throws CartException {
+        try {
+            // Delete CartItems
+            this.cartRepository.deleteCartById(cartId);
+
+            // Delete User Cart
+            this.cartItemRepository.deleteCartItemsByCartId(cartId);
+        } catch (RepositoryException e) {
+            e.printStackTrace();
         }
     }
 

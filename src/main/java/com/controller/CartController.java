@@ -1,13 +1,12 @@
 package com.controller;
 
 import com.dto.CartDTO;
-import com.dto.UserDTO;
+
 import com.exception.CartException;
 import com.exception.UserException;
 import com.response.HttpResponse;
 import com.service.CartService;
 import com.service.UserService;
-import com.util.LogUtils;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,18 +32,13 @@ public class CartController {
 
     @GetMapping(value = "/getCart")
     @Operation(description = "find cart by user id")
-    public ResponseEntity<HttpResponse> getUserCart(@RequestHeader("Authorization") String jwt)
-            throws CartException, UserException {
-        UserDTO user;
-        LogUtils.entry();
+    public ResponseEntity<HttpResponse> getUserCart(@RequestHeader("Authorization") String jwt) {
         try {
             logger.debug("TOKEN: {} " + jwt);
-            user = userService.findUserProfileByJwt(jwt);
-            logger.debug("USER: {} ", user);
-            CartDTO cartDto = cartService.getUserCart(user);
+            Long userId = userService.getUserIdByJwt(jwt);
+            logger.debug("UserId: {} ", userId);
+            CartDTO cartDto = cartService.getUserCart(userId);
             logger.debug("CART: {} ", cartDto);
-
-            System.out.println("User Found: " + user);
 
             return ResponseEntity.ok().body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                     .data(Map.of("cart", cartDto)).message("Cart Found").status(HttpStatus.OK).statusCode(200).build());

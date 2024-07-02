@@ -13,7 +13,7 @@ public interface OrderMapper {
     @Mapping(target = "userId", source = "user.userId")
     OrderDTO toOrderDTO(Order order);
 
-    @Mapping(target = "paymentDetails", ignore = true)
+    // @Mapping(target = "paymentDetails", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "orderItems", source = "orderItems")
     @Mapping(target = "user.userId", source = "userId")

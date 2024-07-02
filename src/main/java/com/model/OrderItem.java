@@ -29,9 +29,8 @@ public class OrderItem {
     @JoinColumn(name = "product_id")
     private Product product;
     private String size;
-    private int quantity;
+    private Integer quantity;
     private Integer orderPrice;
     private Integer discountedPrice;
-
     private LocalDateTime deliveryDate;
 }

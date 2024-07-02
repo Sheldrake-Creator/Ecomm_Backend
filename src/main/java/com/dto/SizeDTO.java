@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class SizeDTO {
 
     private String name;
-    private int quantity;
+    private Integer quantity;
 
 }

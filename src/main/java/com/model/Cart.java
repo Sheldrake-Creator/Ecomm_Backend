@@ -32,12 +32,12 @@ public class Cart {
     private Set<CartItem> cartItems;
 
     @Column(name = "total_price")
-    private double totalPrice;
+    private Integer totalPrice;
 
     @Column(name = "total_items")
-    private int totalItems;
+    private Integer totalItems;
 
-    private int totalDiscountedPrice;
+    private Integer totalDiscountedPrice;
 
     @Override
     public int hashCode() {

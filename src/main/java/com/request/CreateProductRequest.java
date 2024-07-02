@@ -9,14 +9,14 @@ public class CreateProductRequest {
 
     private String title;
     private String description;
-    private int price;
-    private int discountedPrice;
-    private int discountPresent;
-    private int quantity;
+    private Integer price;
+    private Integer discountedPrice;
+    private Integer discountPresent;
+    private Integer quantity;
     private String brand;
     private String color;
 
-    private Set<Size> size=new HashSet<>();
+    private Set<Size> size = new HashSet<>();
     private String imageUrl;
     private String firstLevelCategory;
     private String secondLevelCategory;
@@ -25,9 +25,9 @@ public class CreateProductRequest {
     public CreateProductRequest() {
     }
 
-    public CreateProductRequest(String title, String description, int price, int discountedPrice, int discountPresent,
-                                int quantity, String brand, String color, Set<Size> size, String imageUrl,
-                                String firstLevelCategory, String secondLevelCategory, String thirdLevelCategory) {
+    public CreateProductRequest(String title, String description, Integer price, Integer discountedPrice,
+            Integer discountPresent, Integer quantity, String brand, String color, Set<Size> size, String imageUrl,
+            String firstLevelCategory, String secondLevelCategory, String thirdLevelCategory) {
         this.title = title;
         this.description = description;
         this.price = price;
@@ -59,7 +59,7 @@ public class CreateProductRequest {
         this.description = description;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
@@ -67,7 +67,7 @@ public class CreateProductRequest {
         this.price = price;
     }
 
-    public int getDiscountedPrice() {
+    public Integer getDiscountedPrice() {
         return discountedPrice;
     }
 
@@ -75,7 +75,7 @@ public class CreateProductRequest {
         this.discountedPrice = discountedPrice;
     }
 
-    public int getDiscountPresent() {
+    public Integer getDiscountPresent() {
         return discountPresent;
     }
 
@@ -83,7 +83,7 @@ public class CreateProductRequest {
         this.discountPresent = discountPresent;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
