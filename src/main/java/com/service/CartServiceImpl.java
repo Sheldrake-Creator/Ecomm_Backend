@@ -137,11 +137,11 @@ public class CartServiceImpl implements CartService {
     @Override
     public void checkoutCart(Long cartId) throws CartException {
         try {
+            // Delete User Cart
+            this.cartItemRepository.deleteCartItemsByCartId(cartId);
             // Delete CartItems
             this.cartRepository.deleteCartById(cartId);
 
-            // Delete User Cart
-            this.cartItemRepository.deleteCartItemsByCartId(cartId);
         } catch (RepositoryException e) {
             e.printStackTrace();
         }

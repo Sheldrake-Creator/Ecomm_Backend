@@ -17,6 +17,6 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     Optional<Cart> findByUserId(@Param("userId") Long userId) throws DataAccessException, RepositoryException;
 
     @Modifying
-    @Query("SELECT c From Cart c Where c.cartId=:cartId")
+    @Query("DELETE From Cart c Where c.cartId=:cartId")
     void deleteCartById(@Param("cartId") Long userId) throws RepositoryException;
 }

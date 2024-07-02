@@ -82,6 +82,9 @@ public class CartItemController {
         public ResponseEntity<HttpResponse> updateCartItem(@RequestBody CartItemDTO cartItem,
                         @PathVariable Long cartItemId) throws UserException, CartItemException {
                 try {
+                        logger.debug("Req CartItemDTO: {}", cartItem);
+
+                        logger.debug("Req cartItemId: {}", cartItemId);
                         CartItemDTO updatedCartItem = cartItemService.updateCartItem(cartItemId, cartItem);
                         return ResponseEntity.ok().body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                                         .message("Cart Item updated!").status(HttpStatus.OK).statusCode(200)
