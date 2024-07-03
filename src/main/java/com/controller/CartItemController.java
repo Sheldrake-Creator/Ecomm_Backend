@@ -70,11 +70,13 @@ public class CartItemController {
                         @RequestHeader("Authorization") String jwt) throws UserException, CartItemException {
 
                 Long userId = userService.getUserIdByJwt(jwt);
+                CartItemDTO cartItem = new CartItemDTO();
+                cartItem.setCartItemId(cartItemId);
 
                 cartItemService.removeCartItem(userId, cartItemId);
                 return ResponseEntity.ok().body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
-                                .data(Map.of("cartItem", "Item Removed from cart"))
-                                .message("CartItem Removed from Cart").status(HttpStatus.OK).statusCode(200).build());
+                                .data(Map.of("cartItem", cartItem)).message("CartItem Removed from Cart")
+                                .status(HttpStatus.OK).statusCode(200).build());
         }
 
         @PutMapping("/{cartItemId}")
