@@ -25,27 +25,24 @@ public class UserAuthProvider {
     private String secretKey;
 
     @PostConstruct
-    protected void init(){
+    protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
-    public String createToken(UserDTO userDTO){
+
+    public String createToken(UserDTO userDTO) {
         Date now = new Date();
-        Date validity = new Date(now.getTime() + 3_600_000);
-        return JWT.create()
-                .withIssuer(userDTO.getUserName())
-                .withIssuedAt(now)
-                .withExpiresAt(validity)
-                .withClaim("email", userDTO.getEmail())
-                .sign(Algorithm.HMAC256(secretKey));
+        Date validity = new Date(now.getTime() + 43_200_000);
+        return JWT.create().withIssuer(userDTO.getUserName()).withIssuedAt(now).withExpiresAt(validity)
+                .withClaim("email", userDTO.getEmail()).sign(Algorithm.HMAC256(secretKey));
     }
 
-    public Authentication validateToken(String token){
+    public Authentication validateToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decoded = verifier.verify(token);
         UserDTO user = new UserDTO();
-                user.setUserName(decoded.getIssuer()); 
-                user.setEmail(decoded.getClaim("email").asString());
+        user.setUserName(decoded.getIssuer());
+        user.setEmail(decoded.getClaim("email").asString());
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
     }
 
@@ -57,9 +54,8 @@ public class UserAuthProvider {
         String accessToken = token.replace("Bearer ", ""); // delete Bearer
         System.out.println("JWT : " + accessToken); // TokenValue
         DecodedJWT decoded = verifier.verify(accessToken);
-        //* TODO fix this shit later. Authentication needs to be stricter  */
-        return decoded.getIssuer();        
+        // * TODO fix this shit later. Authentication needs to be stricter */
+        return decoded.getIssuer();
     }
-
 
 }

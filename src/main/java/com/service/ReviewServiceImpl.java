@@ -34,6 +34,10 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDTO createReview(ReviewRequest req, UserDTO user) throws ProductException {
+
+        logger.debug("Req: {}", req);
+        logger.debug("UserDTO: {}", user);
+
         ProductDTO product = productService.findProductById(req.getProductId());
 
         ReviewDTO review = new ReviewDTO();

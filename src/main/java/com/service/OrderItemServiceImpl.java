@@ -16,11 +16,12 @@ import lombok.RequiredArgsConstructor;
 public class OrderItemServiceImpl implements OrderItemService {
 
     private final OrderItemRepository orderItemRepository;
-    private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(OrderItemServiceImpl.class);
 
     @Override
     public OrderItem createOrderItem(OrderItem orderItem) {
 
+        logger.debug("OrderItemDTO: {}", orderItem);
         return orderItemRepository.save(orderItem);
     }
 

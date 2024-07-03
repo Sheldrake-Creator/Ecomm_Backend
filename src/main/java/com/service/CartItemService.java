@@ -11,7 +11,7 @@ public interface CartItemService {
 
         boolean doesCartItemExist(CartDTO cart, ProductDTO product, String size) throws CartItemException;
 
-        CartDTO removeCartItem(Long userId, Long cartItemId) throws CartItemException;
+        void removeCartItem(Long userId, Long cartItemId) throws CartItemException;
 
         CartItemDTO findCartItemById(Long cartItemId) throws CartItemException;
 

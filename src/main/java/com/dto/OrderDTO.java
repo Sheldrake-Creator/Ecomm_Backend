@@ -2,7 +2,6 @@ package com.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,9 +19,9 @@ public class OrderDTO {
     // private PaymentDetailsDTO PaymentDetails;
     private Integer totalPrice;
     private Integer totalDiscountedPrice;
+    private Integer totalItems;
     private Integer discount;
     private String orderStatus;
-    private Integer totalItems;
     private LocalDateTime deliveryDate;
     private LocalDateTime orderDate;
     private Long userId;

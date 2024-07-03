@@ -69,12 +69,13 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CartDTO removeCartItem(Long userId, Long cartItemId) throws CartItemException {
+    public void removeCartItem(Long userId, Long cartItemId) throws CartItemException {
         try {
             this.cartItemRepository.deleteCartItemById(cartItemId);
             CartDTO cart = cartService.findUserCart(userId);
-            CartDTO newCart = this.cartService.syncCartWithCartItems(cart);
-            return newCart;
+            this.cartService.syncCartWithCartItems(cart);
+
+            // return cartItemId;
         } catch (CartException e) {
             throw new CartItemException("Cart Item not Found", e);
         }

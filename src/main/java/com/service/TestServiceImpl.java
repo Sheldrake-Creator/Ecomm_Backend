@@ -1,40 +1,39 @@
 package com.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dto.CartDTO;
-import com.dto.CartItemDTO;
-import com.dto.ProductDTO;
-import com.dto.RatingDTO;
-import com.dto.ReviewDTO;
-import com.dto.UserDTO;
 import com.exception.CartException;
 import com.exception.CartItemException;
 import com.exception.RatingException;
 import com.exception.ReviewException;
 import com.exception.UserException;
-import com.mapper.CartItemMapper;
-import com.mapper.CartMapper;
-import com.mapper.ProductMapper;
-import com.mapper.UserMapper;
-import com.model.Cart;
-import com.model.CartItem;
-import com.model.Product;
-import com.model.Review;
-import com.model.User;
-import com.repository.CartItemRepository;
-import com.repository.CartRepository;
-import com.repository.OrderItemRepository;
-import com.repository.OrderRepository;
-import com.repository.ProductRepository;
-import com.repository.ReviewRepository;
-import com.repository.UserRepository;
+
+// import java.util.List;
+// import java.util.Optional;
+
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
+// import org.springframework.stereotype.Service;
+// import org.springframework.transaction.annotation.Transactional;
+// import com.dto.ProductDTO;
+// import com.exception.CartException;
+// import com.exception.CartItemException;
+// import com.exception.RatingException;
+// import com.exception.ReviewException;
+// import com.exception.UserException;
+// import com.mapper.CartItemMapper;
+// import com.mapper.CartMapper;
+// import com.mapper.ProductMapper;
+// import com.mapper.UserMapper;
+// import com.model.Product;
+// import com.repository.CartItemRepository;
+// import com.repository.CartRepository;
+// import com.repository.OrderItemRepository;
+// import com.repository.OrderRepository;
+// import com.repository.ProductRepository;
+// import com.repository.ReviewRepository;
+// import com.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,38 +42,40 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class TestServiceImpl implements TestService {
     // Repos
-    private final UserRepository userRepository;
-    private final CartRepository cartRepository;
-    private final CartItemRepository cartItemRepository;
-    private final ProductRepository productRepository;
-    private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
-    private final ReviewRepository reviewsRep;
-    private final ReviewRepository RatingsRep;
+    // private final UserRepository userRepository;
+    // private final CartRepository cartRepository;
+    // private final CartItemRepository cartItemRepository;
+    // private final ProductRepository productRepository;
+    // private final OrderRepository orderRepository;
+    // private final OrderItemRepository orderItemRepository;
+    // private final ReviewRepository reviewsRep;
+    // private final ReviewRepository RatingsRep;
 
-    // Services
-    private final UserService userService;
-    private final CartService cartService;
-    private final CartItemService cartItemService;
-    private final ProductService productService;
-    private final OrderService orderService;
-    private final ReviewService reviewService;
-    private final RatingService ratingService;
+    // // Services
+    // private final UserService userService;
+    // private final CartService cartService;
+    // private final CartItemService cartItemService;
+    // private final ProductService productService;
+    // private final OrderService orderService;
+    // private final ReviewService reviewService;
+    // private final RatingService ratingService;
 
-    private final UserMapper userMapper;
-    private final CartMapper cartMapper;
-    private final CartItemMapper cartItemMapper;
-    private final ProductMapper productMapper;
-    private final CartService cartServices;
-    private final Logger logger = LoggerFactory.getLogger(TestServiceImpl.class);
+    // private final UserMapper userMapper;
+    // private final CartMapper cartMapper;
+    // private final CartItemMapper cartItemMapper;
+    // private final ProductMapper productMapper;
+    // private final CartService cartServices;
+    // private final Logger logger = LoggerFactory.getLogger(TestServiceImpl.class);
+    // private ProductRepository productRepository;
 
     public void testEverything(String jwt)
             throws UserException, CartException, CartItemException, ReviewException, RatingException {
-        Optional<Product> product = this.productRepository.findById(1L);
-        logger.debug("Product: {}", product.get());
+        // Optional<Product> product = this.productRepository.findById(id);
+        // // logger.debug("Product: {}", product.get());
 
-        ProductDTO prodDTO = productMapper.toProductDTO(product.get());
-        logger.debug("ProductDTO: {}", prodDTO);
+        // ProductMapper productMapper;
+        // ProductDTO prodDTO = productMapper.toProductDTO(product.get());
+        // logger.debug("ProductDTO: {}", prodDTO);
 
         // System.out.println("CALLING User");
         // UserDTO user = this.userService.findUserProfileByJwt(jwt);

@@ -46,14 +46,13 @@ public class SecurityConfig {
                                                                 "/api/admin/orders/{orderId}/confirmed",
                                                                 "/api/admin/orders/{orderId}/shipping",
                                                                 "/api/admin/products/{productId}/update",
-                                                                "/api/cart/add", "api/item/{cartItemId}")
+                                                                "/api/cart/add", "/api/item/{cartItemId}")
                                                 .permitAll()
                                                 .requestMatchers(HttpMethod.DELETE, "/api/item/{cartItemId}",
                                                                 "/api/admin/orders/{orderId}/delete",
                                                                 "/api/admin/products/{productId}/delete",
                                                                 "api/item/{cartItemId}")
                                                 .permitAll().anyRequest().authenticated());
-
                 return http.build();
         }
 }
