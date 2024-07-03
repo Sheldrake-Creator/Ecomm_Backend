@@ -128,7 +128,7 @@ public class CartItemServiceImpl implements CartItemService {
                 logger.debug("existingCartItems: {}", existingCartItems);
                 CartItemDTO newCartItem = new CartItemDTO();
 
-                newCartItem.setProductId(product.getProductId());
+                newCartItem.setProduct(product);
                 newCartItem.setCartId(existingCart.getCartId());
                 logger.debug("cartId: {}", existingCart.getCartId());
                 newCartItem.setQuantity(quantity);

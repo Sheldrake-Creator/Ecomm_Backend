@@ -72,9 +72,9 @@ public class OrderServiceImpl implements OrderService {
         Order savedOrder = orderRepository.save(orderMapper.toOrder(createdOrder));
 
         for (CartItemDTO item : cart.getCartItems()) {
-            OrderItemDTO orderItem = OrderItemDTO.builder().orderPrice(item.getPrice()).productId(item.getProductId())
-                    .quantity(item.getQuantity()).size(item.getSize()).discountedPrice(item.getDiscountedPrice())
-                    .orderId(savedOrder.getOrderId()).build();
+            OrderItemDTO orderItem = OrderItemDTO.builder().orderPrice(item.getPrice())
+                    .productId(item.getProduct().getProductId()).quantity(item.getQuantity()).size(item.getSize())
+                    .discountedPrice(item.getDiscountedPrice()).orderId(savedOrder.getOrderId()).build();
 
             this.orderItemRepository.save(orderItemMapper.toOrderItem(orderItem));
             orderItemList.add(orderItem);
