@@ -36,7 +36,7 @@ public class CartItemServiceImpl implements CartItemService {
     private final Logger logger = LoggerFactory.getLogger(CartItemServiceImpl.class);
 
     @Override
-    public CartItemDTO updateCartItem(Long cartItemId, CartItemDTO newCartItemDto) throws CartItemException {
+    public CartDTO updateCartItem(Long cartItemId, CartItemDTO newCartItemDto) throws CartItemException {
         try {
 
             logger.debug("cartItemId: {}", cartItemId);
@@ -56,11 +56,11 @@ public class CartItemServiceImpl implements CartItemService {
 
             CartDTO cart = this.cartService.findCartByCartId(existingCartItem.getCart().getCartId());
             logger.debug("cart: {}", cart);
-            this.cartService.syncCartWithCartItems(cart);
-            CartItemDTO newCartItem = cartItemMapper.toCartItemDTO(existingCartItem);
-            logger.debug("cart: {}", newCartItem);
+            cart = this.cartService.syncCartWithCartItems(cart);
 
-            return newCartItem;
+            logger.debug("cart: {}", cart);
+
+            return cart;
         } catch (DataAccessException e) {
             throw new CartItemException("CartItem Exception Thrown", e);
         } catch (CartException e) {

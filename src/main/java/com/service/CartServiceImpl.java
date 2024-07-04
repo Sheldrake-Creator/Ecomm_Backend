@@ -115,8 +115,8 @@ public class CartServiceImpl implements CartService {
 
             for (CartItemDTO cartItem : cartItems) {
                 newTotalItems += cartItem.getQuantity();
-                newTotalPrice += (cartItem.getPrice() * cartItem.getQuantity());
-                newTotalDiscountedPrice += (cartItem.getDiscountedPrice() * cartItem.getQuantity());
+                newTotalPrice += (cartItem.getProduct().getPrice() * cartItem.getQuantity());
+                newTotalDiscountedPrice += (cartItem.getProduct().getDiscountedPrice() * cartItem.getQuantity());
             }
 
             cart.setTotalDiscountedPrice(newTotalDiscountedPrice);
