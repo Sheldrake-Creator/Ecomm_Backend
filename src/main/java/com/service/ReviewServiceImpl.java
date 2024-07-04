@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dto.ProductDTO;
 import com.dto.ReviewDTO;
 import com.dto.UserDTO;
-import com.exception.ProductException;
-import com.exception.ReviewException;
+import com.exception.ProductServiceException;
+import com.exception.ReviewServiceException;
 import com.mapper.ReviewMapper;
 import com.model.Review;
 import com.repository.ReviewRepository;
@@ -33,7 +33,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
 
     @Override
-    public ReviewDTO createReview(ReviewRequest req, UserDTO user) throws ProductException {
+    public ReviewDTO createReview(ReviewRequest req, UserDTO user) throws ProductServiceException {
 
         logger.debug("Req: {}", req);
         logger.debug("UserDTO: {}", user);
@@ -50,11 +50,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewDTO> getAllReviews(Long productId) throws ReviewException {
+    public List<ReviewDTO> getAllReviews(Long productId) throws ReviewServiceException {
         Optional<List<Review>> oReviews = reviewRepository.getAllProductReview(productId);
         List<ReviewDTO> reviewDtos = new ArrayList<>();
         if (!oReviews.isPresent()) {
-            throw new ReviewException("Product ID did not return any reviews");
+            throw new ReviewServiceException("Product ID did not return any reviews");
         }
         List<Review> reviewEntities = oReviews.get();
 

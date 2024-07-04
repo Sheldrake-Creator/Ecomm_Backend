@@ -3,6 +3,7 @@ package com.service;
 import com.dto.CartDTO;
 import com.dto.CartItemDTO;
 import com.dto.ProductDTO;
+import com.exception.CartServiceException;
 import com.exception.CartItemException;
 
 public interface CartItemService {
@@ -15,6 +16,7 @@ public interface CartItemService {
 
         CartItemDTO findCartItemById(Long cartItemId) throws CartItemException;
 
-        CartDTO addItemToCart(Long userId, Integer quantity, String size, long productId) throws CartItemException;
+        CartDTO addItemToCart(Long userId, Integer quantity, String size, long productId)
+                        throws CartItemException, CartServiceException;
 
 }

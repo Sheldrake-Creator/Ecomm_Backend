@@ -3,8 +3,8 @@ package com.controller;
 import com.dto.AddressDTO;
 import com.dto.OrderDTO;
 import com.dto.UserDTO;
-import com.exception.OrderException;
-import com.exception.UserException;
+import com.exception.OrderServiceException;
+import com.exception.UserServiceException;
 import com.response.HttpResponse;
 import com.service.OrderService;
 import com.service.UserService;
@@ -40,7 +40,7 @@ public class OrderController {
                                                         .message("Address Added to User Profile")
                                                         .status(HttpStatus.CREATED)
                                                         .statusCode(HttpStatus.CREATED.value()).build());
-                } catch (UserException e) {
+                } catch (UserServiceException e) {
                         logger.error("Error creating order: User exception", e);
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                         .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
@@ -68,7 +68,7 @@ public class OrderController {
                                                         .data(Map.of("order", order)).message("Order created")
                                                         .status(HttpStatus.CREATED)
                                                         .statusCode(HttpStatus.CREATED.value()).build());
-                } catch (UserException e) {
+                } catch (UserServiceException e) {
                         logger.error("Error creating order: User exception", e);
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                         .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
@@ -94,14 +94,14 @@ public class OrderController {
                         return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                                         .data(Map.of("orders", orders)).message("User order history retrieved")
                                         .status(HttpStatus.OK).statusCode(HttpStatus.OK.value()).build());
-                } catch (UserException e) {
+                } catch (UserServiceException e) {
                         logger.error("Error retrieving order history: User exception", e);
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                         .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                                                         .message("Error retrieving order history: User exception")
                                                         .status(HttpStatus.BAD_REQUEST)
                                                         .statusCode(HttpStatus.BAD_REQUEST.value()).build());
-                } catch (OrderException e) {
+                } catch (OrderServiceException e) {
                         logger.error("Error retrieving order history: Order exception", e);
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                         .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
@@ -129,7 +129,7 @@ public class OrderController {
                         return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                                         .data(Map.of("order", order)).message("Order retrieved").status(HttpStatus.OK)
                                         .statusCode(HttpStatus.OK.value()).build());
-                } catch (OrderException e) {
+                } catch (OrderServiceException e) {
                         logger.error("Error retrieving order: Order exception", e);
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                         .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())

@@ -8,9 +8,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import com.dto.CartDTO;
 import com.dto.CartItemDTO;
-import com.exception.CartException;
+import com.exception.CartServiceException;
 import com.exception.RepositoryException;
-import com.exception.UserException;
+import com.exception.UserServiceException;
 import com.mapper.CartMapper;
 import com.model.Cart;
 import com.repository.CartItemRepository;
@@ -50,10 +50,10 @@ public class CartServiceImpl implements CartService {
         }
     }
 
-    public CartDTO findCartByCartId(Long cartId) throws CartException {
+    public CartDTO findCartByCartId(Long cartId) throws CartServiceException {
         Optional<Cart> optionalCart = cartRepository.findById(cartId);
         if (!optionalCart.isPresent()) {
-            throw new CartException("Cart with ID: " + cartId + " not found");
+            throw new CartServiceException("Cart with ID: " + cartId + " not found");
         }
         CartDTO cart = cartMapper.toCartDTO(optionalCart.get());
         return cart;
@@ -61,7 +61,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional(readOnly = true)
-    public CartDTO findUserCart(Long userId) throws CartException {
+    public CartDTO findUserCart(Long userId) throws CartServiceException {
         try {
 
             logger.debug("Enter: findUserCart");
@@ -70,7 +70,7 @@ public class CartServiceImpl implements CartService {
 
             // Handle case when cart is not found
             if (!optionalCart.isPresent()) {
-                throw new UserException("Cart not found with UserId");
+                throw new UserServiceException("Cart not found with UserId");
             }
 
             CartDTO cart = cartMapper.toCartDTO(optionalCart.get());
@@ -78,15 +78,16 @@ public class CartServiceImpl implements CartService {
             LogUtils.exit();
             return cart;
 
-        } catch (DataAccessException | UserException e) {
+        } catch (DataAccessException | UserServiceException e) {
             logger.error("Data access error while finding cart for user with ID: {}", userId, e);
-            throw new CartException("An unexpected error occurred while retrieving the cart for user with ID: ", e);
+            throw new CartServiceException("An unexpected error occurred while retrieving the cart for user with ID: ",
+                    e);
         }
     }
 
     @Override
     @Transactional
-    public CartDTO getUserCart(Long userId) throws CartException {
+    public CartDTO getUserCart(Long userId) throws CartServiceException {
         try {
             CartDTO cart;
             logger.debug("Fetching cart for user: {}", userId);
@@ -100,12 +101,12 @@ public class CartServiceImpl implements CartService {
             return cart;
         } catch (DataAccessException e) {
             logger.error("Unexpected error occurred while getting user cart: ", e);
-            throw new CartException("Unexpected error occurred while getting user cart", e);
+            throw new CartServiceException("Unexpected error occurred while getting user cart", e);
         }
     }
 
     @Override
-    public CartDTO syncCartWithCartItems(CartDTO cart) throws CartException {
+    public CartDTO syncCartWithCartItems(CartDTO cart) throws CartServiceException {
         try {
 
             Set<CartItemDTO> cartItems = cart.getCartItems();
@@ -130,12 +131,12 @@ public class CartServiceImpl implements CartService {
 
         } catch (DataAccessException e) {
             e.getStackTrace();
-            throw new CartException("Cart not found");
+            throw new CartServiceException("Cart not found");
         }
     }
 
     @Override
-    public void checkoutCart(Long cartId) throws CartException {
+    public void checkoutCart(Long cartId) throws CartServiceException {
         try {
             // Delete User Cart
             this.cartItemRepository.deleteCartItemsByCartId(cartId);

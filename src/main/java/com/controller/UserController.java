@@ -1,7 +1,7 @@
 package com.controller;
 
 import com.dto.UserDTO;
-import com.exception.UserException;
+import com.exception.UserServiceException;
 import com.response.HttpResponse;
 import com.service.TestService;
 import com.service.UserService;
@@ -31,7 +31,7 @@ public class UserController {
         try {
             UserDTO userDTO = userService.findUserProfileByJwt(jwt);
             if (userDTO == null) {
-                throw new UserException("Authorization Issue is Occuring");
+                throw new UserServiceException("Authorization Issue is Occuring");
             }
 
             logger.debug("UserName: {}", userDTO.getUserName());
@@ -39,7 +39,7 @@ public class UserController {
             UserDTO profile = userService.findUserById(userDTO.getUserId());
 
             if (profile == null) {
-                throw new UserException("User UserId not found");
+                throw new UserServiceException("User UserId not found");
             }
 
             logger.debug("User profile found: {}", profile.getUserName());
@@ -47,7 +47,7 @@ public class UserController {
             return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                     .data(Map.of("user", profile)).message("User profile fetched successfully").status(HttpStatus.OK)
                     .statusCode(HttpStatus.OK.value()).build());
-        } catch (UserException e) {
+        } catch (UserServiceException e) {
             logger.error("Error fetching user profile", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString()).message(e.getMessage())

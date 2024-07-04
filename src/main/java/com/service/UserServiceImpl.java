@@ -4,7 +4,7 @@ import com.dto.CredentialsDTO;
 import com.dto.SignUpDTO;
 import com.dto.UserDTO;
 import com.exception.AuthException;
-import com.exception.UserException;
+import com.exception.UserServiceException;
 import com.mapper.UserMapper;
 import com.model.User;
 import com.repository.UserRepository;
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
-    public UserDTO findUserById(Long userId) throws UserException {
+    public UserDTO findUserById(Long userId) throws UserServiceException {
         logger.debug("User ID : {}", userId);
 
         Optional<User> user = userRepository.findUserByUserId(userId);
@@ -42,17 +42,17 @@ public class UserServiceImpl implements UserService {
         if (user.isPresent()) {
             return userMapper.toUserDto(user.get());
         }
-        throw new UserException("user not found with userId - " + userId);
+        throw new UserServiceException("user not found with userId - " + userId);
     }
 
     @Override
-    public User findUserByEmail(String email) throws UserException {
+    public User findUserByEmail(String email) throws UserServiceException {
         Optional<User> optionalUser = userRepository.findByEmail(email);
 
         if (optionalUser != null) {
             return optionalUser.get();
         }
-        throw new UserException("User Profile not found with email" + email);
+        throw new UserServiceException("User Profile not found with email" + email);
     }
 
     @Override
@@ -91,17 +91,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findUserProfileByJwt(String jwt) throws UserException {
+    public UserDTO findUserProfileByJwt(String jwt) throws UserServiceException {
         String userName = userAuthProvider.getUserNameFromToken(jwt);
         Optional<User> user = userRepository.findByUserName(userName);
         if (user.isPresent()) {
             return userMapper.toUserDto(user.get());
         }
-        throw new UserException("User Profile not found with User Name" + userName);
+        throw new UserServiceException("User Profile not found with User Name" + userName);
     }
 
     @Override
-    public Long getUserIdByJwt(String jwt) throws UserException {
+    public Long getUserIdByJwt(String jwt) throws UserServiceException {
         String userName = userAuthProvider.getUserNameFromToken(jwt);
 
         logger.debug("userName: {}", userName);
@@ -110,6 +110,6 @@ public class UserServiceImpl implements UserService {
         if (userId.isPresent()) {
             return userId.get();
         }
-        throw new UserException("UserId not found with User Name" + userName);
+        throw new UserServiceException("UserId not found with User Name" + userName);
     }
 }

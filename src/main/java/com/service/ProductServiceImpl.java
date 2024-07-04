@@ -1,7 +1,7 @@
 package com.service;
 
 import com.dto.ProductDTO;
-import com.exception.ProductException;
+import com.exception.ProductServiceException;
 import com.mapper.ProductMapper;
 import com.model.Category;
 import com.model.Product;
@@ -40,9 +40,9 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO createProduct(CreateProductRequest req) {
 
         // Fetch or create top-level category
-        Category firstLevel = categoryRepository.findByName(req.getTopLevelCategory()).orElseGet(() -> {
+        Category firstLevel = categoryRepository.findByName(req.getFirstLevelCategory()).orElseGet(() -> {
             Category firstLevelCategory = new Category();
-            firstLevelCategory.setName(req.getTopLevelCategory());
+            firstLevelCategory.setName(req.getFirstLevelCategory());
             firstLevelCategory.setLevel(1);
             return categoryRepository.save(firstLevelCategory);
         });
@@ -86,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public String deleteProduct(Long productId) throws ProductException {
+    public String deleteProduct(Long productId) throws ProductServiceException {
 
         ProductDTO product = findProductById(productId);
         product.getSizes().clear();
@@ -96,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO updateProduct(ProductDTO req, Long productId) throws ProductException {
+    public ProductDTO updateProduct(ProductDTO req, Long productId) throws ProductServiceException {
 
         ProductDTO product = findProductById(productId);
 
@@ -109,7 +109,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO findProductById(Long id) throws ProductException {
+    public ProductDTO findProductById(Long id) throws ProductServiceException {
         logger.debug("ProductId: {}", id);
 
         Optional<Product> product = productRepository.findById(id);
@@ -119,11 +119,11 @@ public class ProductServiceImpl implements ProductService {
             return productDto;
         }
 
-        throw new ProductException("Product not found with id - " + id);
+        throw new ProductServiceException("Product not found with id - " + id);
     }
 
     @Override
-    public ProductDTO findProductByCategory(String category) throws ProductException {
+    public ProductDTO findProductByCategory(String category) throws ProductServiceException {
         return null;
     }
 

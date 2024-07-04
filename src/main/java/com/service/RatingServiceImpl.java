@@ -13,8 +13,8 @@ import com.dto.ProductDTO;
 import com.dto.RatingDTO;
 import com.dto.UserDTO;
 import com.exception.CartItemException;
-import com.exception.ProductException;
-import com.exception.RatingException;
+import com.exception.ProductServiceException;
+import com.exception.RatingServiceException;
 import com.mapper.RatingMapper;
 import com.model.Rating;
 import com.repository.RatingRepository;
@@ -33,7 +33,7 @@ public class RatingServiceImpl implements RatingService {
     private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
 
     @Override
-    public RatingDTO createRating(RatingRequest req, UserDTO user) throws ProductException {
+    public RatingDTO createRating(RatingRequest req, UserDTO user) throws ProductServiceException {
         logger.debug("req: {}", req);
         logger.debug("userDTO in Request: {}", user);
 
@@ -60,14 +60,14 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public List<RatingDTO> getAllRatings(Long productId) throws RatingException {
+    public List<RatingDTO> getAllRatings(Long productId) throws RatingServiceException {
         try {
             return ratingRepository.getAllProductsRating(productId).orElseThrow(() -> {
                 logger.error("No Cart Found with UserId: {}", productId);
                 return new CartItemException("No Cart Found with UserId: " + productId);
             }).stream().map(ratingMapper::toRatingDTO).collect(Collectors.toList());
         } catch (CartItemException e) {
-            throw new RatingException(
+            throw new RatingServiceException(
                     "An unexpected error occurred while retrieving the rating for user with ProductId: ", e);
         }
     }

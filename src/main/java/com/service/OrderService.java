@@ -7,31 +7,31 @@ import org.springframework.stereotype.Service;
 import com.dto.AddressDTO;
 import com.dto.OrderDTO;
 import com.dto.UserDTO;
-import com.exception.CartException;
-import com.exception.OrderException;
+import com.exception.CartServiceException;
+import com.exception.OrderServiceException;
 
 @Service
 public interface OrderService {
 
-    public OrderDTO createOrder(UserDTO user) throws CartException, OrderException;
+    public OrderDTO createOrder(UserDTO user) throws CartServiceException, OrderServiceException;
 
-    public OrderDTO findOrderById(Long orderId) throws OrderException;
+    public OrderDTO findOrderById(Long orderId) throws OrderServiceException;
 
-    public List<OrderDTO> usersOrderHistory(Long userId) throws OrderException;
+    public List<OrderDTO> usersOrderHistory(Long userId) throws OrderServiceException;
 
-    public OrderDTO placedOrder(Long orderId) throws OrderException;
+    public OrderDTO placedOrder(Long orderId) throws OrderServiceException;
 
-    public OrderDTO confirmedOrder(Long orderId) throws OrderException;
+    public OrderDTO confirmedOrder(Long orderId) throws OrderServiceException;
 
-    public OrderDTO shippedOrder(Long orderId) throws OrderException;
+    public OrderDTO shippedOrder(Long orderId) throws OrderServiceException;
 
-    public OrderDTO deliveredOrder(Long orderId) throws OrderException;
+    public OrderDTO deliveredOrder(Long orderId) throws OrderServiceException;
 
-    public OrderDTO canceledOrder(Long orderId) throws OrderException;
+    public OrderDTO canceledOrder(Long orderId) throws OrderServiceException;
 
-    public List<OrderDTO> getAllOrders() throws OrderException;
+    public List<OrderDTO> getAllOrders() throws OrderServiceException;
 
-    public void deleteOrder(Long orderId) throws OrderException;
+    public void deleteOrder(Long orderId) throws OrderServiceException;
 
-    public void addAddress(Long UserId, AddressDTO address) throws OrderException;
+    public void addAddress(Long UserId, AddressDTO address) throws OrderServiceException;
 }

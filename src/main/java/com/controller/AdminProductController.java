@@ -1,7 +1,7 @@
 package com.controller;
 
 import com.dto.ProductDTO;
-import com.exception.ProductException;
+import com.exception.ProductServiceException;
 import com.request.CreateProductRequest;
 import com.response.HttpResponse;
 import com.service.ProductService;
@@ -92,7 +92,7 @@ public class AdminProductController {
             return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                     .message("Product deleted successfully").status(HttpStatus.OK).statusCode(HttpStatus.OK.value())
                     .build());
-        } catch (ProductException e) {
+        } catch (ProductServiceException e) {
             logger.error("Error deleting product", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
@@ -116,7 +116,7 @@ public class AdminProductController {
                     .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                             .data(Map.of("product", product)).message("Product updated").status(HttpStatus.CREATED)
                             .statusCode(HttpStatus.CREATED.value()).build());
-        } catch (ProductException e) {
+        } catch (ProductServiceException e) {
             logger.error("Error updating product", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())

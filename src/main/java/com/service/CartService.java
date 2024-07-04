@@ -1,19 +1,19 @@
 package com.service;
 
 import com.dto.CartDTO;
-import com.exception.CartException;
+import com.exception.CartServiceException;
 
 public interface CartService {
 
-    CartDTO createCart(Long userId) throws CartException;
+    CartDTO createCart(Long userId) throws CartServiceException;
 
-    CartDTO getUserCart(Long userId) throws CartException;
+    CartDTO getUserCart(Long userId) throws CartServiceException;
 
-    CartDTO findUserCart(Long userId) throws CartException;
+    CartDTO findUserCart(Long userId) throws CartServiceException;
 
-    CartDTO findCartByCartId(Long cartId) throws CartException;
+    CartDTO findCartByCartId(Long cartId) throws CartServiceException;
 
-    CartDTO syncCartWithCartItems(CartDTO cart) throws CartException;
+    CartDTO syncCartWithCartItems(CartDTO cart) throws CartServiceException;
 
-    void checkoutCart(Long cartId) throws CartException;
+    void checkoutCart(Long cartId) throws CartServiceException;
 }

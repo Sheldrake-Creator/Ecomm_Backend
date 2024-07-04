@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dto.CartDTO;
 import com.dto.CartItemDTO;
+import com.exception.CartServiceException;
 import com.exception.CartItemException;
-import com.exception.UserException;
+import com.exception.UserServiceException;
 import com.request.AddItemRequest;
 import com.response.HttpResponse;
 import com.service.CartItemService;
@@ -42,7 +43,7 @@ public class CartItemController {
         @PutMapping("/add")
         @Operation(description = "add item to cart")
         public ResponseEntity<HttpResponse> addItemToCart(@RequestHeader("Authorization") String jwt,
-                        @RequestBody AddItemRequest req) throws UserException, CartItemException {
+                        @RequestBody AddItemRequest req) {
                 try {
                         Long userId = userService.getUserIdByJwt(jwt);
 
@@ -52,13 +53,18 @@ public class CartItemController {
                         return ResponseEntity.ok().body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                                         .message("Item Successfully Added to cart").data(Map.of("Cart", data))
                                         .status(HttpStatus.OK).statusCode(200).build());
-                } catch (UserException e) {
+                } catch (UserServiceException e) {
                         return ResponseEntity.badRequest()
                                         .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                                                         .message("User not found").status(HttpStatus.BAD_REQUEST)
                                                         .statusCode(HttpStatus.BAD_REQUEST.value()).build());
 
                 } catch (CartItemException e) {
+                        return ResponseEntity.badRequest()
+                                        .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                                                        .message("Cart Item not found").status(HttpStatus.BAD_REQUEST)
+                                                        .statusCode(HttpStatus.BAD_REQUEST.value()).build());
+                } catch (CartServiceException e) {
                         return ResponseEntity.badRequest()
                                         .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                                                         .message("Cart not found").status(HttpStatus.BAD_REQUEST)
@@ -69,22 +75,34 @@ public class CartItemController {
         @DeleteMapping("/{cartItemId}")
         @Operation(description = "Remove Cart Item From Cart")
         public ResponseEntity<HttpResponse> deleteCartItem(@PathVariable Long cartItemId,
-                        @RequestHeader("Authorization") String jwt) throws UserException, CartItemException {
+                        @RequestHeader("Authorization") String jwt) {
+                try {
+                        Long userId = userService.getUserIdByJwt(jwt);
+                        CartItemDTO cartItem = new CartItemDTO();
+                        cartItem.setCartItemId(cartItemId);
 
-                Long userId = userService.getUserIdByJwt(jwt);
-                CartItemDTO cartItem = new CartItemDTO();
-                cartItem.setCartItemId(cartItemId);
+                        cartItemService.removeCartItem(userId, cartItemId);
+                        return ResponseEntity.ok().body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                                        .data(Map.of("cartItem", cartItem)).message("CartItem Removed from Cart")
+                                        .status(HttpStatus.OK).statusCode(200).build());
+                } catch (CartItemException e) {
+                        return ResponseEntity.badRequest()
+                                        .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                                                        .message("Cart not found").status(HttpStatus.BAD_REQUEST)
+                                                        .statusCode(HttpStatus.BAD_REQUEST.value()).build());
+                } catch (UserServiceException e) {
+                        return ResponseEntity.badRequest()
+                                        .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                                                        .message("User not found").status(HttpStatus.BAD_REQUEST)
+                                                        .statusCode(HttpStatus.BAD_REQUEST.value()).build());
 
-                cartItemService.removeCartItem(userId, cartItemId);
-                return ResponseEntity.ok().body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
-                                .data(Map.of("cartItem", cartItem)).message("CartItem Removed from Cart")
-                                .status(HttpStatus.OK).statusCode(200).build());
+                }
         }
 
         @PutMapping("/{cartItemId}")
         @Operation(description = "Update Item To Cart")
         public ResponseEntity<HttpResponse> updateCartItem(@RequestBody CartItemDTO cartItem,
-                        @PathVariable Long cartItemId) throws UserException, CartItemException {
+                        @PathVariable Long cartItemId) throws UserServiceException, CartItemException {
                 try {
                         logger.debug("Req CartItemDTO: {}", cartItem);
 

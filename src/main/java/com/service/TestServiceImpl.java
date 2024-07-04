@@ -3,11 +3,11 @@ package com.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.exception.CartException;
+import com.exception.CartServiceException;
 import com.exception.CartItemException;
-import com.exception.RatingException;
-import com.exception.ReviewException;
-import com.exception.UserException;
+import com.exception.RatingServiceException;
+import com.exception.ReviewServiceException;
+import com.exception.UserServiceException;
 
 // import java.util.List;
 // import java.util.Optional;
@@ -17,11 +17,11 @@ import com.exception.UserException;
 // import org.springframework.stereotype.Service;
 // import org.springframework.transaction.annotation.Transactional;
 // import com.dto.ProductDTO;
-// import com.exception.CartException;
+// import com.exception.CartServiceException;
 // import com.exception.CartItemException;
-// import com.exception.RatingException;
-// import com.exception.ReviewException;
-// import com.exception.UserException;
+// import com.exception.RatingServiceException;
+// import com.exception.ReviewServiceException;
+// import com.exception.UserServiceException;
 // import com.mapper.CartItemMapper;
 // import com.mapper.CartMapper;
 // import com.mapper.ProductMapper;
@@ -68,8 +68,8 @@ public class TestServiceImpl implements TestService {
     // private final Logger logger = LoggerFactory.getLogger(TestServiceImpl.class);
     // private ProductRepository productRepository;
 
-    public void testEverything(String jwt)
-            throws UserException, CartException, CartItemException, ReviewException, RatingException {
+    public void testEverything(String jwt) throws UserServiceException, CartServiceException, CartItemException,
+            ReviewServiceException, RatingServiceException {
         // Optional<Product> product = this.productRepository.findById(id);
         // // logger.debug("Product: {}", product.get());
 

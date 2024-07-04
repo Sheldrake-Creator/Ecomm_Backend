@@ -10,10 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import com.exception.CartException;
-import com.exception.OrderException;
+import com.exception.CartServiceException;
+import com.exception.OrderServiceException;
 import com.exception.RepositoryException;
-import com.exception.UserException;
+import com.exception.UserServiceException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
     private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
 
-    public void addAddress(Long userId, AddressDTO shippingAddress) throws OrderException {
+    public void addAddress(Long userId, AddressDTO shippingAddress) throws OrderServiceException {
         try {
             shippingAddress.setUserId(userId);
             this.addressRepository.save(addressMapper.toAddress(shippingAddress));
@@ -45,14 +45,14 @@ public class OrderServiceImpl implements OrderService {
                     .orElseThrow(() -> new RepositoryException("Address Not Found"));
             user.setAddressId(address.getAddressId());
 
-        } catch (UserException e) {
-            throw new OrderException("Error occurred while saving User Address: ", e);
+        } catch (UserServiceException e) {
+            throw new OrderServiceException("Error occurred while saving User Address: ", e);
         }
 
     }
 
     @Override
-    public OrderDTO createOrder(UserDTO userDto) throws CartException, OrderException {
+    public OrderDTO createOrder(UserDTO userDto) throws CartServiceException, OrderServiceException {
 
         Long addressId = userDto.getAddressId();
         Address addressEntity = this.addressRepository.findById(addressId)
@@ -100,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO placedOrder(Long orderId) throws OrderException {
+    public OrderDTO placedOrder(Long orderId) throws OrderServiceException {
         Order order = findOrderByIdEntity(orderId);
         order.setOrderStatus("PLACED");
         // order.getPaymentDetails().setStatus("COMPLETED");
@@ -108,57 +108,57 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO confirmedOrder(Long orderId) throws OrderException {
+    public OrderDTO confirmedOrder(Long orderId) throws OrderServiceException {
         Order order = findOrderByIdEntity(orderId);
         order.setOrderStatus("CONFIRMED");
         return orderMapper.toOrderDTO(orderRepository.save(order));
     }
 
     @Override
-    public OrderDTO shippedOrder(Long orderId) throws OrderException {
+    public OrderDTO shippedOrder(Long orderId) throws OrderServiceException {
         Order order = findOrderByIdEntity(orderId);
         order.setOrderStatus("SHIPPED");
         return orderMapper.toOrderDTO(orderRepository.save(order));
     }
 
     @Override
-    public OrderDTO deliveredOrder(Long orderId) throws OrderException {
+    public OrderDTO deliveredOrder(Long orderId) throws OrderServiceException {
         Order order = findOrderByIdEntity(orderId);
         order.setOrderStatus("DELIVERED");
         return orderMapper.toOrderDTO(orderRepository.save(order));
     }
 
     @Override
-    public OrderDTO canceledOrder(Long orderId) throws OrderException {
+    public OrderDTO canceledOrder(Long orderId) throws OrderServiceException {
         Order order = findOrderByIdEntity(orderId);
         order.setOrderStatus("CANCELLED");
         return orderMapper.toOrderDTO(orderRepository.save(order));
     }
 
     @Override
-    public OrderDTO findOrderById(Long orderId) throws OrderException {
+    public OrderDTO findOrderById(Long orderId) throws OrderServiceException {
         Optional<Order> opt = orderRepository.findById(orderId);
         if (opt.isPresent()) {
             return orderMapper.toOrderDTO(opt.get());
         }
-        throw new OrderException("Order does not exist with id " + orderId);
+        throw new OrderServiceException("Order does not exist with id " + orderId);
     }
 
-    private Order findOrderByIdEntity(Long orderId) throws OrderException {
+    private Order findOrderByIdEntity(Long orderId) throws OrderServiceException {
         Optional<Order> opt = orderRepository.findById(orderId);
         if (opt.isPresent()) {
             return opt.get();
         }
-        throw new OrderException("Order does not exist with id " + orderId);
+        throw new OrderServiceException("Order does not exist with id " + orderId);
     }
 
     @Override
-    public List<OrderDTO> usersOrderHistory(Long userId) throws OrderException {
+    public List<OrderDTO> usersOrderHistory(Long userId) throws OrderServiceException {
         logger.debug("UserID in UserOrderHistory() : {}", userId);
         Optional<List<Order>> optionalOrder = orderRepository.getUsersOrders(userId);
         List<OrderDTO> orderDtos = new ArrayList<>();
         if (!optionalOrder.isPresent()) {
-            throw new OrderException("Order not found for UserID " + userId);
+            throw new OrderServiceException("Order not found for UserID " + userId);
         }
         List<Order> orderEntity = optionalOrder.get();
         for (Order order : orderEntity) {
@@ -179,7 +179,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteOrder(Long orderId) throws OrderException {
+    public void deleteOrder(Long orderId) throws OrderServiceException {
         orderRepository.deleteById(orderId);
     }
 }

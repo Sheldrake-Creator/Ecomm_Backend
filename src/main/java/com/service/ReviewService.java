@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.dto.ReviewDTO;
 import com.dto.UserDTO;
-import com.exception.ProductException;
-import com.exception.ReviewException;
+import com.exception.ProductServiceException;
+import com.exception.ReviewServiceException;
 import com.request.ReviewRequest;
 
 public interface ReviewService {
 
-    List<ReviewDTO> getAllReviews(Long ProductId) throws ReviewException;
+    List<ReviewDTO> getAllReviews(Long ProductId) throws ReviewServiceException;
 
-    ReviewDTO createReview(ReviewRequest req, UserDTO user) throws ProductException;
+    ReviewDTO createReview(ReviewRequest req, UserDTO user) throws ProductServiceException;
 }

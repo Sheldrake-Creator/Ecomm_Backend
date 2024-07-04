@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dto.CartDTO;
 import com.dto.CartItemDTO;
 import com.dto.ProductDTO;
-import com.exception.CartException;
+import com.exception.CartServiceException;
 import com.exception.CartItemException;
-import com.exception.ProductException;
+import com.exception.ProductServiceException;
 import com.mapper.CartItemMapper;
 import com.mapper.CartMapper;
 import com.mapper.ProductMapper;
@@ -63,7 +63,7 @@ public class CartItemServiceImpl implements CartItemService {
             return cart;
         } catch (DataAccessException e) {
             throw new CartItemException("CartItem Exception Thrown", e);
-        } catch (CartException e) {
+        } catch (CartServiceException e) {
             throw new CartItemException("CartItem Exception Thrown", e);
         }
     }
@@ -76,7 +76,7 @@ public class CartItemServiceImpl implements CartItemService {
             this.cartService.syncCartWithCartItems(cart);
 
             // return cartItemId;
-        } catch (CartException e) {
+        } catch (CartServiceException e) {
             throw new CartItemException("Cart Item not Found", e);
         }
     }
@@ -113,7 +113,8 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CartDTO addItemToCart(Long userId, Integer quantity, String size, long productId) throws CartItemException {
+    public CartDTO addItemToCart(Long userId, Integer quantity, String size, long productId)
+            throws CartItemException, CartServiceException {
         try {
 
             CartDTO existingCart = cartService.findUserCart(userId);
@@ -148,17 +149,13 @@ public class CartItemServiceImpl implements CartItemService {
             }
             throw new CartItemException("CartItem Already Exists in Cart");
 
-        } catch (ProductException e) {
+        } catch (ProductServiceException e) {
             throw new CartItemException("Error find Product with Product Id: ", e);
 
         } catch (CartItemException e) {
             throw new CartItemException("Error finding CartItem that matches ProductId", e);
 
-        } catch (CartException e) {
-            // TODO Auto-generated catch block
-            throw new CartItemException("Cart Error", e);
         }
-
     }
 
     // * Helper Methods

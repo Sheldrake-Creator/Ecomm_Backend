@@ -1,7 +1,7 @@
 package com.controller;
 
 import com.dto.ProductDTO;
-import com.exception.ProductException;
+import com.exception.ProductServiceException;
 import com.response.HttpResponse;
 import com.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +53,7 @@ public class ProductController {
             return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                     .data(Map.of("product", product)).message("Product fetched successfully").status(HttpStatus.OK)
                     .statusCode(HttpStatus.OK.value()).build());
-        } catch (ProductException e) {
+        } catch (ProductServiceException e) {
             logger.error("Error fetching product by ID", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString()).message(e.getMessage())
