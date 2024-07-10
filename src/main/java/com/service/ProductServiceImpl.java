@@ -73,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = Product.builder().title(req.getTitle()).color(req.getColor())
                 .description(req.getDescription()).discountedPrice(req.getDiscountedPrice())
                 .discountPresent(req.getDiscountPresent()).imageUrl(req.getImageUrl()).brand(req.getBrand())
-                .price(req.getPrice()).sizes(req.getSize()).numInStock(req.getQuantity()).category(thirdLevel)
+                .price(req.getPrice()).sizes(req.getSize()).numInStock(req.getNumInStock()).category(thirdLevel)
                 .createdAt(LocalDateTime.now()).build();
 
         logger.debug("productEntity: {}", product);
