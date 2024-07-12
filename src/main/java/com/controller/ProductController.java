@@ -19,6 +19,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProductController {
 
     private final ProductService productService;
@@ -52,7 +53,7 @@ public class ProductController {
             @RequestParam Integer maxPrice, @RequestParam Integer minDiscount, @RequestParam String sort,
             @RequestParam String stock, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         try {
-            Page<ProductDTO> products = productService.getAllProducts(category, color, size, minPrice, maxPrice,
+            Page<ProductDTO> products = productService.findProductsByCategory(category, color, size, minPrice, maxPrice,
                     minDiscount, sort, stock, pageNumber, pageSize);
             logger.debug("Products fetched: {}", products);
             return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())

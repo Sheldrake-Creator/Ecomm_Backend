@@ -17,10 +17,9 @@ public interface ProductService {
 
     ProductDTO findProductById(Long id) throws ProductServiceException;
 
-    ProductDTO findProductByCategory(String category) throws ProductServiceException;
-
-    Page<ProductDTO> getAllProducts(String category, List<String> colors, List<String> sizes, Integer minPrice,
-            Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize);
+    Page<ProductDTO> findProductsByCategory(String category, List<String> colors, List<String> sizes, Integer minPrice,
+            Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize)
+            throws ProductServiceException;
 
     List<ProductDTO> findAllProducts();
 }

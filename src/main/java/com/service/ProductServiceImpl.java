@@ -123,13 +123,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO findProductByCategory(String category) throws ProductServiceException {
-        return null;
-    }
-
-    @Override
-    public Page<ProductDTO> getAllProducts(String category, List<String> colors, List<String> sizes, Integer minPrice,
-            Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize) {
+    public Page<ProductDTO> findProductsByCategory(String category, List<String> colors, List<String> sizes,
+            Integer minPrice, Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber,
+            Integer pageSize) {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
@@ -173,4 +169,5 @@ public class ProductServiceImpl implements ProductService {
         }
         return productDtos;
     }
+
 }
