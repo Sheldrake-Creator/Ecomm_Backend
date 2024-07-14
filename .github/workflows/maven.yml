@@ -67,7 +67,7 @@ jobs:
     - name: Push Docker image
       run: docker push sheldrakecreator/ecommrepo:latest
 
-    - name: Set up Docker Compose
-      run: |
-        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-        docker-compose up -d
+    # - name: Set up Docker Compose
+    #   run: |
+    #     echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+    #     docker-compose up -d
