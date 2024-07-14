@@ -1,24 +1,16 @@
 package com.service;
 
-import com.exception.ProductException;
-import com.exception.ReviewException;
-import com.model.Rating;
-import com.model.User;
-import com.request.CreateProductRequest;
-import com.request.CreateReviewRequest;
-import com.request.RatingRequest;
-
 import java.util.List;
+
+import com.dto.RatingDTO;
+import com.dto.UserDTO;
+import com.exception.ProductServiceException;
+import com.exception.RatingServiceException;
+import com.request.RatingRequest;
 
 public interface RatingService {
 
-    public Rating createRating(RatingRequest req, User user) throws ProductException;
-    public List<Rating> getProductsRating(Long productId);
+    RatingDTO createRating(RatingRequest req, UserDTO user) throws ProductServiceException;
 
-
-
-
-
-
-
+    List<RatingDTO> getAllRatings(Long productId) throws RatingServiceException;
 }

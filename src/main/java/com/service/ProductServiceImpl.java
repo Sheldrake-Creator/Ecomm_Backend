@@ -1,164 +1,173 @@
 package com.service;
 
-import com.exception.ProductException;
+import com.dto.ProductDTO;
+import com.exception.ProductServiceException;
+import com.mapper.ProductMapper;
 import com.model.Category;
 import com.model.Product;
 import com.repository.CategoryRepository;
 import com.repository.ProductRepository;
 import com.request.CreateProductRequest;
+import lombok.RequiredArgsConstructor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+@Transactional
+@RequiredArgsConstructor
+public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository productRepository;
-    private UserService userService;
-    private CategoryRepository categoryRepository;
-
-    public ProductServiceImpl(ProductRepository productRepository,
-                              UserService userService,
-                              CategoryRepository categoryRepository) {
-        this.productRepository = productRepository;
-        this.userService = userService;
-        this.categoryRepository = categoryRepository;
-    }
+    private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final ProductMapper productMapper;
+    private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     @Override
-    public Product createProduct(CreateProductRequest req) {
+    public ProductDTO createProduct(CreateProductRequest req) {
 
-        Category firstLevel=categoryRepository.findByName(req.getTopLevelCategory());
-
-        if(firstLevel == null){
+        // Fetch or create top-level category
+        Category firstLevel = categoryRepository.findByName(req.getFirstLevelCategory()).orElseGet(() -> {
             Category firstLevelCategory = new Category();
-            firstLevelCategory.setName(req.getTopLevelCategory());
+            firstLevelCategory.setName(req.getFirstLevelCategory());
             firstLevelCategory.setLevel(1);
+            return categoryRepository.save(firstLevelCategory);
+        });
+        logger.debug("firstLevel: {}", firstLevel);
 
-            firstLevel=categoryRepository.save(firstLevelCategory);
-        }
-        Category secondLevel = categoryRepository.findByNameAndParent(req.getSecondLevelCategory()
-                ,firstLevel.getName());
+        // Fetch or create second-level category
+        Category secondLevel = categoryRepository
+                .findByNameAndParent(req.getSecondLevelCategory(), firstLevel.getName()).orElseGet(() -> {
+                    Category secondLevelCategory = new Category();
+                    secondLevelCategory.setName(req.getSecondLevelCategory());
+                    secondLevelCategory.setLevel(2);
+                    secondLevelCategory.setParentCategory(firstLevel);
+                    return categoryRepository.save(secondLevelCategory);
+                });
+        logger.debug("secondLevel: {}", secondLevel);
 
-        if(secondLevel == null){
-            Category secondLevelCategory = new Category();
-            secondLevelCategory.setName(req.getSecondLevelCategory());
-            secondLevelCategory.setLevel(2);
+        // Fetch or create third-level category
+        Category thirdLevel = categoryRepository.findByNameAndParent(req.getThirdLevelCategory(), secondLevel.getName())
+                .orElseGet(() -> {
+                    Category thirdLevelCategory = new Category();
+                    thirdLevelCategory.setName(req.getThirdLevelCategory());
+                    thirdLevelCategory.setLevel(3);
+                    thirdLevelCategory.setParentCategory(secondLevel);
+                    return categoryRepository.save(thirdLevelCategory);
+                });
+        logger.debug("thirdLevel: {}", thirdLevel);
 
-            secondLevel=categoryRepository.save(secondLevelCategory);
-        }
+        Product product = Product.builder().title(req.getTitle()).color(req.getColor())
+                .description(req.getDescription()).discountedPrice(req.getDiscountedPrice())
+                .discountPresent(req.getDiscountPresent()).imageUrl(req.getImageUrl()).brand(req.getBrand())
+                .price(req.getPrice()).sizes(req.getSize()).numInStock(req.getNumInStock()).category(thirdLevel)
+                .createdAt(LocalDateTime.now()).build();
 
-        Category thirdLevel=categoryRepository.findByNameAndParent(req.getThirdLevelCategory(),
-                secondLevel.getName());
-
-        if(thirdLevel==null) {
-            Category thirdLevelCategory = new Category();
-            thirdLevelCategory.setName(req.getThirdLevelCategory());
-            thirdLevelCategory.setParentCategory(secondLevel);
-            thirdLevelCategory.setLevel(3);
-            thirdLevel = categoryRepository.save(thirdLevelCategory);
-        }
-
-        Product product = new Product();
-        product.setTitle(req.getTitle());
-        product.setColor(req.getColor());
-        product.setColor(req.getColor());
-        product.setDescription(req.getDescription());
-        product.setDiscountedPrice(req.getDiscountedPrice());
-        product.setDiscountPresent(req.getDiscountPresent());
-        product.setImageUrl(req.getImageUrl());
-        product.setBrand(req.getBrand());
-        product.setPrice(req.getPrice());
-        product.setSizes(req.getSize());
-        product.setQuantity(req.getQuantity());
-        product.setCategory(thirdLevel);
-        product.setCreatedAt(LocalDateTime.now());
+        logger.debug("productEntity: {}", product);
 
         Product savedProduct = productRepository.save(product);
 
-        return savedProduct;
+        logger.debug("savedProduct: {}", savedProduct);
+
+        return productMapper.toProductDTO(savedProduct);
     }
 
     @Override
-    public String deleteProduct(Long productId) throws ProductException {
+    public String deleteProduct(Long productId) throws ProductServiceException {
 
-        Product product = findProductById(productId);
+        ProductDTO product = findProductById(productId);
         product.getSizes().clear();
-        productRepository.delete(product);
+        productRepository.delete(productMapper.toProduct(product));
 
         return "Product Deleted";
     }
 
     @Override
-    public Product updateProduct(Long productId, Product req) throws ProductException {
+    public ProductDTO updateProduct(ProductDTO req, Long productId) throws ProductServiceException {
 
-        Product product = findProductById(productId);
+        ProductDTO product = findProductById(productId);
 
-
-        if(req.getQuantity()!= 0){
-            product.setQuantity(req.getQuantity());
+        if (req.getNumInStock() != 0) {
+            product.setNumInStock(req.getNumInStock());
         }
+        productRepository.save(productMapper.toProduct(product));
 
-        return productRepository.save(product);
+        return product;
     }
 
     @Override
-    public Product findProductById(Long id) throws ProductException {
-        Optional<Product> product=productRepository.findById(id);
-        if(product.isPresent()) {
-            return product.get();
+    public ProductDTO findProductById(Long id) throws ProductServiceException {
+        logger.debug("ProductId: {}", id);
+
+        Optional<Product> product = productRepository.findById(id);
+        if (product.isPresent()) {
+            ProductDTO productDto = productMapper.toProductDTO(product.get());
+            logger.debug("ProductDTO: {}", productDto);
+            return productDto;
         }
-        throw new ProductException ("Product not found with id - "+id);
+
+        throw new ProductServiceException("Product not found with id - " + id);
     }
 
     @Override
-    public Product findProductByCategory(String category) throws ProductException {
-        return null;
-    }
+    public Page<ProductDTO> findProductsByCategory(String category, List<String> colors, List<String> sizes,
+            Integer minPrice, Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber,
+            Integer pageSize) {
 
-    @Override
-    public Page<Product> getAllProducts(String category, List<String> colors, List<String> sizes, Integer minPrice,
-                                       Integer maxPrice, Integer minDiscount, String sort, String stock,
-                                       Integer pageNumber, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-        Pageable pageable= PageRequest.of(pageNumber, pageSize);
+        Optional<List<Product>> optionalProducts = productRepository.filterProducts(category, minPrice, maxPrice,
+                minDiscount, sort);
 
-        List<Product> products=productRepository.filterProducts(category, minPrice, maxPrice, minDiscount, sort);
+        // Handle the case where no products are found
+        List<Product> products = optionalProducts.orElse(Collections.emptyList());
 
-        if(!colors.isEmpty()) {
-                products=products.stream().filter(p-> colors.stream().anyMatch(c-> c.equalsIgnoreCase(p.getColor())))
-                .collect(Collectors.toList());
-                //TODO
+        if (!colors.isEmpty()) {
+            products = products.stream().filter(p -> colors.stream().anyMatch(c -> c.equalsIgnoreCase(p.getColor())))
+                    .collect(Collectors.toList());
         }
-        if(stock!=null) {
-            if(stock.equals("in_stock")){
-                products = products.stream().filter(p -> p.getQuantity() > 0).collect(Collectors.toList());
+
+        if (stock != null) {
+            if (stock.equals("in_stock")) {
+                products = products.stream().filter(p -> p.getNumInStock() > 0).collect(Collectors.toList());
+            } else if (stock.equals("out_of_stock")) {
+                products = products.stream().filter(p -> p.getNumInStock() < 1).collect(Collectors.toList());
             }
-            else if (stock.equals("out_of_stock")){
-                    products=products.stream().filter(p -> p.getQuantity() < 1).collect(Collectors.toList());
-            }
         }
 
-        int startIndex=(int) pageable.getOffset();
-        int endIndex=Math.min(startIndex + pageable.getPageSize(), products.size());
+        Integer startIndex = (int) pageable.getOffset();
+        Integer endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
 
-        List<Product> pageContent=products.subList(startIndex, endIndex);
-        Page<Product> filteredProducts=new PageImpl<>(pageContent,pageable,products.size());
+        List<ProductDTO> productDTOs = productMapper.toProductsDTOList(products);
+        List<ProductDTO> pageContent = productDTOs.subList(startIndex, endIndex);
+
+        Page<ProductDTO> filteredProducts = new PageImpl<>(pageContent, pageable, productDTOs.size());
 
         return filteredProducts;
     }
 
     @Override
-    public List<Product> findAllProducts() {
+    public List<ProductDTO> findAllProducts() {
         List<Product> products = productRepository.findAll();
+        List<ProductDTO> productDtos = new ArrayList<ProductDTO>();
 
-        return products;
+        for (Product product : products) {
+            productDtos.add(productMapper.toProductDTO(product));
+        }
+        return productDtos;
     }
+
 }

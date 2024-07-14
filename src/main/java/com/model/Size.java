@@ -1,32 +1,15 @@
 package com.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Size {
 
     private String name;
-    private int quantity;
+    private Integer quantity;
 
-    public Size() {
-        // TODO Auto-generated constructor stub
-    }
-
-    public Size(String name, int quantity) {
-        this.name = name;
-        this.quantity = quantity;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 }

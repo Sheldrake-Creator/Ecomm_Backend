@@ -1,9 +1,19 @@
 package com.service;
 
-import com.exception.OrderException;
+import com.dto.*;
+import com.mapper.*;
 import com.model.*;
 import com.repository.*;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import com.exception.CartServiceException;
+import com.exception.OrderServiceException;
+import com.exception.RepositoryException;
+import com.exception.UserServiceException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,131 +21,165 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrderServiceImpl implements OrderService{
+@Transactional
+@RequiredArgsConstructor
+public class OrderServiceImpl implements OrderService {
 
-    private OrderRepository orderRepository;
-    private CartService cartService;
-    private AddressRepository addressRepository;
-    private UserRepository userRepository;
-    private OrderItemService orderItemService;
-    private OrderItemRepository orderItemRepository;
+    private final CartService cartService;
+    private final UserService userService;
+    private final AddressRepository addressRepository;
+    private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final AddressMapper addressMapper;
+    private final OrderItemMapper orderItemMapper;
+    private final OrderMapper orderMapper;
+    private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
 
+    public void addAddress(Long userId, AddressDTO shippingAddress) throws OrderServiceException {
+        try {
+            shippingAddress.setUserId(userId);
+            this.addressRepository.save(addressMapper.toAddress(shippingAddress));
 
-    public OrderServiceImpl(OrderRepository orderRepository, CartService cartService, AddressRepository addressRepository, UserRepository userRepository, OrderItemService orderItemService, OrderItemRepository orderItemRepository) {
-        this.orderRepository = orderRepository;
-        this.cartService = cartService;
-        this.addressRepository = addressRepository;
-        this.userRepository = userRepository;
-        this.orderItemService = orderItemService;
-        this.orderItemRepository = orderItemRepository;
+            UserDTO user = this.userService.findUserById(userId);
+            Address address = this.addressRepository.findAddressByUserId(userId)
+                    .orElseThrow(() -> new RepositoryException("Address Not Found"));
+            user.setAddressId(address.getAddressId());
+
+        } catch (UserServiceException e) {
+            throw new OrderServiceException("Error occurred while saving User Address: ", e);
+        }
+
     }
 
     @Override
-    public Order createOrder(User user, Address shippingAddress) {
+    public OrderDTO createOrder(UserDTO userDto) throws CartServiceException, OrderServiceException {
 
-        shippingAddress.setUser(user);
-        Address address= addressRepository.save(shippingAddress);
-        user.getAddress().add(address);
-        userRepository.save(user);
+        Long addressId = userDto.getAddressId();
+        Address addressEntity = this.addressRepository.findById(addressId)
+                .orElseThrow(() -> new RepositoryException("Address Not Found"));
+        AddressDTO address = addressMapper.toAddressDTO(addressEntity);
 
-        Cart cart=cartService.findUserCart(user.getId());
-        List<OrderItem> orderItems=new ArrayList<>();
+        CartDTO cart = cartService.findUserCart(userDto.getUserId());
+        List<OrderItemDTO> orderItemList = new ArrayList<>();
 
-        for(CartItem item: cart.getCartItems ()) {
-            OrderItem orderItem=new OrderItem();
+        // Create initial OrderDTO without order items
+        OrderDTO createdOrder = OrderDTO.builder().userId(userDto.getUserId()).orderItems(orderItemList)
+                .totalPrice(cart.getTotalPrice()).totalDiscountedPrice(cart.getTotalDiscountedPrice())
+                .totalItems(cart.getTotalItems()).shippingAddress(address).orderDate(LocalDateTime.now())
+                .orderStatus("PENDING").deliveryDate(LocalDateTime.now().plusDays(5)).build();
 
-            orderItem.setPrice(item.getPrice());
-            orderItem.setProduct(item.getProduct());
-            orderItem.setQuantity(item.getQuantity());
-            orderItem.setSize(item.getSize());
-            orderItem.setUserId(item.getUserId());
-            orderItem.setDiscountedPrice(item.getDiscountedPrice());
+        // Save the initial order to get the generated order ID
+        Order savedOrder = orderRepository.save(orderMapper.toOrder(createdOrder));
 
-            OrderItem createdOrderItem= orderItemRepository.save(orderItem);
-            orderItems.add(createdOrderItem);
+        for (CartItemDTO item : cart.getCartItems()) {
+            OrderItemDTO orderItem = OrderItemDTO.builder().orderPrice(item.getPrice())
+                    .productId(item.getProduct().getProductId()).quantity(item.getQuantity()).size(item.getSize())
+                    .discountedPrice(item.getDiscountedPrice()).orderId(savedOrder.getOrderId()).build();
+
+            this.orderItemRepository.save(orderItemMapper.toOrderItem(orderItem));
+            orderItemList.add(orderItem);
         }
 
-        Order createdOrder=new Order();
-        createdOrder.setUser(user);
-        createdOrder.setOrderItems(orderItems);
-        createdOrder.setTotalPrice(cart.getTotalPrice());
-        createdOrder.setTotalDiscountedPrice(cart.getTotalDiscountedPrice());
-        createdOrder.setDiscount(cart.getDiscount());
-        createdOrder.setTotalItem(cart.getTotalItem());
-        createdOrder.setShippingAddress(address);
-        createdOrder.setOrderDate(LocalDateTime.now());
-        createdOrder.setOrderStatus("PENDING");
-        createdOrder.getPaymentDetails().setStatus("PENDING");
-        createdOrder.setCreatedAt(LocalDateTime.now());
+        createdOrder.setOrderItems(orderItemList);
+        // savedOrder = orderRepository.save(orderMapper.toOrder(createdOrder));
 
-        Order savedOrder= orderRepository.save(createdOrder);
+        this.placedOrder(savedOrder.getOrderId());
+        this.cartService.checkoutCart(cart.getCartId());
+        this.cartService.createCart(userDto.getUserId());
 
-        for(OrderItem item:orderItems) {
-            item.setOrder(savedOrder);
-            orderItemRepository.save(item);
-        }
-        return savedOrder;
+        return orderMapper.toOrderDTO(savedOrder);
+
+        // for (OrderItemDTO item : orderItemList) {
+        // item.setOrderId(savedOrder.getOrderId());
+        // orderItemRepository.save(orderItemMapper.toOrderItem(item));
+        // }
+        // this.placedOrder(savedOrder.getOrderId());
+        // this.cartService.checkoutCart(cart.getCartId());
+        // this.cartService.createCart(userDto.getUserId());
+
     }
 
     @Override
-    public Order placedOrder(Long orderId) throws OrderException {
-        Order order=findOrderById(orderId);
+    public OrderDTO placedOrder(Long orderId) throws OrderServiceException {
+        Order order = findOrderByIdEntity(orderId);
         order.setOrderStatus("PLACED");
-        order.getPaymentDetails().setStatus("COMPLETED");
-        return order;
+        // order.getPaymentDetails().setStatus("COMPLETED");
+        return orderMapper.toOrderDTO(orderRepository.save(order));
     }
 
     @Override
-    public Order confirmedOrder(Long orderId) throws OrderException {
-        Order order=findOrderById(orderId);
+    public OrderDTO confirmedOrder(Long orderId) throws OrderServiceException {
+        Order order = findOrderByIdEntity(orderId);
         order.setOrderStatus("CONFIRMED");
-
-        return orderRepository.save(order);
+        return orderMapper.toOrderDTO(orderRepository.save(order));
     }
 
     @Override
-    public Order shippedOrder(Long orderId) throws OrderException {
-        Order order=findOrderById(orderId);
+    public OrderDTO shippedOrder(Long orderId) throws OrderServiceException {
+        Order order = findOrderByIdEntity(orderId);
         order.setOrderStatus("SHIPPED");
-        return orderRepository.save(order);
+        return orderMapper.toOrderDTO(orderRepository.save(order));
     }
 
     @Override
-    public Order deliveredOrder(Long orderId) throws OrderException {
-        Order order=findOrderById(orderId);
+    public OrderDTO deliveredOrder(Long orderId) throws OrderServiceException {
+        Order order = findOrderByIdEntity(orderId);
         order.setOrderStatus("DELIVERED");
-        return orderRepository.save(order);
+        return orderMapper.toOrderDTO(orderRepository.save(order));
     }
 
     @Override
-    public Order canceledOrder(Long orderId) throws OrderException {
-        Order order=findOrderById(orderId);
+    public OrderDTO canceledOrder(Long orderId) throws OrderServiceException {
+        Order order = findOrderByIdEntity(orderId);
         order.setOrderStatus("CANCELLED");
-        return orderRepository.save(order);
+        return orderMapper.toOrderDTO(orderRepository.save(order));
     }
 
     @Override
-    public Order findOrderById(Long orderId) throws OrderException {
-        Optional<Order> opt=orderRepository.findById(orderId);
-        if(opt.isPresent()) {
+    public OrderDTO findOrderById(Long orderId) throws OrderServiceException {
+        Optional<Order> opt = orderRepository.findById(orderId);
+        if (opt.isPresent()) {
+            return orderMapper.toOrderDTO(opt.get());
+        }
+        throw new OrderServiceException("Order does not exist with id " + orderId);
+    }
+
+    private Order findOrderByIdEntity(Long orderId) throws OrderServiceException {
+        Optional<Order> opt = orderRepository.findById(orderId);
+        if (opt.isPresent()) {
             return opt.get();
         }
-        throw new OrderException("order not exist with id "+orderId);
-    }
-    @Override
-    public List<Order> usersOrderHistory(Long userId) {
-        return orderRepository.getUsersOrders(userId);
+        throw new OrderServiceException("Order does not exist with id " + orderId);
     }
 
     @Override
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public List<OrderDTO> usersOrderHistory(Long userId) throws OrderServiceException {
+        logger.debug("UserID in UserOrderHistory() : {}", userId);
+        Optional<List<Order>> optionalOrder = orderRepository.getUsersOrders(userId);
+        List<OrderDTO> orderDtos = new ArrayList<>();
+        if (!optionalOrder.isPresent()) {
+            throw new OrderServiceException("Order not found for UserID " + userId);
+        }
+        List<Order> orderEntity = optionalOrder.get();
+        for (Order order : orderEntity) {
+            logger.debug("Orders: {}", order);
+            orderDtos.add(orderMapper.toOrderDTO(order));
+        }
+        return orderDtos;
     }
 
     @Override
-    public void deleteOrder(Long orderId) throws OrderException {
-        Order order =findOrderById(orderId);
+    public List<OrderDTO> getAllOrders() {
+        List<Order> orders = orderRepository.findAll();
+        List<OrderDTO> orderDtos = new ArrayList<>();
+        for (Order order : orders) {
+            orderDtos.add(orderMapper.toOrderDTO(order));
+        }
+        return orderDtos;
+    }
+
+    @Override
+    public void deleteOrder(Long orderId) throws OrderServiceException {
         orderRepository.deleteById(orderId);
     }
-
 }

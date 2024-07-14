@@ -1,47 +1,66 @@
 package com.service;
 
-import com.exception.ProductException;
-import com.exception.ReviewException;
-import com.model.Product;
-import com.model.Rating;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.dto.ProductDTO;
+import com.dto.ReviewDTO;
+import com.dto.UserDTO;
+import com.exception.ProductServiceException;
+import com.exception.ReviewServiceException;
+import com.mapper.ReviewMapper;
 import com.model.Review;
-import com.model.User;
-import com.repository.ProductRepository;
 import com.repository.ReviewRepository;
 import com.request.ReviewRequest;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
-public class ReviewServiceImpl implements ReviewService{
+@Transactional
+@RequiredArgsConstructor
+public class ReviewServiceImpl implements ReviewService {
 
-    private ReviewRepository reviewRepository;
-    private ProductService productService;
-    private ProductRepository productRepository;
-
-    public ReviewServiceImpl(ReviewRepository reviewRepository, ProductService productService, ProductRepository productRepository) {
-        this.reviewRepository = reviewRepository;
-        this.productService = productService;
-        this.productRepository = productRepository;
-    }
+    private final ReviewRepository reviewRepository;
+    private final ProductService productService;
+    private final ReviewMapper reviewMapper;
+    private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
 
     @Override
-    public Review createReview(ReviewRequest req, User user) throws ProductException {
-        Product product = productService.findProductById(req.getProductId());
+    public ReviewDTO createReview(ReviewRequest req, UserDTO user) throws ProductServiceException {
 
-        Review review= new Review();
+        logger.debug("Req: {}", req);
+        logger.debug("UserDTO: {}", user);
+
+        ProductDTO product = productService.findProductById(req.getProductId());
+
+        ReviewDTO review = new ReviewDTO();
         review.setReview(req.getReview());
-        review.setUser(user);
+        review.setUserId(user.getUserId());
         review.setCreatedAt(LocalDateTime.now());
-        review.setProduct(product);
-
-        return reviewRepository.save(review);
+        review.setProductId(product.getProductId());
+        this.reviewRepository.save(reviewMapper.toReview(review));
+        return review;
     }
 
     @Override
-    public List<Review> getAllReviews(Long productId) {
-        return reviewRepository.getAllProductReview(productId);
+    public List<ReviewDTO> getAllReviews(Long productId) throws ReviewServiceException {
+        Optional<List<Review>> oReviews = reviewRepository.getAllProductReview(productId);
+        List<ReviewDTO> reviewDtos = new ArrayList<>();
+        if (!oReviews.isPresent()) {
+            throw new ReviewServiceException("Product ID did not return any reviews");
+        }
+        List<Review> reviewEntities = oReviews.get();
+
+        for (Review review : reviewEntities) {
+            reviewDtos.add(reviewMapper.toReviewDTO(review));
+        }
+        return reviewDtos;
     }
 }

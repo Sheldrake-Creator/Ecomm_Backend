@@ -1,83 +1,170 @@
 package com.service;
 
-import com.exception.CartItemException;
-import com.exception.UserException;
-import com.model.Cart;
-import com.model.CartItem;
-import com.model.Product;
-import com.model.User;
-import com.repository.CartItemRepository;
-import com.repository.CartRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.Optional;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.dto.CartDTO;
+import com.dto.CartItemDTO;
+import com.dto.ProductDTO;
+import com.exception.CartServiceException;
+import com.exception.CartItemException;
+import com.exception.ProductServiceException;
+import com.mapper.CartItemMapper;
+import com.mapper.CartMapper;
+import com.mapper.ProductMapper;
+import com.model.CartItem;
+import com.repository.CartItemRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
-public class CartItemServiceImpl implements CartItemService{
+@RequiredArgsConstructor
+@Transactional
+public class CartItemServiceImpl implements CartItemService {
 
-    private CartItemRepository cartItemRepository;
-    private UserService userService;
-    private CartRepository cartRepository;
-
-    public CartItemServiceImpl() {
-    }
-
-    public CartItemServiceImpl(CartItemRepository cartItemRepository, UserService userService, CartRepository cartRepository,
-                               ProductService productService) {
-        this.cartItemRepository = cartItemRepository;
-        this.userService = userService;
-        this.cartRepository = cartRepository;
-    }
+    private final ProductService productService;
+    private final CartService cartService;
+    private final CartItemMapper cartItemMapper;
+    private final CartMapper cartMapper;
+    private final ProductMapper productMapper;
+    private final CartItemRepository cartItemRepository;
+    private final Logger logger = LoggerFactory.getLogger(CartItemServiceImpl.class);
 
     @Override
-    public CartItem createCartItem(CartItem cartItem) {
-        cartItem.setQuantity(1);
-        cartItem.setPrice(cartItem.getProduct().getPrice()*cartItem.getQuantity());
-        cartItem.setDiscountedPrice(cartItem.getProduct().getDiscountedPrice()*cartItem.getQuantity());
+    public CartDTO updateCartItem(Long cartItemId, CartItemDTO newCartItemDto) throws CartItemException {
+        try {
 
-        CartItem createdCartItem=cartItemRepository.save(cartItem);
-        return createdCartItem;
-    }
+            logger.debug("cartItemId: {}", cartItemId);
+            logger.debug("newCartItemDto: {}", newCartItemDto);
 
-    @Override
-    public CartItem updateCartItem(Long userId, Long id, CartItem cartItem) throws CartItemException, UserException {
+            CartItem existingCartItem = cartItemRepository.findCartItemById(cartItemId)
+                    .orElseThrow(() -> new CartItemException("CartItem not found with id: " + cartItemId));
+            logger.debug("existingCartItem: {}", existingCartItem);
 
-        CartItem item=findCartItemById(id);
-        User user=userService.findUserById(item.getUserId());
-        if(user.getId().equals(userId)){
-            item.setQuantity(cartItem.getQuantity());
-            item.setPrice(item.getQuantity()*item.getProduct().getPrice());
-            item.setDiscountedPrice(item.getProduct().getDiscountedPrice()*item.getQuantity());
-        }
-        return cartItemRepository.save(item);
-    }
+            existingCartItem.setQuantity(newCartItemDto.getQuantity());
+            existingCartItem.setPrice(existingCartItem.getProduct().getPrice() * newCartItemDto.getQuantity());
+            existingCartItem.setDiscountedPrice(
+                    existingCartItem.getProduct().getDiscountedPrice() * newCartItemDto.getQuantity());
+            logger.debug("existingCartItem: {}", existingCartItem);
 
-    @Override
-    public CartItem doesCartItemExist(Cart cart, Product product, String size, Long userId) {
+            cartItemRepository.save(existingCartItem);
 
-        return cartItemRepository.doesCartItemExist(cart, product, size, userId);
-    }
+            CartDTO cart = this.cartService.findCartByCartId(existingCartItem.getCart().getCartId());
+            logger.debug("cart: {}", cart);
+            cart = this.cartService.syncCartWithCartItems(cart);
 
-    @Override
-    public void removeCartItem(Long userId, Long cartItemId) throws CartItemException, UserException {
+            logger.debug("cart: {}", cart);
 
-        CartItem cartItem=findCartItemById(cartItemId);
-        User user=userService.findUserById(cartItem.getUserId());
-        User reqUser=userService.findUserById(userId);
-
-        if(user.getId().equals(reqUser.getId())) {
-            cartItemRepository.deleteById(cartItemId);
-        }
-        else {
-        throw new UserException("You can't remove another users item");
+            return cart;
+        } catch (DataAccessException e) {
+            throw new CartItemException("CartItem Exception Thrown", e);
+        } catch (CartServiceException e) {
+            throw new CartItemException("CartItem Exception Thrown", e);
         }
     }
 
     @Override
-    public CartItem findCartItemById(Long cartItemId) throws CartItemException {
-        Optional<CartItem> opt =cartItemRepository.findById(cartItemId);
-        if(opt.isPresent()) {
-            return opt.get();
-        }throw new CartItemException(" cartItem not found with id : " + cartItemId);
+    public void removeCartItem(Long userId, Long cartItemId) throws CartItemException {
+        try {
+            this.cartItemRepository.deleteCartItemById(cartItemId);
+            CartDTO cart = cartService.findUserCart(userId);
+            this.cartService.syncCartWithCartItems(cart);
+
+            // return cartItemId;
+        } catch (CartServiceException e) {
+            throw new CartItemException("Cart Item not Found", e);
+        }
     }
+
+    @Override
+    @Transactional
+    public boolean doesCartItemExist(CartDTO cart, ProductDTO product, String size) throws CartItemException {
+        try {
+            logger.debug("CARTITEMSERVICE: {}", cart);
+            Optional<CartItem> cartItem = this.cartItemRepository.doesCartItemExist(cartMapper.toCart(cart),
+                    productMapper.toProduct(product), size);
+            logger.debug("CARTITEMSERVICE: {}", cartItem);
+
+            return cartItem.isPresent();
+        } catch (DataAccessException e) {
+            logger.error("Data access error while finding cart for user with ID: {}", e);
+            throw new CartItemException("An unexpected error occurred while retrieving the cart for user with ID: ", e);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CartItemDTO findCartItemById(Long cartItemId) throws CartItemException {
+        Optional<CartItem> opt = cartItemRepository.findById(cartItemId);
+
+        if (!opt.isPresent()) {
+            throw new IllegalArgumentException("cartItemId does not exist in DB");
+        }
+        CartItemDTO cartItem = cartItemMapper.toCartItemDTO(opt.get());
+        // CartDTO cart = cartService.findUserCart(cartItem.getCartId());
+
+        return cartItem;
+
+    }
+
+    @Override
+    public CartDTO addItemToCart(Long userId, Integer quantity, String size, long productId)
+            throws CartItemException, CartServiceException {
+        try {
+
+            CartDTO existingCart = cartService.findUserCart(userId);
+            logger.debug("Existing Cart: {}", existingCart);
+
+            ProductDTO product = productService.findProductById(productId);
+            logger.debug("ProductDTO: {}", product);
+
+            if (!this.doesCartItemExist(existingCart, product, size)) {
+                // *This is Definitely the issue. This is definitely throwing a null value.
+
+                Set<CartItemDTO> existingCartItems = existingCart.getCartItems();
+                logger.debug("existingCartItems: {}", existingCartItems);
+                CartItemDTO newCartItem = new CartItemDTO();
+
+                newCartItem.setProduct(product);
+                newCartItem.setCartId(existingCart.getCartId());
+                logger.debug("cartId: {}", existingCart.getCartId());
+                newCartItem.setQuantity(quantity);
+                Integer price = (quantity * product.getPrice());
+                Integer discountedPrice = (quantity * product.getDiscountedPrice());
+                newCartItem.setPrice(price);
+                newCartItem.setDiscountedPrice(discountedPrice);
+                newCartItem.setSize(size);
+                logger.debug(" CARTSERVICE cartITEM DTO: {}", newCartItem);
+
+                existingCartItems.add(newCartItem);
+
+                existingCart.setCartItems(existingCartItems);
+                CartDTO newCart = cartService.syncCartWithCartItems(existingCart);
+                return newCart;
+            }
+            throw new CartItemException("CartItem Already Exists in Cart");
+
+        } catch (ProductServiceException e) {
+            throw new CartItemException("Error find Product with Product Id: ", e);
+
+        } catch (CartItemException e) {
+            throw new CartItemException("Error finding CartItem that matches ProductId", e);
+
+        }
+    }
+
+    // * Helper Methods
+    // private void updateCartTotals(Cart cart, CartItem cartItem) {
+    // cart.setTotalItems(cart.getTotalItems() + cartItem.getQuantity());
+    // cart.setTotalPrice(cart.getTotalPrice() + cartItem.getProduct().getPrice() *
+    // cartItem.getQuantity());
+    // cart.setTotalDiscountedPrice(
+    // cart.getTotalDiscountedPrice() + cartItem.getProduct().getDiscountedPrice() *
+    // cartItem.getQuantity());
+    // }
 }

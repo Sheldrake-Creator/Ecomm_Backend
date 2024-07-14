@@ -1,28 +1,37 @@
 package com.service;
 
-
-import com.exception.OrderException;
-import com.model.Address;
-import com.model.Order;
-import com.model.User;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.dto.AddressDTO;
+import com.dto.OrderDTO;
+import com.dto.UserDTO;
+import com.exception.CartServiceException;
+import com.exception.OrderServiceException;
 
 @Service
 public interface OrderService {
 
-    public Order createOrder(User user, Address shippingAddress);
-    public Order findOrderById(Long orderId) throws OrderException;
-    public List<Order> usersOrderHistory(Long userId);
-    public Order placedOrder(Long orderId) throws OrderException;
-    public Order confirmedOrder(Long orderId)throws OrderException;
-    public Order shippedOrder(Long orderId) throws OrderException;
-    public Order deliveredOrder(Long orderId) throws OrderException;
-    public Order canceledOrder(Long orderId) throws OrderException;
-    public List<Order> getAllOrders();
-    public void deleteOrder(Long orderId) throws OrderException;
+    public OrderDTO createOrder(UserDTO user) throws CartServiceException, OrderServiceException;
 
+    public OrderDTO findOrderById(Long orderId) throws OrderServiceException;
 
+    public List<OrderDTO> usersOrderHistory(Long userId) throws OrderServiceException;
+
+    public OrderDTO placedOrder(Long orderId) throws OrderServiceException;
+
+    public OrderDTO confirmedOrder(Long orderId) throws OrderServiceException;
+
+    public OrderDTO shippedOrder(Long orderId) throws OrderServiceException;
+
+    public OrderDTO deliveredOrder(Long orderId) throws OrderServiceException;
+
+    public OrderDTO canceledOrder(Long orderId) throws OrderServiceException;
+
+    public List<OrderDTO> getAllOrders() throws OrderServiceException;
+
+    public void deleteOrder(Long orderId) throws OrderServiceException;
+
+    public void addAddress(Long UserId, AddressDTO address) throws OrderServiceException;
 }

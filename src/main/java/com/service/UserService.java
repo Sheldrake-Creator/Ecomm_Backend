@@ -1,15 +1,29 @@
 package com.service;
 
-
-import com.exception.UserException;
+import com.dto.CredentialsDTO;
+import com.dto.SignUpDTO;
+import com.exception.AuthException;
+import com.exception.UserServiceException;
 import com.model.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.dto.UserDTO;
 
+import org.springframework.stereotype.Service;
+
+//import org.springframework.security.core.userdetails.UserDetails;
+@Service
 public interface UserService {
 
-    public User findUserById(Long userId) throws UserException;
+    UserDTO findUserById(Long userId) throws UserServiceException;
 
-    public User findUserProfileByJwt(String jwt) throws UserException;
+    UserDTO findUserProfileByJwt(String jwt) throws UserServiceException;
 
-    public User  loadUserByUsername(String username);
+    Long getUserIdByJwt(String jwt) throws UserServiceException;
+
+    User findUserByEmail(String email) throws UserServiceException;
+
+    User loadUserByUsername(String username);
+
+    UserDTO login(CredentialsDTO credentialsDTO) throws AuthException;
+
+    UserDTO register(SignUpDTO signUpDto) throws AuthException;
 }

@@ -1,42 +1,74 @@
 package com.service;
 
-import com.exception.ProductException;
-import com.model.Product;
-import com.model.Rating;
-import com.model.User;
-import com.repository.RatingRepository;
-import com.request.RatingRequest;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.dto.ProductDTO;
+import com.dto.RatingDTO;
+import com.dto.UserDTO;
+import com.exception.CartItemException;
+import com.exception.ProductServiceException;
+import com.exception.RatingServiceException;
+import com.mapper.RatingMapper;
+import com.model.Rating;
+import com.repository.RatingRepository;
+import com.request.RatingRequest;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
-public class RatingServiceImpl implements RatingService{
+@Transactional
+@RequiredArgsConstructor
+public class RatingServiceImpl implements RatingService {
 
-    private RatingRepository ratingRepository;
-    private ProductService productService;
-
-    public RatingServiceImpl(RatingRepository ratingRepository, ProductService productService) {
-        this.ratingRepository = ratingRepository;
-        this.productService = productService;
-    }
+    private final RatingRepository ratingRepository;
+    private final ProductService productService;
+    private final RatingMapper ratingMapper;
+    private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
 
     @Override
-    public Rating createRating(RatingRequest req, User user) throws ProductException {
-        Product product=productService.findProductById(req.getProductId());
+    public RatingDTO createRating(RatingRequest req, UserDTO user) throws ProductServiceException {
+        logger.debug("req: {}", req);
+        logger.debug("userDTO in Request: {}", user);
 
-        Rating rating = new Rating();
+        ProductDTO product = productService.findProductById(req.getProductId());
+        logger.debug("Product Id: {}", product.getProductId());
+
+        RatingDTO rating = new RatingDTO();
         rating.setRating(req.getRating());
-        rating.setProduct(product);
+        rating.setProductId(product.getProductId());
         rating.setCreatedAt(LocalDateTime.now());
-        rating.setUser(user);
-        return ratingRepository.save(rating);
+        rating.setUserId(user.getUserId());
+        Rating ratingEntity = ratingMapper.toRating(rating);
+        System.out.println(" ");
+        logger.debug("User: {}", user);
+        logger.debug("UserID: {}", user.getUserId());
+
+        System.out.println(" ");
+        logger.debug("Product: {}", ratingEntity.getProduct());
+        logger.debug("ProductId: {}", ratingEntity.getProduct().getProductId());
+
+        Rating newRating = this.ratingRepository.save(ratingMapper.toRating(rating));
+
+        return ratingMapper.toRatingDTO(newRating);
     }
 
     @Override
-    public List<Rating> getProductsRating(Long productId) {
-
-        return ratingRepository.getAllProductsRating(productId);
+    public List<RatingDTO> getAllRatings(Long productId) throws RatingServiceException {
+        try {
+            return ratingRepository.getAllProductsRating(productId).orElseThrow(() -> {
+                logger.error("No Cart Found with UserId: {}", productId);
+                return new CartItemException("No Cart Found with UserId: " + productId);
+            }).stream().map(ratingMapper::toRatingDTO).collect(Collectors.toList());
+        } catch (CartItemException e) {
+            throw new RatingServiceException(
+                    "An unexpected error occurred while retrieving the rating for user with ProductId: ", e);
+        }
     }
 }

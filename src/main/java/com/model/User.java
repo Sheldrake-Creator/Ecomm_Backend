@@ -1,156 +1,75 @@
 package com.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
+@Table(name = "app_user")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    private String firstName;
-    private String lastName;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long userId;
+    private String userName;
+    private String token;
     private String password;
     private String email;
     private String role;
-    private String mobile;
 
-    @OneToMany(mappedBy="user",cascade = CascadeType.ALL)
-    private List<Address> address=new ArrayList<>();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Address address;
 
     @Embedded
     @ElementCollection
-    @CollectionTable(name="payment_information" ,joinColumns = @JoinColumn(name="user_id"))
-    private List<PaymentInformation> paymentInformation=new ArrayList<>();
+    @CollectionTable(name = "payment_information", joinColumns = @JoinColumn(name = "user_id"))
+    private List<CreditCardInformation> paymentInformation = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Rating>ratings=new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference // This breaks the infinite
+    @ToString.Exclude
+    private List<Rating> ratings = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy="user",cascade = CascadeType.ALL)
-    private List<Review> reviews=new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference // This breaks the infinite recursion
+    @ToString.Exclude
+    private List<Review> reviews = new ArrayList<>();
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
-    public User(){
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
+    @ToString.Exclude
+    private Cart cart;
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, userName, email, role);
     }
 
-    public User(Long userId, String firstName, String lastName, String password, String email, String role, String mobile, List<Address> address, List<PaymentInformation> paymentInformation, List<Rating> ratings, List<Review> reviews, LocalDateTime createdAt) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-        this.mobile = mobile;
-        this.address = address;
-        this.paymentInformation = paymentInformation;
-        this.ratings = ratings;
-        this.reviews = reviews;
-        this.createdAt = createdAt;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        User user = (User) o;
+        return userId.equals(user.userId);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long userId) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public List<Address> getAddress() {
-        return address;
-    }
-
-    public void setAddress(List<Address> address) {
-        this.address = address;
-    }
-
-    public List<PaymentInformation> getPaymentInformation() {
-        return paymentInformation;
-    }
-
-    public void setPaymentInformation(List<PaymentInformation> paymentInformation) {
-        this.paymentInformation = paymentInformation;
-    }
-
-    public List<Rating> getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
-    }
-
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 }

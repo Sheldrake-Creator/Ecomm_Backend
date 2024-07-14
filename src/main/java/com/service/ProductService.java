@@ -1,7 +1,7 @@
 package com.service;
 
-import com.exception.ProductException;
-import com.model.Product;
+import com.dto.ProductDTO;
+import com.exception.ProductServiceException;
 import com.request.CreateProductRequest;
 import org.springframework.data.domain.Page;
 
@@ -9,22 +9,17 @@ import java.util.List;
 
 public interface ProductService {
 
-    public Product createProduct(CreateProductRequest request);
+    ProductDTO createProduct(CreateProductRequest request);
 
-    public String deleteProduct(Long productId) throws ProductException;
+    String deleteProduct(Long productId) throws ProductServiceException;
 
-    public Product updateProduct(Long productId, Product req) throws ProductException;
+    ProductDTO updateProduct(ProductDTO req, Long productId) throws ProductServiceException;
 
-    public Product findProductById(Long id) throws ProductException;
+    ProductDTO findProductById(Long id) throws ProductServiceException;
 
-    public Product findProductByCategory(String category) throws ProductException;
+    Page<ProductDTO> findProductsByCategory(String category, List<String> colors, List<String> sizes, Integer minPrice,
+            Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize)
+            throws ProductServiceException;
 
-    public Page<Product>getAllProducts(String category, List<String> colors, List<String>sizes, Integer minPrice, Integer maxPrice,
-                                      Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize);
-
-    public List<Product> findAllProducts();
-
-
-
-
+    List<ProductDTO> findAllProducts();
 }

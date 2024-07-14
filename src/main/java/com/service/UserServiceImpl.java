@@ -1,47 +1,115 @@
 package com.service;
 
-import com.config.JwtProvider;
-import com.exception.UserException;
+import com.dto.CredentialsDTO;
+import com.dto.SignUpDTO;
+import com.dto.UserDTO;
+import com.exception.AuthException;
+import com.exception.UserServiceException;
+import com.mapper.UserMapper;
 import com.model.User;
 import com.repository.UserRepository;
-import org.springframework.stereotype.Service;
+import com.response.UserAuthProvider;
 
+import lombok.RequiredArgsConstructor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.nio.CharBuffer;
 import java.util.Optional;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private JwtProvider jwtProvider;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
+    private final UserAuthProvider userAuthProvider;
+    private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    @Override
+    public UserDTO findUserById(Long userId) throws UserServiceException {
+        logger.debug("User ID : {}", userId);
 
-    public UserServiceImpl(UserRepository userRepository,JwtProvider jwtProvider){
-        this.userRepository =userRepository;
-        this.jwtProvider=jwtProvider;
-    // TODO Auto-generated constructor stub
+        Optional<User> user = userRepository.findUserByUserId(userId);
+
+        if (user.isPresent()) {
+            return userMapper.toUserDto(user.get());
+        }
+        throw new UserServiceException("user not found with userId - " + userId);
     }
 
     @Override
-    public User findUserById(Long userId) throws UserException {
-        Optional<User> user = userRepository.findById(userId);
-        if(user.isPresent()){
-            return user.get();
-        }
-        throw new UserException("user not found with userId - " + userId);
-    }
+    public User findUserByEmail(String email) throws UserServiceException {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
 
-    @Override
-    public User findUserProfileByJwt(String jwt) throws UserException {
-        String email = jwtProvider.getEmailFromToken(jwt);
-        User user = userRepository.findByEmail(email);
-        if(user != null){
-            return user;
+        if (optionalUser != null) {
+            return optionalUser.get();
         }
-        throw new UserException("User Profile not found with email" + email);
+        throw new UserServiceException("User Profile not found with email" + email);
     }
 
     @Override
     public User loadUserByUsername(String username) {
         return null;
+    }
+
+    @Override
+    public UserDTO login(CredentialsDTO credentialsDTO) throws AuthException {
+        logger.debug("Credentials", credentialsDTO);
+
+        User user = userRepository.findByUserName(credentialsDTO.userName())
+                .orElseThrow(() -> new AuthException("Unknown User", HttpStatus.NOT_FOUND));
+        logger.debug("UserEntity", user);
+        logger.debug("UserEntity Username", user.getUserName());
+        logger.debug("UserEntity password", user.getPassword());
+        return userMapper.toUserDto(user);
+        // if (passwordEncoder.matches(CharBuffer.wrap(credentialsDTO.password()),
+        // user.getPassword())) {}
+    }
+
+    @Override
+    public UserDTO register(SignUpDTO signUpDto) throws AuthException {
+
+        logger.debug("SignupDTO class", signUpDto);
+        Optional<User> oUser = userRepository.findByUserName(signUpDto.userName());
+
+        if (oUser.isPresent()) {
+            throw new AuthException("Username already Exists", HttpStatus.BAD_REQUEST);
+            // TO DO Add Exception for Existing Email address too
+        }
+        User user = userMapper.signUpDTOToUser(signUpDto);
+        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(signUpDto.password())));
+        User savedUser = userRepository.save(user);
+        return userMapper.toUserDto(savedUser);
+    }
+
+    @Override
+    public UserDTO findUserProfileByJwt(String jwt) throws UserServiceException {
+        String userName = userAuthProvider.getUserNameFromToken(jwt);
+        Optional<User> user = userRepository.findByUserName(userName);
+        if (user.isPresent()) {
+            return userMapper.toUserDto(user.get());
+        }
+        throw new UserServiceException("User Profile not found with User Name" + userName);
+    }
+
+    @Override
+    public Long getUserIdByJwt(String jwt) throws UserServiceException {
+        String userName = userAuthProvider.getUserNameFromToken(jwt);
+
+        logger.debug("userName: {}", userName);
+        Optional<Long> userId = userRepository.findUserIdByUserName(userName);
+        logger.debug("userName: {}", userId.get());
+        if (userId.isPresent()) {
+            return userId.get();
+        }
+        throw new UserServiceException("UserId not found with User Name" + userName);
     }
 }

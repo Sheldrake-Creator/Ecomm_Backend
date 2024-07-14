@@ -1,23 +1,28 @@
 package com.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.model.OrderItem;
 import com.repository.OrderItemRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class OrderItemServiceImpl implements OrderItemService {
 
-    @Autowired
-    private OrderItemRepository orderItemRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final Logger logger = LoggerFactory.getLogger(OrderItemServiceImpl.class);
 
+    @Override
+    public OrderItem createOrderItem(OrderItem orderItem) {
 
-        @Override
-        public OrderItem createOrderItem(OrderItem orderItem){
-
+        logger.debug("OrderItemDTO: {}", orderItem);
         return orderItemRepository.save(orderItem);
-        }
-
-
+    }
 
 }
