@@ -1,6 +1,0 @@
-[30m2024-07-10 02:31:35[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m15s665ms).
-[30m2024-07-10 06:45:29[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4h23s530ms).
-[30m2024-07-10 08:02:55[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h16m55s827ms).
-[30m2024-07-10 11:27:20[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3h23m55s150ms).
-[30m2024-07-10 22:27:21[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11h414ms).
-[30m2024-07-10 22:41:34[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m12s968ms).
