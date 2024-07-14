@@ -15,7 +15,7 @@ services:
       - mysql-data:/var/lib/mysql
 
   app:
-    image: your-dockerhub-username/demo:latest
+    image: sheldrakecreator/ecommrepo:latest
     container_name: springboot-app
     depends_on:
       - db
