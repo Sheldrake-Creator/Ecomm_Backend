@@ -55,7 +55,7 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        docker build -t your-dockerhub-username/demo:latest .
+        docker build -t sheldrakecreator/ecommrepo:latest .
       env:
         DOCKER_BUILDKIT: 1
 
