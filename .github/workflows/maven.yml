@@ -18,6 +18,21 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: 30624003
+          MYSQL_DATABASE: ecomm_store
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    
 
     steps:
     - uses: actions/checkout@v4
@@ -27,18 +42,30 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+
+    - name: Wait for MySQL to be ready
+      run: |
+        until mysqladmin ping -h 127.0.0.1 --silent; do
+          echo "Waiting for MySQL to be ready..."
+          sleep 5
+        done
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
+    - name: Build Docker Image
+      run: |
+        docker build -t sheldrakecreator/ecommrepo:latest .
+      env:
+        DOCKER_BUILDKIT: 1
+
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-    - name: Build Docker image
-      run: docker build -t your-dockerhub-username/demo:latest .
-
     - name: Push Docker image
-      run: docker push your-dockerhub-username/demo:latest
+      run: docker push sheldrakecreator/ecommrepo:latest
 
     - name: Set up Docker Compose
       run: |
