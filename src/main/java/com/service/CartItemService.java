@@ -8,7 +8,7 @@ import com.exception.CartItemException;
 
 public interface CartItemService {
 
-        CartDTO updateCartItem(Long cartId, CartItemDTO cartItemDto) throws CartItemException;
+        CartItemDTO updateCartItem(Long cartId, CartItemDTO cartItemDto) throws CartItemException;
 
         boolean doesCartItemExist(CartDTO cart, ProductDTO product, String size) throws CartItemException;
 
