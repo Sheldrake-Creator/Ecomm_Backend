@@ -12,3 +12,4 @@ EXPOSE 4545
 
 # Run the jar file
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
