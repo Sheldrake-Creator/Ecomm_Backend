@@ -1,5 +1,7 @@
 package com.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,5 +15,5 @@ public class UserDTO {
     private String token;
     private String email;
     private String role;
-    private Long addressId;
+    private List<AddressDTO> addresses;
 }

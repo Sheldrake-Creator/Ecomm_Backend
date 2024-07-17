@@ -1,4 +1,4 @@
-package com.Config;
+package com.config;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;

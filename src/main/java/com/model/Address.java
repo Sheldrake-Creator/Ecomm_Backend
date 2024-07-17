@@ -1,5 +1,7 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +29,7 @@ public class Address {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference // Break the infinite recursion
     private User user;
 
     @Column(name = "city")

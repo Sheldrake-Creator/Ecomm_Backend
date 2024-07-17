@@ -1,4 +1,4 @@
-package com.Config;
+package com.config;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Configuration;

@@ -6,15 +6,15 @@ import com.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { AddressMapper.class })
 public interface UserMapper {
 
-    @Mapping(target = "addressId", source = "address.addressId")
+    @Mapping(target = "addresses", source = "addresses")
     UserDTO toUserDto(User user);
 
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "cart", ignore = true)
-    @Mapping(target = "address.addressId", source = "addressId")
+    @Mapping(target = "addresses", source = "addresses")
     @Mapping(target = "paymentInformation", ignore = true)
     @Mapping(target = "ratings", ignore = true)
     @Mapping(target = "reviews", ignore = true)
@@ -24,7 +24,7 @@ public interface UserMapper {
 
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "cart", ignore = true)
-    @Mapping(target = "address", ignore = true)
+    @Mapping(target = "addresses", ignore = true)
     @Mapping(target = "paymentInformation", ignore = true)
     @Mapping(target = "ratings", ignore = true)
     @Mapping(target = "reviews", ignore = true)

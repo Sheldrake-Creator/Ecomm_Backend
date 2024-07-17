@@ -13,7 +13,8 @@ import com.exception.OrderServiceException;
 @Service
 public interface OrderService {
 
-    public OrderDTO createOrder(UserDTO user) throws CartServiceException, OrderServiceException;
+    public OrderDTO createOrder(UserDTO user, AddressDTO shippingAddress)
+            throws CartServiceException, OrderServiceException;
 
     public OrderDTO findOrderById(Long orderId) throws OrderServiceException;
 
@@ -32,6 +33,4 @@ public interface OrderService {
     public List<OrderDTO> getAllOrders() throws OrderServiceException;
 
     public void deleteOrder(Long orderId) throws OrderServiceException;
-
-    public void addAddress(Long UserId, AddressDTO address) throws OrderServiceException;
 }

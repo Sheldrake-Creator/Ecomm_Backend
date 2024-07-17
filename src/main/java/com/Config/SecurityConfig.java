@@ -1,4 +1,4 @@
-package com.Config;
+package com.config;
 
 import com.response.UserAuthProvider;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ public class SecurityConfig {
                                                                 "/api/orders", "/api/orders",
                                                                 "/api/admin/products/creates", "/api/admin/products/",
                                                                 "api/getCart", "/login", "/register", "api/createCart",
-                                                                "/api/getCart")
+                                                                "/api/getCart", "/api/address/add")
                                                 .permitAll()
                                                 .requestMatchers(HttpMethod.PUT, "/api/item/{cartItemId}",
                                                                 "/api/item/add", "/api/admin/orders/{orderId}/cancel",
@@ -46,12 +46,13 @@ public class SecurityConfig {
                                                                 "/api/admin/orders/{orderId}/confirmed",
                                                                 "/api/admin/orders/{orderId}/shipping",
                                                                 "/api/admin/products/{productId}/update",
-                                                                "/api/cart/add", "/api/item/{cartItemId}")
+                                                                "/api/cart/add", "/api/item/{cartItemId}",
+                                                                "/api/address/update")
                                                 .permitAll()
                                                 .requestMatchers(HttpMethod.DELETE, "/api/item/{cartItemId}",
                                                                 "/api/admin/orders/{orderId}/delete",
                                                                 "/api/admin/products/{productId}/delete",
-                                                                "api/item/{cartItemId}")
+                                                                "api/item/{cartItemId}", "/api/address/delete")
                                                 .permitAll().anyRequest().authenticated());
                 return http.build();
         }
