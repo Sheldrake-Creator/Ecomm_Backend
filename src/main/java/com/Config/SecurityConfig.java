@@ -52,7 +52,8 @@ public class SecurityConfig {
                                                 .requestMatchers(HttpMethod.DELETE, "/api/item/{cartItemId}",
                                                                 "/api/admin/orders/{orderId}/delete",
                                                                 "/api/admin/products/{productId}/delete",
-                                                                "api/item/{cartItemId}", "/api/address/delete")
+                                                                "api/item/{cartItemId}",
+                                                                "/api/address/delete/{addressId}")
                                                 .permitAll().anyRequest().authenticated());
                 return http.build();
         }

@@ -28,7 +28,7 @@ public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
 
     @Override
-    public void addAddress(Long userId, AddressDTO shippingAddress) throws AddressServiceException {
+    public AddressDTO addAddress(Long userId, AddressDTO shippingAddress) throws AddressServiceException {
         try {
             shippingAddress.setUserId(userId);
             Address updatedAddress = this.addressRepository.save(addressMapper.toAddress(shippingAddress));
@@ -36,8 +36,10 @@ public class AddressServiceImpl implements AddressService {
             UserDTO user = this.userService.findUserById(userId);
             // Address address = this.addressRepository.findAddressByUserId(userId)
             // .orElseThrow(() -> new RepositoryException("Address Not Found"));
-            user.getAddresses().add(addressMapper.toAddressDTO(updatedAddress));
+            AddressDTO addressDTO = addressMapper.toAddressDTO(updatedAddress);
+            user.getAddresses().add(addressDTO);
             this.userRepository.save(userMapper.toUser(user));
+            return addressDTO;
 
         } catch (UserServiceException e) {
             throw new AddressServiceException("Error occurred while saving User Address: ", e);
@@ -53,7 +55,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void removeAddress(Long userId, AddressDTO address) throws AddressServiceException {
+    public AddressDTO removeAddress(Long userId, AddressDTO address) throws AddressServiceException {
         try {
             address.setUserId(userId);
             this.addressRepository.deleteAddressById(address.getAddressId());
@@ -62,7 +64,7 @@ public class AddressServiceImpl implements AddressService {
             user.getAddresses().removeIf(addressId -> addressId.equals(address.getAddressId()));
 
             this.userRepository.save(userMapper.toUser(user));
-
+            return address;
         } catch (UserServiceException e) {
             throw new UnsupportedOperationException("Unimplemented method 'updateAddress'");
         }

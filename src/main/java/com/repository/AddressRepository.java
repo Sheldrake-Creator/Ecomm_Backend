@@ -13,6 +13,6 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     @Query("SELECT a FROM Address a WHERE a.user.userId=:userId")
     Optional<Address> findAddressByUserId(@Param("userId") Long userId);
 
-    @Query("DELETE FROM Address WHERE a.addressId=:addressId")
+    @Query("DELETE FROM Address a WHERE a.addressId=:addressId")
     void deleteAddressById(@Param("addressId") Long addressId);
 }
