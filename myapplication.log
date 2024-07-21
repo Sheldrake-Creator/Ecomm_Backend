@@ -1,32 +1,475 @@
-[30m2024-07-18 00:09:39[0;39m [39mDEBUG[0;39m [1;33mo.s.web.servlet.DispatcherServlet[0;39m - POST "/login", parameters={}
-[30m2024-07-18 00:09:39[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestMappingHandlerMapping[0;39m - Mapped to com.controller.AuthController#loginHandler(CredentialsDTO)
-[30m2024-07-18 00:09:39[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestResponseBodyMethodProcessor[0;39m - Read "application/json;charset=UTF-8" to [CredentialsDTO[userName=Silas, password=[C@1e444aab]]
-[30m2024-07-18 00:09:40[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.HttpEntityMethodProcessor[0;39m - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
-[30m2024-07-18 00:09:40[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.HttpEntityMethodProcessor[0;39m - Writing [HttpResponse(timeStamp=2024-07-18T00:09:40.010348, statusCode=200, status=200 OK, reason=null, messa (truncated)...]
-[30m2024-07-18 00:09:40[0;39m [39mDEBUG[0;39m [1;33mo.s.web.servlet.DispatcherServlet[0;39m - Completed 200 OK
-[30m2024-07-18 00:09:40[0;39m [39mDEBUG[0;39m [1;33mo.s.web.servlet.DispatcherServlet[0;39m - GET "/api/getCart", parameters={}
-[30m2024-07-18 00:09:40[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestMappingHandlerMapping[0;39m - Mapped to com.controller.CartController#getUserCart(String)
-[30m2024-07-18 00:09:40[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.HttpEntityMethodProcessor[0;39m - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
-[30m2024-07-18 00:09:40[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.HttpEntityMethodProcessor[0;39m - Writing [HttpResponse(timeStamp=2024-07-18T00:09:40.233179, statusCode=200, status=200 OK, reason=null, messa (truncated)...]
-[30m2024-07-18 00:09:40[0;39m [39mDEBUG[0;39m [1;33mo.s.web.servlet.DispatcherServlet[0;39m - Completed 200 OK
-[30m2024-07-18 00:09:50[0;39m [39mDEBUG[0;39m [1;33mo.s.web.servlet.DispatcherServlet[0;39m - GET "/api/getCart", parameters={}
-[30m2024-07-18 00:09:50[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestMappingHandlerMapping[0;39m - Mapped to com.controller.CartController#getUserCart(String)
-[30m2024-07-18 00:09:50[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.HttpEntityMethodProcessor[0;39m - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
-[30m2024-07-18 00:09:50[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.HttpEntityMethodProcessor[0;39m - Writing [HttpResponse(timeStamp=2024-07-18T00:09:50.507454, statusCode=200, status=200 OK, reason=null, messa (truncated)...]
-[30m2024-07-18 00:09:50[0;39m [39mDEBUG[0;39m [1;33mo.s.web.servlet.DispatcherServlet[0;39m - Completed 200 OK
-[30m2024-07-18 00:16:31[0;39m [39mDEBUG[0;39m [1;33mo.s.web.servlet.DispatcherServlet[0;39m - POST "/login", parameters={}
-[30m2024-07-18 00:16:31[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestMappingHandlerMapping[0;39m - Mapped to com.controller.AuthController#loginHandler(CredentialsDTO)
-[30m2024-07-18 00:16:31[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestResponseBodyMethodProcessor[0;39m - Read "application/json;charset=UTF-8" to [CredentialsDTO[userName=Silas, password=[C@6dacc0c8]]
-[30m2024-07-18 00:16:31[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.HttpEntityMethodProcessor[0;39m - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
-[30m2024-07-18 00:16:31[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.HttpEntityMethodProcessor[0;39m - Writing [HttpResponse(timeStamp=2024-07-18T00:16:31.382831, statusCode=200, status=200 OK, reason=null, messa (truncated)...]
-[30m2024-07-18 00:16:31[0;39m [39mDEBUG[0;39m [1;33mo.s.web.servlet.DispatcherServlet[0;39m - Completed 200 OK
-[30m2024-07-18 00:16:31[0;39m [39mDEBUG[0;39m [1;33mo.s.web.servlet.DispatcherServlet[0;39m - GET "/api/getCart", parameters={}
-[30m2024-07-18 00:16:31[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestMappingHandlerMapping[0;39m - Mapped to com.controller.CartController#getUserCart(String)
-[30m2024-07-18 00:16:31[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.HttpEntityMethodProcessor[0;39m - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
-[30m2024-07-18 00:16:31[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.HttpEntityMethodProcessor[0;39m - Writing [HttpResponse(timeStamp=2024-07-18T00:16:31.843160, statusCode=200, status=200 OK, reason=null, messa (truncated)...]
-[30m2024-07-18 00:16:31[0;39m [39mDEBUG[0;39m [1;33mo.s.web.servlet.DispatcherServlet[0;39m - Completed 200 OK
-[30m2024-07-18 00:16:38[0;39m [39mDEBUG[0;39m [1;33mo.s.web.servlet.DispatcherServlet[0;39m - GET "/api/getCart", parameters={}
-[30m2024-07-18 00:16:38[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestMappingHandlerMapping[0;39m - Mapped to com.controller.CartController#getUserCart(String)
-[30m2024-07-18 00:16:39[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.HttpEntityMethodProcessor[0;39m - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
-[30m2024-07-18 00:16:39[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.HttpEntityMethodProcessor[0;39m - Writing [HttpResponse(timeStamp=2024-07-18T00:16:39.119625, statusCode=200, status=200 OK, reason=null, messa (truncated)...]
-[30m2024-07-18 00:16:39[0;39m [39mDEBUG[0;39m [1;33mo.s.web.servlet.DispatcherServlet[0;39m - Completed 200 OK
+[30m2024-07-19 00:10:40[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Retrograde clock change detected (housekeeper delta=29s747ms), soft-evicting connections from pool.
+[30m2024-07-19 01:13:10[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m28s647ms).
+[30m2024-07-19 03:14:06[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h25s586ms).
+[30m2024-07-19 07:01:51[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3h47m15s87ms).
+[30m2024-07-19 07:03:19[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m27s633ms).
+[30m2024-07-19 09:03:45[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h25s936ms).
+[30m2024-07-19 11:04:11[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h25s895ms).
+[30m2024-07-19 12:59:26[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h55m15s701ms).
+[30m2024-07-19 15:10:28[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h38m1s587ms).
+[30m2024-07-19 16:17:08[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m8s484ms).
+[30m2024-07-19 17:01:38[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=59s256ms).
+[30m2024-07-19 18:20:06[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=56s674ms).
+[30m2024-07-19 18:22:04[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m28s538ms).
+[30m2024-07-19 18:24:08[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m34s400ms).
+[30m2024-07-19 18:58:23[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=34m14s26ms).
+[30m2024-07-19 18:58:52[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Retrograde clock change detected (housekeeper delta=29s388ms), soft-evicting connections from pool.
+[30m2024-07-19 19:18:49[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=19m56s958ms).
+[30m2024-07-19 19:51:02[0;39m [31mWARN [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12m42s411ms).
+[30m2024-07-19 20:12:25[0;39m [34mINFO [0;39m [1;33mo.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener[0;39m - Restarting due to 158 class path changes (0 additions, 158 deletions, 0 modifications)
+[30m2024-07-19 20:12:27[0;39m [34mINFO [0;39m [1;33mo.a.coyote.http11.Http11NioProtocol[0;39m - Stopping ProtocolHandler ["http-nio-4545"]
+[30m2024-07-19 20:12:28[0;39m [34mINFO [0;39m [1;33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+[30m2024-07-19 20:12:31[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown initiated...
+[30m2024-07-19 20:12:31[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-1 - Shutdown completed.
+[30m2024-07-19 20:13:08[0;39m [34mINFO [0;39m [1;33mcom.DemoApplication[0;39m - Starting DemoApplication using Java 17.0.11 with PID 93887 (/Users/silaspacheco/Ecomm_Backend/Ecomm_Backend/target/classes started by silaspacheco in /Users/silaspacheco/Ecomm_Backend/Ecomm_Backend)
+[30m2024-07-19 20:13:08[0;39m [34mINFO [0;39m [1;33mcom.DemoApplication[0;39m - No active profile set, falling back to 1 default profile: "default"
+[30m2024-07-19 20:13:10[0;39m [34mINFO [0;39m [1;33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[30m2024-07-19 20:13:12[0;39m [34mINFO [0;39m [1;33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Finished Spring Data repository scanning in 2168 ms. Found 10 JPA repository interfaces.
+[30m2024-07-19 20:13:13[0;39m [34mINFO [0;39m [1;33mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat initialized with port 4545 (http)
+[30m2024-07-19 20:13:13[0;39m [34mINFO [0;39m [1;33mo.a.catalina.core.StandardService[0;39m - Starting service [Tomcat]
+[30m2024-07-19 20:13:13[0;39m [34mINFO [0;39m [1;33mo.a.catalina.core.StandardEngine[0;39m - Starting Servlet engine: [Apache Tomcat/10.1.25]
+[30m2024-07-19 20:13:13[0;39m [34mINFO [0;39m [1;33mo.a.c.c.C.[Tomcat-1].[localhost].[/][0;39m - Initializing Spring embedded WebApplicationContext
+[30m2024-07-19 20:13:13[0;39m [34mINFO [0;39m [1;33mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m - Root WebApplicationContext: initialization completed in 5654 ms
+[30m2024-07-19 20:13:14[0;39m [39mDEBUG[0;39m [1;33mo.s.w.f.ServerHttpObservationFilter[0;39m - Filter 'webMvcObservationFilter' configured for use
+[30m2024-07-19 20:13:14[0;39m [34mINFO [0;39m [1;33mo.h.jpa.internal.util.LogHelper[0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+[30m2024-07-19 20:13:14[0;39m [34mINFO [0;39m [1;33mo.h.c.i.RegionFactoryInitiator[0;39m - HHH000026: Second-level cache disabled
+[30m2024-07-19 20:13:14[0;39m [34mINFO [0;39m [1;33mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m - No LoadTimeWeaver setup: ignoring JPA class transformer
+[30m2024-07-19 20:13:15[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-2 - Starting...
+[30m2024-07-19 20:13:15[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4170e04d
+[30m2024-07-19 20:13:15[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-2 - Start completed.
+[30m2024-07-19 20:13:16[0;39m [34mINFO [0;39m [1;33mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[30m2024-07-19 20:13:17[0;39m [34mINFO [0;39m [1;33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[30m2024-07-19 20:13:18[0;39m [31mWARN [0;39m [1;33mo.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[0;39m - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[30m2024-07-19 20:13:18[0;39m [31mWARN [0;39m [1;33mo.s.b.a.s.s.UserDetailsServiceAutoConfiguration[0;39m - 
+
+Using generated security password: 34f7c477-5745-4092-91bd-68bb12092bef
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+[30m2024-07-19 20:13:21[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestMappingHandlerMapping[0;39m - 34 mappings in 'requestMappingHandlerMapping'
+[30m2024-07-19 20:13:22[0;39m [34mINFO [0;39m [1;33mo.s.b.a.e.web.EndpointLinksResolver[0;39m - Exposing 1 endpoint(s) beneath base path '/actuator'
+[30m2024-07-19 20:13:22[0;39m [34mINFO [0;39m [1;33mo.s.s.web.DefaultSecurityFilterChain[0;39m - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@34c2233c, org.springframework.security.web.session.ForceEagerSessionCreationFilter@6007b61e, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@701e0bd2, org.springframework.security.web.context.SecurityContextHolderFilter@353a8a06, org.springframework.security.web.header.HeaderWriterFilter@6a5b72e1, org.springframework.web.filter.CorsFilter@18ffbaa0, org.springframework.security.web.authentication.logout.LogoutFilter@4691df42, com.config.JwtAuthFilter@3d81a140, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2aa60f6c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6aa08781, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@606b47a8, org.springframework.security.web.session.SessionManagementFilter@334483c6, org.springframework.security.web.access.ExceptionTranslationFilter@17921109, org.springframework.security.web.access.intercept.AuthorizationFilter@5280d228]
+[30m2024-07-19 20:13:22[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestMappingHandlerAdapter[0;39m - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[30m2024-07-19 20:13:22[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.ExceptionHandlerExceptionResolver[0;39m - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+[30m2024-07-19 20:13:25[0;39m [34mINFO [0;39m [1;33mo.s.b.d.a.OptionalLiveReloadServer[0;39m - LiveReload server is running on port 35729
+[30m2024-07-19 20:13:25[0;39m [34mINFO [0;39m [1;33mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat started on port 4545 (http) with context path ''
+[30m2024-07-19 20:13:25[0;39m [34mINFO [0;39m [1;33mcom.DemoApplication[0;39m - Started DemoApplication in 17.176 seconds (process running for 27161.854)
+[30m2024-07-19 20:13:25[0;39m [34mINFO [0;39m [1;33mo.s.b.d.a.ConditionEvaluationDeltaLoggingListener[0;39m - Condition evaluation unchanged
+[30m2024-07-19 20:14:49[0;39m [34mINFO [0;39m [1;33mo.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener[0;39m - Restarting due to 158 class path changes (0 additions, 158 deletions, 0 modifications)
+[30m2024-07-19 20:14:49[0;39m [34mINFO [0;39m [1;33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+[30m2024-07-19 20:14:49[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-2 - Shutdown initiated...
+[30m2024-07-19 20:14:49[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-2 - Shutdown completed.
+[30m2024-07-19 20:15:19[0;39m [34mINFO [0;39m [1;33mcom.DemoApplication[0;39m - Starting DemoApplication using Java 17.0.11 with PID 93887 (/Users/silaspacheco/Ecomm_Backend/Ecomm_Backend/target/classes started by silaspacheco in /Users/silaspacheco/Ecomm_Backend/Ecomm_Backend)
+[30m2024-07-19 20:15:19[0;39m [34mINFO [0;39m [1;33mcom.DemoApplication[0;39m - No active profile set, falling back to 1 default profile: "default"
+[30m2024-07-19 20:15:20[0;39m [34mINFO [0;39m [1;33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[30m2024-07-19 20:15:22[0;39m [34mINFO [0;39m [1;33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Finished Spring Data repository scanning in 1974 ms. Found 0 JPA repository interfaces.
+[30m2024-07-19 20:15:23[0;39m [34mINFO [0;39m [1;33mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat initialized with port 4545 (http)
+[30m2024-07-19 20:15:23[0;39m [34mINFO [0;39m [1;33mo.a.catalina.core.StandardService[0;39m - Starting service [Tomcat]
+[30m2024-07-19 20:15:23[0;39m [34mINFO [0;39m [1;33mo.a.catalina.core.StandardEngine[0;39m - Starting Servlet engine: [Apache Tomcat/10.1.25]
+[30m2024-07-19 20:15:23[0;39m [34mINFO [0;39m [1;33mo.a.c.c.C.[Tomcat-2].[localhost].[/][0;39m - Initializing Spring embedded WebApplicationContext
+[30m2024-07-19 20:15:23[0;39m [34mINFO [0;39m [1;33mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m - Root WebApplicationContext: initialization completed in 4166 ms
+[30m2024-07-19 20:15:23[0;39m [39mDEBUG[0;39m [1;33mo.s.w.f.ServerHttpObservationFilter[0;39m - Filter 'webMvcObservationFilter' configured for use
+[30m2024-07-19 20:15:24[0;39m [34mINFO [0;39m [1;33mo.h.jpa.internal.util.LogHelper[0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+[30m2024-07-19 20:15:24[0;39m [34mINFO [0;39m [1;33mo.h.c.i.RegionFactoryInitiator[0;39m - HHH000026: Second-level cache disabled
+[30m2024-07-19 20:15:24[0;39m [34mINFO [0;39m [1;33mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m - No LoadTimeWeaver setup: ignoring JPA class transformer
+[30m2024-07-19 20:15:24[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-3 - Starting...
+[30m2024-07-19 20:15:24[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@68d4782d
+[30m2024-07-19 20:15:24[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-3 - Start completed.
+[30m2024-07-19 20:15:24[0;39m [34mINFO [0;39m [1;33mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[30m2024-07-19 20:15:24[0;39m [34mINFO [0;39m [1;33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[30m2024-07-19 20:15:24[0;39m [31mWARN [0;39m [1;33mo.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[0;39m - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[30m2024-07-19 20:15:24[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestMappingHandlerMapping[0;39m - 2 mappings in 'requestMappingHandlerMapping'
+[30m2024-07-19 20:15:25[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.h.SimpleUrlHandlerMapping[0;39m - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[30m2024-07-19 20:15:25[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestMappingHandlerAdapter[0;39m - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[30m2024-07-19 20:15:25[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.ExceptionHandlerExceptionResolver[0;39m - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[30m2024-07-19 20:15:26[0;39m [31mWARN [0;39m [1;33mo.s.b.a.s.s.UserDetailsServiceAutoConfiguration[0;39m - 
+
+Using generated security password: 04229deb-027e-483a-9c2c-29c25866283c
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+[30m2024-07-19 20:15:26[0;39m [34mINFO [0;39m [1;33mo.s.b.a.e.web.EndpointLinksResolver[0;39m - Exposing 1 endpoint(s) beneath base path '/actuator'
+[30m2024-07-19 20:15:26[0;39m [34mINFO [0;39m [1;33mo.s.s.web.DefaultSecurityFilterChain[0;39m - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2b797d90, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1991d751, org.springframework.security.web.context.SecurityContextHolderFilter@119c136e, org.springframework.security.web.header.HeaderWriterFilter@1fe67a48, org.springframework.web.filter.CorsFilter@2ec7fce2, org.springframework.security.web.csrf.CsrfFilter@476606b, org.springframework.security.web.authentication.logout.LogoutFilter@4916c265, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@51343684, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@760b420a, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@6f5ed955, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@33302d5b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3d4ea7a6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@23532627, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@f2bacd3, org.springframework.security.web.access.ExceptionTranslationFilter@6ec767f9, org.springframework.security.web.access.intercept.AuthorizationFilter@4f6a0563]
+[30m2024-07-19 20:15:33[0;39m [34mINFO [0;39m [1;33mo.s.b.d.a.OptionalLiveReloadServer[0;39m - LiveReload server is running on port 35729
+[30m2024-07-19 20:15:34[0;39m [34mINFO [0;39m [1;33mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat started on port 4545 (http) with context path ''
+[30m2024-07-19 20:15:34[0;39m [34mINFO [0;39m [1;33mcom.DemoApplication[0;39m - Started DemoApplication in 15.057 seconds (process running for 27290.883)
+[30m2024-07-19 20:15:35[0;39m [34mINFO [0;39m [1;33mo.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener[0;39m - Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+[30m2024-07-19 20:15:34[0;39m [34mINFO [0;39m [1;33mo.s.b.d.a.ConditionEvaluationDeltaLoggingListener[0;39m - Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+   ManagementWebSecurityAutoConfiguration matched:
+      - found 'session' scope (OnWebApplicationCondition)
+      - AllNestedConditions 2 matched 0 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) did not find any beans; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity' (DefaultWebSecurityCondition)
+
+   SpringBootWebSecurityConfiguration.WebSecurityEnablerConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.security.config.annotation.web.configuration.EnableWebSecurity' (OnClassCondition)
+      - @ConditionalOnMissingBean (names: springSecurityFilterChain; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   TransactionAutoConfiguration.EnableTransactionManagementConfiguration matched:
+      - @ConditionalOnBean (types: org.springframework.transaction.TransactionManager; SearchStrategy: all) found bean 'transactionManager'; @ConditionalOnMissingBean (types: org.springframework.transaction.annotation.AbstractTransactionManagementConfiguration; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   TransactionAutoConfiguration.EnableTransactionManagementConfiguration.CglibAutoProxyConfiguration matched:
+      - @ConditionalOnProperty (spring.aop.proxy-target-class=true) matched (OnPropertyCondition)
+
+   WebMvcAutoConfiguration matched:
+      - @ConditionalOnClass found required classes 'jakarta.servlet.Servlet', 'org.springframework.web.servlet.DispatcherServlet', 'org.springframework.web.servlet.config.annotation.WebMvcConfigurer' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration#formContentFilter matched:
+      - @ConditionalOnProperty (spring.mvc.formcontent.filter.enabled) matched (OnPropertyCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.web.filter.FormContentFilter; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration.EnableWebMvcConfiguration#flashMapManager matched:
+      - @ConditionalOnMissingBean (names: flashMapManager; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration.EnableWebMvcConfiguration#localeResolver matched:
+      - @ConditionalOnMissingBean (names: localeResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration.EnableWebMvcConfiguration#themeResolver matched:
+      - @ConditionalOnMissingBean (names: themeResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter#defaultViewResolver matched:
+      - @ConditionalOnMissingBean (types: org.springframework.web.servlet.view.InternalResourceViewResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter#requestContextFilter matched:
+      - @ConditionalOnMissingBean (types: org.springframework.web.context.request.RequestContextListener,org.springframework.web.filter.RequestContextFilter; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter#viewResolver matched:
+      - @ConditionalOnBean (types: org.springframework.web.servlet.ViewResolver; SearchStrategy: all) found beans 'defaultViewResolver', 'beanNameViewResolver', 'mvcViewResolver'; @ConditionalOnMissingBean (names: viewResolver types: org.springframework.web.servlet.view.ContentNegotiatingViewResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+
+Negative matches:
+-----------------
+
+   WebMvcAutoConfiguration#hiddenHttpMethodFilter:
+      Did not match:
+         - @ConditionalOnProperty (spring.mvc.hiddenmethod.filter.enabled) did not find property 'enabled' (OnPropertyCondition)
+
+   WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter#beanNameViewResolver:
+      Did not match:
+         - @ConditionalOnMissingBean (types: org.springframework.web.servlet.view.BeanNameViewResolver; SearchStrategy: all) found beans of type 'org.springframework.web.servlet.view.BeanNameViewResolver' beanNameViewResolver (OnBeanCondition)
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+[30m2024-07-19 20:16:26[0;39m [34mINFO [0;39m [1;33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+[30m2024-07-19 20:16:26[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-3 - Shutdown initiated...
+[30m2024-07-19 20:16:26[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-3 - Shutdown completed.
+[30m2024-07-19 20:16:27[0;39m [34mINFO [0;39m [1;33mcom.DemoApplication[0;39m - Starting DemoApplication using Java 17.0.11 with PID 93887 (/Users/silaspacheco/Ecomm_Backend/Ecomm_Backend/target/classes started by silaspacheco in /Users/silaspacheco/Ecomm_Backend/Ecomm_Backend)
+[30m2024-07-19 20:16:27[0;39m [34mINFO [0;39m [1;33mcom.DemoApplication[0;39m - No active profile set, falling back to 1 default profile: "default"
+[30m2024-07-19 20:16:27[0;39m [34mINFO [0;39m [1;33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[30m2024-07-19 20:16:28[0;39m [34mINFO [0;39m [1;33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Finished Spring Data repository scanning in 740 ms. Found 10 JPA repository interfaces.
+[30m2024-07-19 20:16:29[0;39m [34mINFO [0;39m [1;33mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat initialized with port 4545 (http)
+[30m2024-07-19 20:16:29[0;39m [34mINFO [0;39m [1;33mo.a.catalina.core.StandardService[0;39m - Starting service [Tomcat]
+[30m2024-07-19 20:16:29[0;39m [34mINFO [0;39m [1;33mo.a.catalina.core.StandardEngine[0;39m - Starting Servlet engine: [Apache Tomcat/10.1.25]
+[30m2024-07-19 20:16:29[0;39m [34mINFO [0;39m [1;33mo.a.c.c.C.[Tomcat-2].[localhost].[/][0;39m - Initializing Spring embedded WebApplicationContext
+[30m2024-07-19 20:16:29[0;39m [34mINFO [0;39m [1;33mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m - Root WebApplicationContext: initialization completed in 1932 ms
+[30m2024-07-19 20:16:29[0;39m [39mDEBUG[0;39m [1;33mo.s.w.f.ServerHttpObservationFilter[0;39m - Filter 'webMvcObservationFilter' configured for use
+[30m2024-07-19 20:16:29[0;39m [34mINFO [0;39m [1;33mo.h.jpa.internal.util.LogHelper[0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+[30m2024-07-19 20:16:33[0;39m [34mINFO [0;39m [1;33mo.h.c.i.RegionFactoryInitiator[0;39m - HHH000026: Second-level cache disabled
+[30m2024-07-19 20:16:33[0;39m [34mINFO [0;39m [1;33mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m - No LoadTimeWeaver setup: ignoring JPA class transformer
+[30m2024-07-19 20:16:33[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-4 - Starting...
+[30m2024-07-19 20:16:33[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@57aa62c2
+[30m2024-07-19 20:16:33[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-4 - Start completed.
+[30m2024-07-19 20:16:33[0;39m [34mINFO [0;39m [1;33mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[30m2024-07-19 20:16:34[0;39m [34mINFO [0;39m [1;33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[30m2024-07-19 20:16:35[0;39m [31mWARN [0;39m [1;33mo.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[0;39m - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[30m2024-07-19 20:16:35[0;39m [31mWARN [0;39m [1;33mo.s.b.a.s.s.UserDetailsServiceAutoConfiguration[0;39m - 
+
+Using generated security password: 46c793bb-33ea-409a-8aa1-525550f5bfda
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+[30m2024-07-19 20:16:35[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestMappingHandlerMapping[0;39m - 34 mappings in 'requestMappingHandlerMapping'
+[30m2024-07-19 20:16:36[0;39m [34mINFO [0;39m [1;33mo.s.b.a.e.web.EndpointLinksResolver[0;39m - Exposing 1 endpoint(s) beneath base path '/actuator'
+[30m2024-07-19 20:16:36[0;39m [34mINFO [0;39m [1;33mo.s.s.web.DefaultSecurityFilterChain[0;39m - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@efae690, org.springframework.security.web.session.ForceEagerSessionCreationFilter@6dc33fa0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5dd64d96, org.springframework.security.web.context.SecurityContextHolderFilter@6d47deb7, org.springframework.security.web.header.HeaderWriterFilter@5dc182ef, org.springframework.web.filter.CorsFilter@f1242dc, org.springframework.security.web.authentication.logout.LogoutFilter@6c66eb58, com.config.JwtAuthFilter@5605fbc8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@32c4ae59, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@370d04a7, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@22cff097, org.springframework.security.web.session.SessionManagementFilter@3ac945b5, org.springframework.security.web.access.ExceptionTranslationFilter@19bf30ed, org.springframework.security.web.access.intercept.AuthorizationFilter@88d6aed]
+[30m2024-07-19 20:16:36[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestMappingHandlerAdapter[0;39m - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[30m2024-07-19 20:16:36[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.ExceptionHandlerExceptionResolver[0;39m - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+[30m2024-07-19 20:16:37[0;39m [34mINFO [0;39m [1;33mo.s.b.d.a.OptionalLiveReloadServer[0;39m - LiveReload server is running on port 35729
+[30m2024-07-19 20:17:57[0;39m [34mINFO [0;39m [1;33mo.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener[0;39m - Restarting due to 160 class path changes (0 additions, 160 deletions, 0 modifications)
+[30m2024-07-19 20:17:57[0;39m [34mINFO [0;39m [1;33mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat started on port 4545 (http) with context path ''
+[30m2024-07-19 20:17:57[0;39m [34mINFO [0;39m [1;33mcom.DemoApplication[0;39m - Started DemoApplication in 90.639 seconds (process running for 27434.562)
+[30m2024-07-19 20:17:57[0;39m [34mINFO [0;39m [1;33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+[30m2024-07-19 20:17:57[0;39m [34mINFO [0;39m [1;33mo.s.b.d.a.ConditionEvaluationDeltaLoggingListener[0;39m - Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+    None
+
+
+Negative matches:
+-----------------
+
+   ManagementWebSecurityAutoConfiguration:
+      Did not match:
+         - AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.web.SecurityFilterChain' securityFilterChain; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity' (DefaultWebSecurityCondition)
+      Matched:
+         - found 'session' scope (OnWebApplicationCondition)
+
+   SpringBootWebSecurityConfiguration.WebSecurityEnablerConfiguration:
+      Did not match:
+         - @ConditionalOnMissingBean (names: springSecurityFilterChain; SearchStrategy: all) found beans named springSecurityFilterChain (OnBeanCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.springframework.security.config.annotation.web.configuration.EnableWebSecurity' (OnClassCondition)
+
+   TransactionAutoConfiguration.EnableTransactionManagementConfiguration:
+      Did not match:
+         - @ConditionalOnMissingBean (types: org.springframework.transaction.annotation.AbstractTransactionManagementConfiguration; SearchStrategy: all) found beans of type 'org.springframework.transaction.annotation.AbstractTransactionManagementConfiguration' org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration (OnBeanCondition)
+
+   TransactionAutoConfiguration.EnableTransactionManagementConfiguration.CglibAutoProxyConfiguration:
+      Did not match:
+         - Ancestor org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$EnableTransactionManagementConfiguration did not match (ConditionEvaluationReport.AncestorsMatchedCondition)
+      Matched:
+         - @ConditionalOnProperty (spring.aop.proxy-target-class=true) matched (OnPropertyCondition)
+
+   WebMvcAutoConfiguration:
+      Did not match:
+         - @ConditionalOnMissingBean (types: org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport; SearchStrategy: all) found beans of type 'org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport' org.springframework.web.servlet.config.annotation.DelegatingWebMvcConfiguration (OnBeanCondition)
+      Matched:
+         - @ConditionalOnClass found required classes 'jakarta.servlet.Servlet', 'org.springframework.web.servlet.DispatcherServlet', 'org.springframework.web.servlet.config.annotation.WebMvcConfigurer' (OnClassCondition)
+         - found 'session' scope (OnWebApplicationCondition)
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+[30m2024-07-19 20:17:57[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-4 - Shutdown initiated...
+[30m2024-07-19 20:17:58[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-4 - Shutdown completed.
+[30m2024-07-19 20:17:58[0;39m [34mINFO [0;39m [1;33mcom.DemoApplication[0;39m - Starting DemoApplication using Java 17.0.11 with PID 93887 (/Users/silaspacheco/Ecomm_Backend/Ecomm_Backend/target/classes started by silaspacheco in /Users/silaspacheco/Ecomm_Backend/Ecomm_Backend)
+[30m2024-07-19 20:17:59[0;39m [34mINFO [0;39m [1;33mcom.DemoApplication[0;39m - No active profile set, falling back to 1 default profile: "default"
+[30m2024-07-19 20:18:00[0;39m [34mINFO [0;39m [1;33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[30m2024-07-19 20:18:04[0;39m [34mINFO [0;39m [1;33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Finished Spring Data repository scanning in 3977 ms. Found 10 JPA repository interfaces.
+[30m2024-07-19 20:18:05[0;39m [34mINFO [0;39m [1;33mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat initialized with port 4545 (http)
+[30m2024-07-19 20:18:05[0;39m [34mINFO [0;39m [1;33mo.a.catalina.core.StandardService[0;39m - Starting service [Tomcat]
+[30m2024-07-19 20:18:05[0;39m [34mINFO [0;39m [1;33mo.a.catalina.core.StandardEngine[0;39m - Starting Servlet engine: [Apache Tomcat/10.1.25]
+[30m2024-07-19 20:18:05[0;39m [34mINFO [0;39m [1;33mo.a.c.c.C.[Tomcat-2].[localhost].[/][0;39m - Initializing Spring embedded WebApplicationContext
+[30m2024-07-19 20:18:05[0;39m [34mINFO [0;39m [1;33mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m - Root WebApplicationContext: initialization completed in 5913 ms
+[30m2024-07-19 20:18:05[0;39m [39mDEBUG[0;39m [1;33mo.s.w.f.ServerHttpObservationFilter[0;39m - Filter 'webMvcObservationFilter' configured for use
+[30m2024-07-19 20:18:06[0;39m [34mINFO [0;39m [1;33mo.h.jpa.internal.util.LogHelper[0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+[30m2024-07-19 20:18:06[0;39m [34mINFO [0;39m [1;33mo.h.c.i.RegionFactoryInitiator[0;39m - HHH000026: Second-level cache disabled
+[30m2024-07-19 20:18:06[0;39m [34mINFO [0;39m [1;33mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m - No LoadTimeWeaver setup: ignoring JPA class transformer
+[30m2024-07-19 20:18:06[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-5 - Starting...
+[30m2024-07-19 20:18:06[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2bbee369
+[30m2024-07-19 20:18:06[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-5 - Start completed.
+[30m2024-07-19 20:18:07[0;39m [34mINFO [0;39m [1;33mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[30m2024-07-19 20:18:08[0;39m [34mINFO [0;39m [1;33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[30m2024-07-19 20:18:10[0;39m [31mWARN [0;39m [1;33mo.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[0;39m - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[30m2024-07-19 20:18:10[0;39m [31mWARN [0;39m [1;33mo.s.b.a.s.s.UserDetailsServiceAutoConfiguration[0;39m - 
+
+Using generated security password: b1a9ee56-e1d3-468a-b887-9a8fe13bcae7
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+[30m2024-07-19 20:18:19[0;39m [39mDEBUG[0;39m [1;33mo.s.w.s.m.m.a.RequestMappingHandlerMapping[0;39m - 34 mappings in 'requestMappingHandlerMapping'
+[30m2024-07-19 20:18:20[0;39m [34mINFO [0;39m [1;33mo.s.b.a.e.web.EndpointLinksResolver[0;39m - Exposing 1 endpoint(s) beneath base path '/actuator'
+[30m2024-07-19 20:18:20[0;39m [31mWARN [0;39m [1;33mo.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext[0;39m - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration': Unsatisfied dependency expressed through method 'setFilterChains' parameter 0: Error creating bean with name 'securityFilterChain' defined in class path resource [com/config/SecurityConfig.class]: Failed to instantiate [org.springframework.security.web.SecurityFilterChain]: Factory method 'securityFilterChain' threw exception with message: com/config/JwtAuthFilter
+[30m2024-07-19 20:18:20[0;39m [34mINFO [0;39m [1;33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+[30m2024-07-19 20:18:20[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-5 - Shutdown initiated...
+[30m2024-07-19 20:18:20[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-5 - Shutdown completed.
+[30m2024-07-19 20:18:24[0;39m [34mINFO [0;39m [1;33mo.a.catalina.core.StandardService[0;39m - Stopping service [Tomcat]
+[30m2024-07-19 20:18:24[0;39m [34mINFO [0;39m [1;33mo.s.b.a.l.ConditionEvaluationReportLogger[0;39m - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[30m2024-07-19 20:18:24[0;39m [1;31mERROR[0;39m [1;33mo.s.boot.SpringApplication[0;39m - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration': Unsatisfied dependency expressed through method 'setFilterChains' parameter 0: Error creating bean with name 'securityFilterChain' defined in class path resource [com/config/SecurityConfig.class]: Failed to instantiate [org.springframework.security.web.SecurityFilterChain]: Factory method 'securityFilterChain' threw exception with message: com/config/JwtAuthFilter
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredMethodElement.resolveMethodArguments(AutowiredAnnotationBeanPostProcessor.java:895)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredMethodElement.inject(AutowiredAnnotationBeanPostProcessor.java:848)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:508)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1421)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at com.DemoApplication.main(DemoApplication.java:13)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'securityFilterChain' defined in class path resource [com/config/SecurityConfig.class]: Failed to instantiate [org.springframework.security.web.SecurityFilterChain]: Factory method 'securityFilterChain' threw exception with message: com/config/JwtAuthFilter
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:648)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:636)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1337)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1167)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.addCandidateEntry(DefaultListableBeanFactory.java:1689)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1653)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveMultipleBeanCollection(DefaultListableBeanFactory.java:1543)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveMultipleBeans(DefaultListableBeanFactory.java:1511)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1392)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredMethodElement.resolveMethodArguments(AutowiredAnnotationBeanPostProcessor.java:887)
+	... 25 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.security.web.SecurityFilterChain]: Factory method 'securityFilterChain' threw exception with message: com/config/JwtAuthFilter
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:177)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:644)
+	... 42 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: com/config/JwtAuthFilter
+	at com.config.SecurityConfig.securityFilterChain(SecurityConfig.java:24)
+	at com.config.SecurityConfig$$SpringCGLIB$$0.CGLIB$securityFilterChain$0(<generated>)
+	at com.config.SecurityConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:348)
+	at com.config.SecurityConfig$$SpringCGLIB$$0.securityFilterChain(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:354)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.aspectj.AspectJAfterAdvice.invoke(AspectJAfterAdvice.java:49)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor.invoke(MethodBeforeAdviceInterceptor.java:58)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at com.config.SecurityConfig$$SpringCGLIB$$1.securityFilterChain(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:140)
+	... 43 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.config.JwtAuthFilter
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525)
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Class.java:467)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525)
+	... 73 common frames omitted
+[30m2024-07-19 20:18:29[0;39m [34mINFO [0;39m [1;33mcom.DemoApplication[0;39m - Starting DemoApplication using Java 17.0.11 with PID 93887 (/Users/silaspacheco/Ecomm_Backend/Ecomm_Backend/target/classes started by silaspacheco in /Users/silaspacheco/Ecomm_Backend/Ecomm_Backend)
+[30m2024-07-19 20:18:29[0;39m [34mINFO [0;39m [1;33mcom.DemoApplication[0;39m - No active profile set, falling back to 1 default profile: "default"
+[30m2024-07-19 20:18:32[0;39m [34mINFO [0;39m [1;33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[30m2024-07-19 20:18:36[0;39m [34mINFO [0;39m [1;33mo.s.d.r.c.RepositoryConfigurationDelegate[0;39m - Finished Spring Data repository scanning in 3869 ms. Found 0 JPA repository interfaces.
+[30m2024-07-19 20:18:37[0;39m [34mINFO [0;39m [1;33mo.s.b.w.e.tomcat.TomcatWebServer[0;39m - Tomcat initialized with port 4545 (http)
+[30m2024-07-19 20:18:37[0;39m [34mINFO [0;39m [1;33mo.a.catalina.core.StandardService[0;39m - Starting service [Tomcat]
+[30m2024-07-19 20:18:37[0;39m [34mINFO [0;39m [1;33mo.a.catalina.core.StandardEngine[0;39m - Starting Servlet engine: [Apache Tomcat/10.1.25]
+[30m2024-07-19 20:18:37[0;39m [34mINFO [0;39m [1;33mo.a.c.c.C.[Tomcat-3].[localhost].[/][0;39m - Initializing Spring embedded WebApplicationContext
+[30m2024-07-19 20:18:37[0;39m [34mINFO [0;39m [1;33mo.s.b.w.s.c.ServletWebServerApplicationContext[0;39m - Root WebApplicationContext: initialization completed in 7509 ms
+[30m2024-07-19 20:18:37[0;39m [39mDEBUG[0;39m [1;33mo.s.w.f.ServerHttpObservationFilter[0;39m - Filter 'webMvcObservationFilter' configured for use
+[30m2024-07-19 20:18:37[0;39m [34mINFO [0;39m [1;33mo.h.jpa.internal.util.LogHelper[0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+[30m2024-07-19 20:18:37[0;39m [34mINFO [0;39m [1;33mo.h.c.i.RegionFactoryInitiator[0;39m - HHH000026: Second-level cache disabled
+[30m2024-07-19 20:18:42[0;39m [34mINFO [0;39m [1;33mo.s.o.j.p.SpringPersistenceUnitInfo[0;39m - No LoadTimeWeaver setup: ignoring JPA class transformer
+[30m2024-07-19 20:18:42[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-6 - Starting...
+[30m2024-07-19 20:18:42[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.pool.HikariPool[0;39m - HikariPool-6 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2a4b2a5
+[30m2024-07-19 20:18:42[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-6 - Start completed.
+[30m2024-07-19 20:18:42[0;39m [34mINFO [0;39m [1;33mo.h.e.t.j.p.i.JtaPlatformInitiator[0;39m - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[30m2024-07-19 20:18:42[0;39m [34mINFO [0;39m [1;33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[30m2024-07-19 20:18:42[0;39m [31mWARN [0;39m [1;33mo.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext[0;39m - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'ratingMapperImpl': Lookup method resolution failed
+[30m2024-07-19 20:18:59[0;39m [34mINFO [0;39m [1;33mo.s.o.j.LocalContainerEntityManagerFactoryBean[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+[30m2024-07-19 20:18:59[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-6 - Shutdown initiated...
+[30m2024-07-19 20:18:59[0;39m [34mINFO [0;39m [1;33mcom.zaxxer.hikari.HikariDataSource[0;39m - HikariPool-6 - Shutdown completed.
+[30m2024-07-19 20:18:59[0;39m [34mINFO [0;39m [1;33mo.a.catalina.core.StandardService[0;39m - Stopping service [Tomcat]
+[30m2024-07-19 20:18:59[0;39m [34mINFO [0;39m [1;33mo.s.b.a.l.ConditionEvaluationReportLogger[0;39m - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[30m2024-07-19 20:18:59[0;39m [1;31mERROR[0;39m [1;33mo.s.boot.SpringApplication[0;39m - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'ratingMapperImpl': Lookup method resolution failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:497)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:367)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1296)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1191)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at com.DemoApplication.main(DemoApplication.java:13)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.mapper.RatingMapperImpl] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@2a95172f]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:483)
+	at org.springframework.util.ReflectionUtils.doWithLocalMethods(ReflectionUtils.java:320)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:475)
+	... 24 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: Rating
+	at java.base/java.lang.Class.getDeclaredMethods0(Native Method)
+	at java.base/java.lang.Class.privateGetDeclaredMethods(Class.java:3402)
+	at java.base/java.lang.Class.getDeclaredMethods(Class.java:2504)
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:465)
+	... 26 common frames omitted
+Caused by: java.lang.ClassNotFoundException: Rating
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525)
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Class.java:467)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525)
+	... 30 common frames omitted

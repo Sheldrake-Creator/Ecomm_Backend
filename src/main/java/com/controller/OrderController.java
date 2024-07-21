@@ -23,13 +23,14 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class OrderController {
 
         private final OrderService orderService;
         private final UserService userService;
         private final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
-        @GetMapping("/")
+        @PostMapping("/")
         public ResponseEntity<HttpResponse> createOrder(@RequestHeader("Authorization") String jwt, CartDTO cart,
                         AddressDTO address) {
                 try {

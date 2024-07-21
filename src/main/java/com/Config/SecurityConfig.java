@@ -35,10 +35,10 @@ public class SecurityConfig {
                                                 "/api/admin/products/all", "/api").permitAll()
                                                 .requestMatchers(HttpMethod.POST, "/api/orders/add",
                                                                 "/api/reviews/create", "/api/ratings/create",
-                                                                "/api/orders", "/api/orders",
-                                                                "/api/admin/products/creates", "/api/admin/products/",
-                                                                "api/getCart", "/login", "/register", "api/createCart",
-                                                                "/api/getCart", "/api/address/add")
+                                                                "/api/orders", "/api/admin/products/creates",
+                                                                "/api/admin/products/", "api/getCart", "/login",
+                                                                "/register", "api/createCart", "/api/getCart",
+                                                                "/api/address/add")
                                                 .permitAll()
                                                 .requestMatchers(HttpMethod.PUT, "/api/item/{cartItemId}",
                                                                 "/api/item/add", "/api/admin/orders/{orderId}/cancel",
