@@ -10,23 +10,14 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-    - name: Pull Docker image
-      run: sudo docker pull sheldrakecreator/ecommrepo:server
-
-    - name: Delete Old docker container
-      run: sudo docker rm -f cicd || true
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Log in to Docker Hub
-      run: echo ${{secrets.DOCKER_PASSWORD}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-    - name: Build the Docker image
-      run: sudo docker build -t sheldrakecreator/ecommrepo:server .
-
-    - name: Push to Dockerhub
-      run: sudo docker push sheldrakecreator/ecommrepo:server
-
-    - name: Delete Old docker container
+    - name: Delete Old Docker Container
       run: sudo docker rm -f ecommrepo-container || true
 
-    - name: Run Docker Container
-      run: sudo docker run -d -p 8080:8080 --name ecommrepo-container sheldrakecreator/ecommrepo:server
+    - name: Run New Docker Container
+      run: sudo docker run -d -p 4545:4545 --name ecommrepo-container sheldrakecreator/ecommrepo:server
