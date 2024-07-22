@@ -15,7 +15,7 @@ services:
       - mysql-data:/var/lib/mysql
 
   app:
-    image: sheldrakecreator/ecommrepo:latest
+    image: sheldrakecreator/ecommrepo:server
     container_name: springboot-app
     depends_on:
       - db

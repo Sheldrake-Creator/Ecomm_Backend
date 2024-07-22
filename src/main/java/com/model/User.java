@@ -31,8 +31,9 @@ public class User {
     private String email;
     private String role;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Address address;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference // This breaks the infinite
+    private List<Address> addresses;
 
     @Embedded
     @ElementCollection

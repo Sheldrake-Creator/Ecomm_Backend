@@ -9,7 +9,7 @@ import com.model.Address;
 @Mapper(componentModel = "spring")
 public interface AddressMapper {
 
-    // @Mapping(target = "addressId", source = "address.addressId")
+    @Mapping(target = "addressId", source = "address.addressId")
     @Mapping(target = "userId", source = "user.userId")
     AddressDTO toAddressDTO(Address address);
 

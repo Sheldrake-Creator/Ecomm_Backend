@@ -107,11 +107,10 @@ public class CartItemController {
                         logger.debug("Req CartItemDTO: {}", cartItem);
 
                         logger.debug("Req cartItemId: {}", cartItemId);
-                        CartDTO updatedCart = cartItemService.updateCartItem(cartItemId, cartItem);
-                        return ResponseEntity.ok()
-                                        .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
-                                                        .message("Cart Item updated!").status(HttpStatus.OK)
-                                                        .statusCode(200).data(Map.of("cart", updatedCart)).build());
+                        CartItemDTO updatedCartItem = this.cartItemService.updateCartItem(cartItemId, cartItem);
+                        return ResponseEntity.ok().body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                                        .message("Cart Item updated!").status(HttpStatus.OK).statusCode(200)
+                                        .data(Map.of("cartItem", updatedCartItem)).build());
                 } catch (CartItemException e) {
                         return ResponseEntity.badRequest()
                                         .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())

@@ -9,11 +9,12 @@ import com.model.CartItem;
 @Mapper(componentModel = "spring", uses = { ProductMapper.class })
 public interface CartItemMapper {
 
+    @Mapping(target = "product", source = "product")
     @Mapping(target = "cart.cartId", source = "cartId")
     CartItem toCartItem(CartItemDTO cartItemDTO);
 
+    @Mapping(target = "product", source = "product")
     @Mapping(target = "cartId", source = "cart.cartId")
-
     CartItemDTO toCartItemDTO(CartItem createdCartItem);
 
 }
