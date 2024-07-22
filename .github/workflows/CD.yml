@@ -10,14 +10,12 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
 
-    - name: Log in to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
+    - name: Pull Docker Image
+      run: sudo docker pull sheldrakecreator/ecommrepo:server
     - name: Delete Old Docker Container
       run: sudo docker rm -f ecommrepo-container || true
-
     - name: Run New Docker Container
       run: sudo docker run -d -p 4545:4545 --name ecommrepo-container sheldrakecreator/ecommrepo:server
+
+  
