@@ -6,6 +6,7 @@ import com.dto.OrderDTO;
 import com.dto.UserDTO;
 import com.exception.OrderServiceException;
 import com.exception.UserServiceException;
+import com.request.CreateOrderRequest;
 import com.response.HttpResponse;
 import com.service.OrderService;
 import com.service.UserService;
@@ -31,11 +32,11 @@ public class OrderController {
         private final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
         @PostMapping("/")
-        public ResponseEntity<HttpResponse> createOrder(@RequestHeader("Authorization") String jwt, CartDTO cart,
-                        AddressDTO address) {
+        public ResponseEntity<HttpResponse> createOrder(@RequestHeader("Authorization") String jwt,
+                        @RequestBody CreateOrderRequest req) {
                 try {
                         UserDTO user = userService.findUserProfileByJwt(jwt);
-                        OrderDTO order = orderService.createOrder(user, address);
+                        OrderDTO order = orderService.createOrder(user, req.getAddress(), req.getCart());
                         logger.debug("Order created: {}", order);
                         return ResponseEntity.status(HttpStatus.CREATED)
                                         .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())

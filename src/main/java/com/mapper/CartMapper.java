@@ -12,11 +12,11 @@ public interface CartMapper {
 
     // Mapping from CartDTO to Cart
     @Mapping(target = "user.userId", source = "userId")
-    @Mapping(target = "cartItems", source = "cartItems") // Add this line
+    @Mapping(target = "cartItems", source = "cartItems")
     Cart toCart(CartDTO cartDTO);
 
     // Reverse mapping from Cart to CartDTO
     @Mapping(target = "userId", source = "user.userId")
-    @Mapping(target = "cartItems", source = "cartItems") // Add this line
+    @Mapping(target = "cartItems", source = "cartItems")
     CartDTO toCartDTO(Cart cart);
 }

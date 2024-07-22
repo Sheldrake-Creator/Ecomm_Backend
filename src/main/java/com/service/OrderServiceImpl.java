@@ -28,44 +28,48 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemRepository orderItemRepository;
     private final OrderItemMapper orderItemMapper;
     private final OrderMapper orderMapper;
-    private final Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Override
-    public OrderDTO createOrder(UserDTO userDto, AddressDTO shippingAddress)
+    public OrderDTO createOrder(UserDTO user, AddressDTO shippingAddress, CartDTO cart)
             throws CartServiceException, OrderServiceException {
 
         // List<AddressDTO> addressId = userDto.getAddresses();
-        // Address addressEntity = this.addressRepository.findById(addressId.get)
+        // Address addressEntity = this.addressRepository.findById(addressId.get())
         // .orElseThrow(() -> new RepositoryException("Address Not Found"));
         // AddressDTO address = addressMapper.toAddressDTO(addressEntity);
 
-        CartDTO cart = cartService.findUserCart(userDto.getUserId());
-        List<OrderItemDTO> orderItemList = new ArrayList<>();
+        List<OrderItem> orderItemList = new ArrayList<>();
+        logger.debug("userId: {}", user.getUserId());
 
         // Create initial OrderDTO without order items
-        OrderDTO createdOrder = OrderDTO.builder().userId(userDto.getUserId()).orderItems(orderItemList)
-                .totalPrice(cart.getTotalPrice()).totalDiscountedPrice(cart.getTotalDiscountedPrice())
-                .totalItems(cart.getTotalItems()).shippingAddress(shippingAddress).orderDate(LocalDateTime.now())
-                .orderStatus("PENDING").deliveryDate(LocalDateTime.now().plusDays(5)).build();
+        OrderDTO createdOrder = OrderDTO.builder().userId(user.getUserId()).totalPrice(cart.getTotalPrice())
+                .totalDiscountedPrice(cart.getTotalDiscountedPrice()).totalItems(cart.getTotalItems())
+                .shippingAddress(shippingAddress).orderDate(LocalDateTime.now()).orderStatus("PENDING")
+                .deliveryDate(LocalDateTime.now().plusDays(5)).build();
 
         // Save the initial order to get the generated order ID
         Order savedOrder = orderRepository.save(orderMapper.toOrder(createdOrder));
+        logger.debug("Saved Order: {}", savedOrder);
 
         for (CartItemDTO item : cart.getCartItems()) {
-            OrderItemDTO orderItem = OrderItemDTO.builder().orderPrice(item.getPrice())
-                    .productId(item.getProduct().getProductId()).quantity(item.getQuantity()).size(item.getSize())
-                    .discountedPrice(item.getDiscountedPrice()).orderId(savedOrder.getOrderId()).build();
+            OrderItemDTO orderItem = OrderItemDTO.builder().orderPrice(item.getPrice()).product(item.getProduct())
+                    .quantity(item.getQuantity()).size(item.getSize()).discountedPrice(item.getDiscountedPrice())
+                    .orderId(savedOrder.getOrderId()).build();
 
-            this.orderItemRepository.save(orderItemMapper.toOrderItem(orderItem));
-            orderItemList.add(orderItem);
+            OrderItem orderEntity = this.orderItemRepository.save(orderItemMapper.toOrderItem(orderItem));
+            orderItemList.add(orderEntity);
         }
 
-        createdOrder.setOrderItems(orderItemList);
-        // savedOrder = orderRepository.save(orderMapper.toOrder(createdOrder));
+        savedOrder.setOrderItems(orderItemList);
 
-        this.placedOrder(savedOrder.getOrderId());
+        logger.debug("Saved Order: {}", savedOrder);
+        this.orderRepository.save(savedOrder);
+
+        // this.placedOrder(savedOrder.getOrderId()); /// This will need to be changed
+        // to Pending
         this.cartService.checkoutCart(cart.getCartId());
-        this.cartService.createCart(userDto.getUserId());
+        this.cartService.createCart(cart.getUserId());
 
         return orderMapper.toOrderDTO(savedOrder);
 

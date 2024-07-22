@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.dto.AddressDTO;
+import com.dto.CartDTO;
 import com.dto.OrderDTO;
 import com.dto.UserDTO;
 import com.exception.CartServiceException;
@@ -13,7 +14,7 @@ import com.exception.OrderServiceException;
 @Service
 public interface OrderService {
 
-    public OrderDTO createOrder(UserDTO user, AddressDTO shippingAddress)
+    public OrderDTO createOrder(UserDTO user, AddressDTO shippingAddress, CartDTO cart)
             throws CartServiceException, OrderServiceException;
 
     public OrderDTO findOrderById(Long orderId) throws OrderServiceException;
