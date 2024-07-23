@@ -63,9 +63,9 @@ spring:
       on-profile: ec2
 
   datasource:
-    url: jdbc:mysql://${{MYSQL_VM_IP}}:${{MYSQL_PORT}}/${{MYSQL_DATABASE}}
-    username: ${{ secrets.MYSQL_USERNAME }}
-    password: 30624003
+    url: jdbc:mysql://${MYSQL_VM_IP}:${MYSQL_PORT}/${MYSQL_DATABASE}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-timeout: 20000
