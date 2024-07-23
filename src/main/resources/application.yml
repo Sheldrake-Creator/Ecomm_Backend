@@ -8,7 +8,6 @@ server:
       suffix: ''
       file-date-format: ''
 
-
 spring:
   application:
     name: demo
