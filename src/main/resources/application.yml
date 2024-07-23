@@ -8,12 +8,64 @@ server:
       suffix: ''
       file-date-format: ''
 
+
 spring:
   application:
     name: demo
+
+  profiles:
+    active: spring.profiles.active@
+    
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+        hibernate: error
+  file:
+    name: myapplication.log
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: none
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/ecomm_store
-    username: root
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT}/${MYSQL_DATABASE}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 30
+      minimum-idle: 10
+  jpa:
+    show_sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        "[use_sql_comments]": true
+  devtools:
+    restart:
+      enabled: true
+  jmx:
+    enabled: false
+---
+spring:
+  config:
+    activate:
+      on-profile: ec2
+
+  datasource:
+    url: jdbc:mysql://${{secrets.VM_IP}}:${{secrets.MYSQL_PORT}}/${{secrets.MYSQL_DATABASE}}
+    username: ${{ secrets.MYSQL_USERNAME }}
     password: 30624003
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
@@ -27,96 +79,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-        "[format_sql]": true
         "[use_sql_comments]": true
-  devtools:
-    restart:
-      enabled: true
-  jmx:
-    enabled: false
-
-logging:
-  level:
-    org:
-      springframework:
-        web: debug
-        hibernate: error
-  file:
-    name: myapplication.log
-
-profiles:
-  active: debug
-
-management:
-  endpoints:
-    jmx:
-      exposure:
-        include: none
 
 
 
-# server:
-#   port: 4545
-#   tomcat:
-#     accesslog:
-#       enabled: true
-#       directory: /dev
-#       prefix: stdout
-#       suffix: ''
-#       file-date-format: ''
-
-# spring:
-
-#   application:
-#     name: demo
-
-#   datasource:
-#     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/ecomm_store
-#     username: root
-#     password: 30624003
-#     driver-class-name: com.mysql.cj.jdbc.Driver
-#     hikari:
-#       connection-timeout: 20000
-#       maximum-pool-size: 30
-#       minimum-idle: 10
-#   jpa:
-#       show_sql: true
-#       hibernate:
-#         ddl-auto: update
-#       properties:
-#          hibernate:
-#          dialect: org.hibernate.dialect.MySQLDialect
-#          "[format_sql]": true
-#          "[use_sql_comments]": true
-
-#   devtools:
-#     restart:
-#       enabled: true
-
-#   jmx:
-#     enabled: false
-
-
-
-        
-# # logging.config=src/main/resources/log4j2.xml
-# logging:
-#   level:
-#     org:
-#       springframework:
-#         web: debug
-#         hibernate: error
-#   file:
-#     name: myapplication.log
-
-
-# profiles:
-#     active: debug
-
-
-# management:
-#   endpoints:
-#     jmx:
-#       exposure:
-#         include: none
 
