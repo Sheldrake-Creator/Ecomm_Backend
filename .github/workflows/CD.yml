@@ -22,7 +22,7 @@ jobs:
           sudo docker stop ecommrepo-container
           sudo docker rm ecommrepo-container
         fi
-        
+
     - name: Run New Docker Container
       run: |
         sudo docker run -d -p 4545:4545 --name ecommrepo-container \
@@ -32,7 +32,8 @@ jobs:
           -e MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
           -e MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }} \
           -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
+          -e MYSQL_VM_IP=${{ secrets.MYSQL_VM_IP }} \
+          -e MYSQL_VM_IP=${{ secrets.MYSQL_VM_IP }} \
           sheldrakecreator/ecommrepo:server
-  
     - name: Verify Docker Container is Running
       run: sudo docker ps -a | grep ecommrepo-container
