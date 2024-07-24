@@ -8,7 +8,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication(exclude = { JmxAutoConfiguration.class,
 		JmxEndpointAutoConfiguration.class }, scanBasePackages = { "com.service", "com.mapper", "com.dto", "com.model",
-				"com.Config", "com.controller", "com.exception", "com.request", "com.response" })
+				"com.config", "com.controller", "com.exception", "com.request", "com.response" })
 @EnableAspectJAutoProxy
 public class DemoApplication {
 

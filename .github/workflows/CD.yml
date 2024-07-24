@@ -33,7 +33,6 @@ jobs:
           -e MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }} \
           -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
           -e MYSQL_VM_IP=${{ secrets.MYSQL_VM_IP }} \
-          -e MYSQL_VM_IP=${{ secrets.MYSQL_VM_IP }} \
           sheldrakecreator/ecommrepo:server
     - name: Verify Docker Container is Running
       run: sudo docker ps -a | grep ecommrepo-container
