@@ -19,8 +19,11 @@ logging:
   level:
     org:
       springframework:
-        web: debug
-        hibernate: error
+        web: DEBUG
+        security: DEBUG
+        beans: DEBUG
+      hibernate: DEBUG
+
   file:
     name: myapplication.log
 management:
