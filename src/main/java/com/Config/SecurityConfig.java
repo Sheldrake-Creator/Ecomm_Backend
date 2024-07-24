@@ -21,10 +21,10 @@ public class SecurityConfig {
 
         private final UserAuthProvider userAuth;
 
-        @Bean
-        public PasswordEncoder passwordEncoder() {
-                return new BCryptPasswordEncoder();
-        }
+        // @Bean
+        // public PasswordEncoder passwordEncoder() {
+        // return new BCryptPasswordEncoder();
+        // }
 
         @Bean
         SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
