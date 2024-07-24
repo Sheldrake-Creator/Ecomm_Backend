@@ -13,7 +13,7 @@ jobs:
       mysql:
         image: mysql:8.0
         ports:
-          - 80:3306
+          - 3306:3306
         env:
           MYSQL_ROOT_PASSWORD: 30624003
           MYSQL_DATABASE: ecomm_store
