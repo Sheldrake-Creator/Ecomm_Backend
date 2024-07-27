@@ -66,7 +66,7 @@ spring:
       on-profile: ec2
 
   datasource:
-    url: jdbc:mysql://${MYSQL_VM_IP}:${MYSQL_PORT}/${MYSQL_DATABASE}
+    url: jdbc:mysql://${RDS_ENDPOINT}:${MYSQL_PORT}/${MYSQL_DATABASE}
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver

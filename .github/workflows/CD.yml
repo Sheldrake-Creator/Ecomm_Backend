@@ -1,39 +1,38 @@
-name: Java CD with EC2
+# name: Java CD with EC2
 
-on:
-  workflow_run:
-    workflows: ["Java CI with Maven"]
-    types:
-      - completed
+# on:
+#   workflow_run:
+#     workflows: ["Java CI with Maven"]
+#     types:
+#       - completed
 
-jobs:
-  build:
-    runs-on: self-hosted
-    steps:
+# jobs:
+#   build:
+#     runs-on: self-hosted
+#     steps:
 
-    - name: Pull Docker Image
-      run: sudo docker pull sheldrakecreator/ecommrepo:server
-    - name: Delete Old Docker Container
-      run: sudo docker rm -f java-backend || true
+#     - name: Pull Docker Image
+#       run: sudo docker pull sheldrakecreator/ecommrepo:server
+#     - name: Delete Old Docker Container
+#       run: sudo docker rm -f java-backend || true
 
-    - name: Stop and remove existing container
-      run: |
-        if [ "$(sudo docker ps -q -f name=java-backend)" ]; then
-          sudo docker stop java-backend
-          sudo docker rm java-backend
-        fi
+#     - name: Stop and remove existing container
+#       run: |
+#         if [ "$(sudo docker ps -q -f name=java-backend)" ]; then
+#           sudo docker stop java-backend
+#           sudo docker rm java-backend
+#         fi
 
-    - name: Run New Docker Container
-      run: |
-        sudo docker run -d -p 4545:4545 --name java-backend \
-          -e SPRING_PROFILES_ACTIVE=ec2 \
-          -e MYSQL_HOST=${{ secrets.MYSQL_HOST }} \
-          -e MYSQL_PORT=${{ secrets.MYSQL_PORT }} \
-          -e MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
-          -e MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }} \
-          -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
-          -e MYSQL_VM_IP=${{ secrets.MYSQL_VM_IP }} \
-          sheldrakecreator/ecommrepo:server
-          
-    - name: Verify Docker Container is Running
-      run: sudo docker ps -a | grep java-backend
+    # - name: Run New Docker Container
+    #   run: |
+    #     sudo docker run -d -p 4545:4545 --name java-backend \
+    #       -e SPRING_PROFILES_ACTIVE=ec2 \
+    #       -e MYSQL_PORT=${{ secrets.MYSQL_PORT }} \
+    #       -e MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
+    #       -e MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }} \
+    #       -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
+    #       -e RDS_ENDPOINT=${{ secrets.RDS_ENDPOINT }} \
+    #       sheldrakecreator/ecommrepo:server
+
+    # - name: Verify Docker Container is Running
+    #   run: sudo docker ps -a | grep java-backend
