@@ -12,7 +12,6 @@ jobs:
       - name: Dispatch event to Deploy Repo
         uses: peter-evans/repository-dispatch@v2
         with:
-            
           token: ${{ secrets.DEPLOY_PAT }}
           repository: Sheldrake-Creator/Ecomm_Devops_Pipeline
           event-type: java-repo-update
