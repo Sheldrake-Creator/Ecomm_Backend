@@ -23,6 +23,8 @@ public interface OrderService {
 
     public OrderDTO placedOrder(Long orderId) throws OrderServiceException;
 
+    public OrderDTO confirmOrder(Long orderId) throws OrderServiceException;
+
     public OrderDTO confirmedOrder(Long orderId) throws OrderServiceException;
 
     public OrderDTO shippedOrder(Long orderId) throws OrderServiceException;

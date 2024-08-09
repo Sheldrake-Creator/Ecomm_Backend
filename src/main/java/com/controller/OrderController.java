@@ -1,7 +1,5 @@
 package com.controller;
 
-import com.dto.AddressDTO;
-import com.dto.CartDTO;
 import com.dto.OrderDTO;
 import com.dto.UserDTO;
 import com.exception.OrderServiceException;
@@ -33,6 +31,35 @@ public class OrderController {
 
         @PostMapping("/")
         public ResponseEntity<HttpResponse> createOrder(@RequestHeader("Authorization") String jwt,
+                        @RequestBody CreateOrderRequest req) {
+                try {
+                        UserDTO user = userService.findUserProfileByJwt(jwt);
+                        OrderDTO order = orderService.createOrder(user, req.getAddress(), req.getCart());
+                        logger.debug("Order created: {}", order);
+                        return ResponseEntity.status(HttpStatus.CREATED)
+                                        .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                                                        .data(Map.of("order", order)).message("Order created")
+                                                        .status(HttpStatus.CREATED)
+                                                        .statusCode(HttpStatus.CREATED.value()).build());
+                } catch (UserServiceException e) {
+                        logger.error("Error creating order: User exception", e);
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                        .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                                                        .message("Error creating order: User exception")
+                                                        .status(HttpStatus.BAD_REQUEST)
+                                                        .statusCode(HttpStatus.BAD_REQUEST.value()).build());
+                } catch (Exception e) {
+                        logger.error("Unexpected error creating order", e);
+                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                        .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                                                        .message("Unexpected error creating order")
+                                                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                                        .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build());
+                }
+        }
+
+        @PostMapping("/{orderId}/confirmed")
+        public ResponseEntity<HttpResponse> confirmOrder(@RequestHeader("Authorization") String jwt,
                         @RequestBody CreateOrderRequest req) {
                 try {
                         UserDTO user = userService.findUserProfileByJwt(jwt);

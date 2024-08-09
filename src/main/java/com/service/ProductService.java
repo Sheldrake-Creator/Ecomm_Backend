@@ -22,4 +22,6 @@ public interface ProductService {
             throws ProductServiceException;
 
     List<ProductDTO> findAllProducts();
+
+    Page<ProductDTO> findAllProductsPaginated(int page);
 }

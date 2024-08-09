@@ -68,4 +68,21 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/products/all/{page}")
+    public ResponseEntity<HttpResponse> findAllProduct(@PathVariable Integer page) {
+        try {
+            Page<ProductDTO> products = productService.findAllProductsPaginated(page);
+            logger.debug("Products retrieved: {}", products);
+            return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                    .data(Map.of("products", products)).message("Products retrieved").status(HttpStatus.OK)
+                    .statusCode(HttpStatus.OK.value()).build());
+        } catch (Exception e) {
+            logger.error("Error retrieving products", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                            .message("Error retrieving products").status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build());
+        }
+    }
+
 }

@@ -170,4 +170,15 @@ public class ProductServiceImpl implements ProductService {
         return productDtos;
     }
 
+    @Override
+    public Page<ProductDTO> findAllProductsPaginated(int page) {
+        int pageSize = 10;
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Product> productPage = productRepository.findAll(pageable);
+
+        Page<ProductDTO> productDtos = productPage.map(product -> productMapper.toProductDTO(product));
+
+        return productDtos;
+    }
+
 }
