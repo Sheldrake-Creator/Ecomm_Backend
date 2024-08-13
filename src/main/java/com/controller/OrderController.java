@@ -58,7 +58,7 @@ public class OrderController {
                 }
         }
 
-        @PostMapping("/{orderId}/confirmed")
+        @PostMapping("/confirmed")
         public ResponseEntity<HttpResponse> confirmOrder(@RequestHeader("Authorization") String jwt,
                         @RequestBody CreateOrderRequest req) {
                 try {

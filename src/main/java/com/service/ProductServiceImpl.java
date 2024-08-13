@@ -2,6 +2,7 @@ package com.service;
 
 import com.dto.ProductDTO;
 import com.exception.ProductServiceException;
+import com.exception.ServiceException;
 import com.mapper.ProductMapper;
 import com.model.Category;
 import com.model.Product;
@@ -9,7 +10,7 @@ import com.repository.CategoryRepository;
 import com.repository.ProductRepository;
 import com.request.CreateProductRequest;
 import lombok.RequiredArgsConstructor;
-
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -123,7 +124,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDTO> findProductsByCategory(String category, List<String> colors, List<String> sizes,
+    public Page<ProductDTO> findProductsByCategory(String category, List<String> brands, List<String> sizes,
             Integer minPrice, Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber,
             Integer pageSize) {
 
@@ -135,18 +136,25 @@ public class ProductServiceImpl implements ProductService {
         // Handle the case where no products are found
         List<Product> products = optionalProducts.orElse(Collections.emptyList());
 
-        if (!colors.isEmpty()) {
-            products = products.stream().filter(p -> colors.stream().anyMatch(c -> c.equalsIgnoreCase(p.getColor())))
+        if (!brands.isEmpty()) {
+            products = products.stream().filter(p -> brands.stream().anyMatch(c -> c.equalsIgnoreCase(p.getBrand())))
                     .collect(Collectors.toList());
         }
-
-        if (stock != null) {
-            if (stock.equals("in_stock")) {
-                products = products.stream().filter(p -> p.getNumInStock() > 0).collect(Collectors.toList());
-            } else if (stock.equals("out_of_stock")) {
-                products = products.stream().filter(p -> p.getNumInStock() < 1).collect(Collectors.toList());
-            }
-        }
+        // replace this with real/fake category search
+        // Organization System
+        // cat1: Real/Fake
+        // cat2: Pointless/Dangerous
+        // cat3: subcategory silly, dumb, mildly upsetting
+        //
+        // if (stock != null) {
+        // if (stock.equals("in_stock")) {
+        // products = products.stream().filter(p -> p.getNumInStock() >
+        // 0).collect(Collectors.toList());
+        // } else if (stock.equals("out_of_stock")) {
+        // products = products.stream().filter(p -> p.getNumInStock() <
+        // 1).collect(Collectors.toList());
+        // }
+        // }
 
         Integer startIndex = (int) pageable.getOffset();
         Integer endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
@@ -179,6 +187,87 @@ public class ProductServiceImpl implements ProductService {
         Page<ProductDTO> productDtos = productPage.map(product -> productMapper.toProductDTO(product));
 
         return productDtos;
+    }
+
+    @Override
+    public List<ProductDTO> singleSubCategorySearch(String caseString1, String caseString2, String caseString3)
+            throws ProductServiceException {
+        List<ProductDTO> productDtos = new ArrayList<ProductDTO>();
+        List<Product> productList = new ArrayList<Product>();
+        Optional<List<Product>> productEntities = Optional.ofNullable(productList);
+        System.out.println("test: " + caseString1);
+        System.out.println("test: " + caseString2);
+        System.out.println("test: " + caseString3);
+
+        if (caseString3.isEmpty() || caseString2.isEmpty() || caseString1.isEmpty()) {
+            // Null Scenario
+            System.out.println("Null Scenario");
+            throw new ProductServiceException("Empty Value Sent the Server");
+        } else if (StringUtils.isNumeric(caseString3)) {
+            // Category Search
+            System.out.println("Category Search");
+            Long categoryId = (long) Integer.parseInt(caseString3);
+
+            productEntities = productRepository.singleSubSearch(categoryId);
+
+        } else if (!StringUtils.isNumeric(caseString3) && (caseString3.equals("real") || caseString3.equals("fake"))) {
+            System.out.println("Real/Fake Search");
+            Long categoryId1;
+            Long categoryId2;
+
+            // Real or Fake
+            if (caseString2.equals("pointless")) {
+                if (caseString3.equals("real")) {
+
+                    categoryId1 = 3L;
+                    categoryId2 = 0L;
+                    productEntities = productRepository.getByRealOrFake(categoryId1, categoryId2);
+
+                } else {
+
+                    categoryId1 = 5L;
+                    categoryId2 = 0L;
+                    productEntities = productRepository.getByRealOrFake(categoryId1, categoryId2);
+                }
+            } else if (caseString2.equals("dangerous")) {
+                if (caseString3.equals("real")) {
+
+                    categoryId1 = 4L;
+                    categoryId2 = 0L;
+                    productEntities = productRepository.getByRealOrFake(categoryId1, categoryId2);
+                } else {
+
+                    categoryId1 = 6L;
+                    categoryId2 = 0L;
+                    productEntities = productRepository.getByRealOrFake(categoryId1, categoryId2);
+                }
+            }
+        } else {
+            // Brand Search
+            System.out.println("Brand Search");
+            String brand = caseString3;
+            productEntities = productRepository.findByBrand(brand);
+            // Throw error if not found
+
+        }
+        return productDtos = productEntities.get().stream().map(productMapper::toProductDTO)
+                .collect(Collectors.toList());
+
+    }
+
+    // Optional<List<Product>> products = productRepository.singleSubSearch();
+
+    // if (products.isPresent() && !products.get().isEmpty()) {
+    // productDtos =
+    // products.get().stream().map(productMapper::toProductDTO).collect(Collectors.toList());
+
+    // return productDtos;
+    // }
+
+    @Override
+    public List<ProductDTO> singleBrandSearch(String brand) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'singleBrandSearch'");
     }
 
 }

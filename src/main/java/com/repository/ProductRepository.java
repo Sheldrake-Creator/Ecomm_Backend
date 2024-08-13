@@ -19,4 +19,16 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
         Optional<List<Product>> filterProducts(@Param("category") String category, @Param("minPrice") Integer minPrice,
                         @Param("maxPrice") Integer maxPrice, @Param("minDiscount") Integer minDiscount,
                         @Param("sort") String sort) throws RepositoryException;
+
+        @Query("SELECT p FROM Product p WHERE p.category.categoryId = :categoryId")
+        Optional<List<Product>> singleSubSearch(@Param("categoryId") Long categoryId);
+
+        @Query("SELECT p FROM Product p JOIN p.category c WHERE c.parentCategory.categoryId = :categoryId1 OR c.parentCategory.categoryId = :categoryId2")
+        Optional<List<Product>> getByRealOrFake(@Param("categoryId1") Long categoryId1,
+                        @Param("categoryId2") Long categoryId2);
+
+        // find all by brand;
+        @Query("SELECT p FROM Product p WHERE p.brand = :brand")
+        Optional<List<Product>> findByBrand(@Param("brand") String brand);;
+
 }
