@@ -19,9 +19,9 @@ logging:
   level:
     org:
       springframework:
-        web: DEBUG
-        security: DEBUG
-        beans: DEBUG
+        # web: DEBUG
+        # security: DEBUG
+        # beans: DEBUG
       hibernate: DEBUG
 
   file:
@@ -38,9 +38,9 @@ spring:
       on-profile: local
 
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT}/${MYSQL_DATABASE}
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://localhost:3306/ecomm_store
+    username: root
+    password: 30624003
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-timeout: 20000

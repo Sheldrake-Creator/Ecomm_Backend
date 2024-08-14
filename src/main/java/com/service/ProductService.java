@@ -21,5 +21,12 @@ public interface ProductService {
             Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize)
             throws ProductServiceException;
 
-    List<ProductDTO> findAllProducts();
+    List<ProductDTO> findAllProducts() throws ProductServiceException;;
+
+    Page<ProductDTO> findAllProductsPaginated(int page);
+
+    List<ProductDTO> singleSubCategorySearch(String caseString1, String caseString2, String caseString3)
+            throws ProductServiceException;
+
+    List<ProductDTO> singleBrandSearch(String brand);
 }

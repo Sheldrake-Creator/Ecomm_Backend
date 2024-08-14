@@ -73,21 +73,22 @@ public class OrderServiceImpl implements OrderService {
 
         return orderMapper.toOrderDTO(savedOrder);
 
-        // for (OrderItemDTO item : orderItemList) {
-        // item.setOrderId(savedOrder.getOrderId());
-        // orderItemRepository.save(orderItemMapper.toOrderItem(item));
-        // }
-        // this.placedOrder(savedOrder.getOrderId());
-        // this.cartService.checkoutCart(cart.getCartId());
-        // this.cartService.createCart(userDto.getUserId());
+    }
 
+    public OrderDTO confirmOrder(Long orderId) throws OrderServiceException {
+        Order order = findOrderByIdEntity(orderId);
+        if (order.getOrderStatus().equals("PENDING")) {
+
+            order.setOrderStatus("PLACED");
+        }
+        return orderMapper.toOrderDTO(orderRepository.save(order));
     }
 
     @Override
     public OrderDTO placedOrder(Long orderId) throws OrderServiceException {
         Order order = findOrderByIdEntity(orderId);
         order.setOrderStatus("PLACED");
-        // order.getPaymentDetails().setStatus("COMPLETED");
+
         return orderMapper.toOrderDTO(orderRepository.save(order));
     }
 

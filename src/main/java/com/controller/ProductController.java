@@ -68,4 +68,39 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/products/all/{page}")
+    public ResponseEntity<HttpResponse> findAllProduct(@PathVariable Integer page) {
+        try {
+            Page<ProductDTO> pages = productService.findAllProductsPaginated(page);
+            logger.debug("Products retrieved: {}", pages);
+            return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                    .data(Map.of("pages", pages)).message("Pages retrieved").status(HttpStatus.OK)
+                    .statusCode(HttpStatus.OK.value()).build());
+        } catch (Exception e) {
+            logger.error("Error retrieving products", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                            .message("Error retrieving products").status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build());
+        }
+    }
+
+    @GetMapping("/{caseString1}/{caseString2}/{caseString3}")
+    public ResponseEntity<HttpResponse> findBySubCategory(@PathVariable String caseString1,
+            @PathVariable String caseString2, @PathVariable String caseString3) {
+        try {
+            List<ProductDTO> products = productService.singleSubCategorySearch(caseString1, caseString2, caseString3);
+            logger.debug("Products fetched: {}", products);
+            return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                    .data(Map.of("products", products)).message("Products fetched successfully").status(HttpStatus.OK)
+                    .statusCode(HttpStatus.OK.value()).build());
+        } catch (Exception e) {
+            logger.error("Unexpected error fetching products by category", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
+                            .message("Unexpected error fetching products").status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build());
+        }
+    }
+
 }

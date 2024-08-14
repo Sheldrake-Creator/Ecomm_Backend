@@ -31,14 +31,16 @@ public class SecurityConfig {
                                 .sessionManagement(customizer -> customizer
                                                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                                 .authorizeHttpRequests((requests) -> requests.requestMatchers(HttpMethod.GET,
-                                                "/api/users/test", "/api/orders/{orderId}",
+                                                "/api/{caseString1}/{caseString2}/{caseString3}",
+                                                "/api/products/all/{page}", "/api/users/test", "/api/orders/{orderId}",
                                                 "/api/reviews/product/{productId}", "/api/ratings/product/{productId}",
                                                 "/api/ratings/product/{productId}", "/api/users/id", "/api/orders/user",
                                                 "/api/admin/orders/{orderId}", "/api/products/id/{productId}",
                                                 "/api/admin/orders", "/api/admin/orders/{orderId}", "api/orders/user",
                                                 "api/getCart", "/api/products/id/{productId}", "/api/products/",
                                                 "/api/admin/products/all", "/api").permitAll()
-                                                .requestMatchers(HttpMethod.POST, "/api/orders/add",
+                                                .requestMatchers(HttpMethod.POST, "/api/product/",
+                                                                "/api/orders/confirmed", "/api/orders/add",
                                                                 "/api/reviews/create", "/api/ratings/create",
                                                                 "/api/orders", "/api/admin/products/creates",
                                                                 "/api/admin/products/", "api/getCart", "/login",
