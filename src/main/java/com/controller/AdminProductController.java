@@ -19,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin/products")
-@CrossOrigin(origins = "http://silas-ecomm.com")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class AdminProductController {
 
