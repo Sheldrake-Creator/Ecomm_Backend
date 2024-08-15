@@ -22,7 +22,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://silas-ecomm.com")
 public class OrderController {
 
         private final OrderService orderService;
