@@ -33,7 +33,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/item")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://silas-ecomm.com")
 public class CartItemController {
 
         private final UserService userService;

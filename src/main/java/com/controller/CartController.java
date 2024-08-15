@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Cart Management", description = "find user cart, add item to cart")
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://silas-ecomm.com")
 @RequiredArgsConstructor
 public class CartController {
 
