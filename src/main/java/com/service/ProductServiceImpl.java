@@ -2,7 +2,6 @@ package com.service;
 
 import com.dto.ProductDTO;
 import com.exception.ProductServiceException;
-import com.exception.ServiceException;
 import com.mapper.ProductMapper;
 import com.model.Category;
 import com.model.Product;
@@ -22,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -124,47 +124,71 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDTO> findProductsByCategory(String category, List<String> brands, List<String> sizes,
-            Integer minPrice, Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber,
-            Integer pageSize) {
+    public List<ProductDTO> findProductsByCategory(String category, String brand, Boolean veracity) {
+        logger.info("findProductsService");
+        Optional<List<Product>> optionalProducts;
+        List<String> categoryArray = new ArrayList<String>();
+        ArrayList<String> brandArray;
+        List<Product> products = new ArrayList<Product>();
 
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        if (category != null) {
+            logger.info("CategoryNotNull");
 
-        Optional<List<Product>> optionalProducts = productRepository.filterProducts(category, minPrice, maxPrice,
-                minDiscount, sort);
+            if (!category.isBlank()) {
+                String[] splitCategories = category.split(",");
+                categoryArray = Arrays.asList(splitCategories);
+            }
+            optionalProducts = productRepository.filterProducts(categoryArray);
 
-        // Handle the case where no products are found
-        List<Product> products = optionalProducts.orElse(Collections.emptyList());
+            // Handle the case where no products are found
+            products = optionalProducts.orElse(Collections.emptyList());
+            System.out.println("Products: " + products);
 
-        if (!brands.isEmpty()) {
-            products = products.stream().filter(p -> brands.stream().anyMatch(c -> c.equalsIgnoreCase(p.getBrand())))
-                    .collect(Collectors.toList());
+            if (brand != null) {
+                String[] splitBrands = brand.split(",");
+                brandArray = new ArrayList<>(Arrays.asList(splitBrands));
+                logger.info("brandArray {}", brandArray);
+                products = products.stream()
+                        .filter(p -> brandArray.stream().anyMatch(c -> c.equalsIgnoreCase(p.getBrand())))
+                        .collect(Collectors.toList());
+                logger.info("products2 {}", products);
+            }
+            if (veracity != null) {
+
+                if (veracity) {
+                    products = products.stream().filter(p -> p.getVeracity() == true).collect(Collectors.toList());
+                } else {
+                    products = products.stream().filter(p -> p.getVeracity() == false).collect(Collectors.toList());
+                }
+            }
+            products.forEach(product -> System.out.println("Content: " + product.getTitle()));
+        } else if (brand != null) {
+            logger.info("BrandOnlySearch");
+            String[] splitBrands = brand.split(",");
+            brandArray = new ArrayList<>(Arrays.asList(splitBrands));
+            logger.info("brandArray {}", brandArray);
+            optionalProducts = productRepository.findByBrand(brandArray);
+            logger.info("optionalProducts {}", optionalProducts.get());
+
+            products = optionalProducts.orElse(Collections.emptyList());
+
+            if (veracity != null && !products.isEmpty()) {
+                if (veracity) {
+                    products = products.stream().filter(product -> !product.getVeracity()).collect(Collectors.toList());
+                } else {
+                    products = products.stream().filter(product -> product.getVeracity()).collect(Collectors.toList());
+                }
+            }
+
+        } else if (veracity != null) {
+            logger.info("VeracityOnlySearch");
+            if (veracity) {
+                products = productRepository.getAllReal();
+            } else {
+                products = productRepository.getAllFake();
+            }
         }
-        // replace this with real/fake category search
-        // Organization System
-        // cat1: Real/Fake
-        // cat2: Pointless/Dangerous
-        // cat3: subcategory silly, dumb, mildly upsetting
-        //
-        // if (stock != null) {
-        // if (stock.equals("in_stock")) {
-        // products = products.stream().filter(p -> p.getNumInStock() >
-        // 0).collect(Collectors.toList());
-        // } else if (stock.equals("out_of_stock")) {
-        // products = products.stream().filter(p -> p.getNumInStock() <
-        // 1).collect(Collectors.toList());
-        // }
-        // }
-
-        Integer startIndex = (int) pageable.getOffset();
-        Integer endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
-
-        List<ProductDTO> productDTOs = productMapper.toProductsDTOList(products);
-        List<ProductDTO> pageContent = productDTOs.subList(startIndex, endIndex);
-
-        Page<ProductDTO> filteredProducts = new PageImpl<>(pageContent, pageable, productDTOs.size());
-
-        return filteredProducts;
+        return products.stream().map(productMapper::toProductDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -190,7 +214,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> singleSubCategorySearch(String caseString1, String caseString2, String caseString3)
+    public List<ProductDTO> navContentCategorySearch(String caseString1, String caseString2, String caseString3)
             throws ProductServiceException {
         List<ProductDTO> productDtos = new ArrayList<ProductDTO>();
         List<Product> productList = new ArrayList<Product>();
@@ -245,10 +269,9 @@ public class ProductServiceImpl implements ProductService {
         } else {
             // Brand Search
             System.out.println("Brand Search");
-            String brand = caseString3;
+            List<String> brand = new ArrayList<String>();
+            brand.add(caseString3);
             productEntities = productRepository.findByBrand(brand);
-            // Throw error if not found
-
         }
         return productDtos = productEntities.get().stream().map(productMapper::toProductDTO)
                 .collect(Collectors.toList());
@@ -265,9 +288,95 @@ public class ProductServiceImpl implements ProductService {
     // }
 
     @Override
-    public List<ProductDTO> singleBrandSearch(String brand) {
+    public List<ProductDTO> navContentBrandSearch(String brand) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'singleBrandSearch'");
+        throw new UnsupportedOperationException("Unimplemented method 'navContentBrandSearch'");
     }
 
-}
+} // Organization System
+  // cat1: Real/Fake
+  // cat2: Pointless/Dangerous
+  // cat3: subcategory silly, dumb, mildly upsetting
+  //
+  // if (veracity != null) {
+  // if (veracity.equals("real")) {
+  // products = products.stream().filter(p -> p.getVeracity() >
+  // 0).collect(Collectors.toList());
+  // } else if (veracity.equals("fake")) {
+  // products = products.stream().filter(p -> p.getVeracity() <
+  // 1).collect(Collectors.toList());
+  // }
+  // }
+
+// @Override
+// public Page<ProductDTO> findProductsByCategory(String category, String brand,
+// Boolean veracity, Integer pageNumber,
+// Integer pageSize) {
+// List<String> categoryArray = new ArrayList<String>();
+// ArrayList<String> brandArray;
+
+// Pageable pageable = PageRequest.of(0, pageSize);
+// if (!category.isBlank()) {
+// String[] splitCategories = category.split(",");
+// categoryArray = Arrays.asList(splitCategories);
+// }
+
+// Optional<List<Product>> optionalProducts =
+// productRepository.filterProducts(categoryArray);
+
+// // Handle the case where no products are found
+// List<Product> products = optionalProducts.orElse(Collections.emptyList());
+// System.out.println("Products: " + products);
+
+// if (brand != null) {
+// String[] splitBrands = brand.split(",");
+// brandArray = new ArrayList<>(Arrays.asList(splitBrands));
+// products = products.stream()
+// .filter(p -> brandArray.stream().anyMatch(c ->
+// c.equalsIgnoreCase(p.getBrand())))
+// .collect(Collectors.toList());
+// }
+// if (veracity != null) {
+// if (veracity) {
+// products = products.stream().filter(p -> p.getVeracity() ==
+// true).collect(Collectors.toList());
+// } else {
+// products = products.stream().filter(p -> p.getVeracity() ==
+// false).collect(Collectors.toList());
+// }
+// }
+// System.out.println("Products2: " + products);
+
+// if (products == null || products.isEmpty()) {
+// return new PageImpl<>(Collections.emptyList(), pageable, 0);
+// }
+
+// Integer startIndex = 1;
+// Integer endIndex = 10;
+// System.out.println("start: " + startIndex);
+// System.out.println("end: " + endIndex);
+
+// // Ensure indices are within bounds
+// if (startIndex >= products.size()) {
+// startIndex = products.size();
+// }
+// System.out.println("Size: " + products.size());
+
+// if (endIndex > products.size()) {
+// endIndex = products.size();
+// }
+// System.out.println("Size2: " + endIndex);
+
+// List<ProductDTO> productDTOs = productMapper.toProductsDTOList(products);
+// System.out.println("Mapped ProductDTOs: " + productDTOs);
+
+// List<ProductDTO> pageContent = productDTOs.subList(1, 2);
+// System.out.println(pageContent.toString());
+// pageContent.forEach(product -> System.out.println("Content: " +
+// product.getTitle()));
+
+// Page<ProductDTO> filteredProducts = new PageImpl<>(pageContent, pageable,
+// productDTOs.size());
+// System.out.println("Filtered Products: " + filteredProducts);
+// return filteredProducts;
+// }

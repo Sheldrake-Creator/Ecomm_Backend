@@ -48,13 +48,12 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<HttpResponse> findProductByCategory(@RequestParam String category,
-            @RequestParam List<String> color, @RequestParam List<String> size, @RequestParam Integer minPrice,
-            @RequestParam Integer maxPrice, @RequestParam Integer minDiscount, @RequestParam String sort,
-            @RequestParam String stock, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+    public ResponseEntity<HttpResponse> findProductByCategory(@RequestParam(required = false) String category,
+            @RequestParam(required = false) String brand, @RequestParam(required = false) Boolean veracity) {
         try {
-            Page<ProductDTO> products = productService.findProductsByCategory(category, color, size, minPrice, maxPrice,
-                    minDiscount, sort, stock, pageNumber, pageSize);
+
+            System.out.println("HIT");
+            List<ProductDTO> products = productService.findProductsByCategory(category, brand, veracity);
             logger.debug("Products fetched: {}", products);
             return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                     .data(Map.of("products", products)).message("Products fetched successfully").status(HttpStatus.OK)
@@ -86,10 +85,10 @@ public class ProductController {
     }
 
     @GetMapping("/{caseString1}/{caseString2}/{caseString3}")
-    public ResponseEntity<HttpResponse> findBySubCategory(@PathVariable String caseString1,
+    public ResponseEntity<HttpResponse> navContentSearch(@PathVariable String caseString1,
             @PathVariable String caseString2, @PathVariable String caseString3) {
         try {
-            List<ProductDTO> products = productService.singleSubCategorySearch(caseString1, caseString2, caseString3);
+            List<ProductDTO> products = productService.navContentCategorySearch(caseString1, caseString2, caseString3);
             logger.debug("Products fetched: {}", products);
             return ResponseEntity.ok(HttpResponse.builder().timeStamp(LocalDateTime.now().toString())
                     .data(Map.of("products", products)).message("Products fetched successfully").status(HttpStatus.OK)

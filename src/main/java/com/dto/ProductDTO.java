@@ -27,5 +27,6 @@ public class ProductDTO {
     // private List<ReviewDTO> reviews;
     private Integer numRatings;
     private Long categoryId;
+    private Boolean veracity;
 
 }

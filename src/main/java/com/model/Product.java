@@ -69,4 +69,6 @@ public class Product {
 
     private LocalDateTime createdAt;
 
+    private Boolean veracity;
+
 }
