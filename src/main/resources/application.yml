@@ -1,15 +1,9 @@
 server:
   port: 4545
-  ssl:
-    enabled: true
-    key-store: /etc/letsencrypt/archive/silas-ecomm.com/keystore.p12
-    key-store-password: ${KEYSTORE_PASSWORD}
-    key-store-type: PKCS12
-    key-alias: javaKey
-
+  
   tomcat:
     accesslog:
-      enabled: true
+      enabled: false
       directory: /dev
       prefix: stdout
       suffix: ''
@@ -33,13 +27,17 @@ logging:
 
   file:
     name: myapplication.log
+
 management:
   endpoints:
     jmx:
       exposure:
         include: none
+
 ---
 spring:
+  mvc:
+    log-request-details: true
   config:
     activate:
       on-profile: local
@@ -66,6 +64,7 @@ spring:
       enabled: true
   jmx:
     enabled: false
+
 ---
 spring:
   config:
@@ -90,6 +89,10 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         "[use_sql_comments]": true
 
-
-
-
+  server:
+    ssl:
+      enabled: true
+      key-store: /etc/letsencrypt/archive/silas-ecomm.com/keystore.p12
+      key-store-password: ${KEYSTORE_PASSWORD}
+      key-store-type: PKCS12
+      key-alias: javaKey

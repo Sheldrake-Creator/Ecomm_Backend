@@ -37,7 +37,7 @@ public class SecurityConfig {
                                                 "/api/ratings/product/{productId}", "/api/users/id", "/api/orders/user",
                                                 "/api/admin/orders/{orderId}", "/api/products/id/{productId}",
                                                 "/api/admin/orders", "/api/admin/orders/{orderId}", "api/orders/user",
-                                                "api/getCart", "/api/products/id/{productId}", "/api/products/",
+                                                "api/getCart", "/api/products/id/{productId}", "/api/products",
                                                 "/api/admin/products/all", "/api").permitAll()
                                                 .requestMatchers(HttpMethod.POST, "/api/product/",
                                                                 "/api/orders/confirmed", "/api/orders/add",

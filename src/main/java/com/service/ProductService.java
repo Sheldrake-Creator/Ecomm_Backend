@@ -9,24 +9,27 @@ import java.util.List;
 
 public interface ProductService {
 
-    ProductDTO createProduct(CreateProductRequest request);
+        ProductDTO createProduct(CreateProductRequest request);
 
-    String deleteProduct(Long productId) throws ProductServiceException;
+        String deleteProduct(Long productId) throws ProductServiceException;
 
-    ProductDTO updateProduct(ProductDTO req, Long productId) throws ProductServiceException;
+        ProductDTO updateProduct(ProductDTO req, Long productId) throws ProductServiceException;
 
-    ProductDTO findProductById(Long id) throws ProductServiceException;
+        ProductDTO findProductById(Long id) throws ProductServiceException;
 
-    Page<ProductDTO> findProductsByCategory(String category, List<String> colors, List<String> sizes, Integer minPrice,
-            Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize)
-            throws ProductServiceException;
+        List<ProductDTO> findProductsByCategory(String categories, String brand, Boolean veracity)
+                        throws ProductServiceException;
 
-    List<ProductDTO> findAllProducts() throws ProductServiceException;;
+        List<ProductDTO> findAllProducts() throws ProductServiceException;;
 
-    Page<ProductDTO> findAllProductsPaginated(int page);
+        Page<ProductDTO> findAllProductsPaginated(int page);
 
-    List<ProductDTO> singleSubCategorySearch(String caseString1, String caseString2, String caseString3)
-            throws ProductServiceException;
+        List<ProductDTO> navContentCategorySearch(String caseString1, String caseString2, String caseString3)
+                        throws ProductServiceException;
 
-    List<ProductDTO> singleBrandSearch(String brand);
+        List<ProductDTO> navContentBrandSearch(String brand);
+
+        // Page<ProductDTO> findProductsByCategoryPaginated(String categories, String
+        // brand, Boolean veracity, Integer pageNumber,
+        // Integer pageSize) throws ProductServiceException;
 }

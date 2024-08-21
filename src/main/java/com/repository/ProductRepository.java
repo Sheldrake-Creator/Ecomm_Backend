@@ -1,6 +1,5 @@
 package com.repository;
 
-import com.exception.RepositoryException;
 import com.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,14 +10,8 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-        @Query("SELECT p FROM Product p " + "WHERE(p.category.name =:category OR :category='')"
-                        + "AND ((:minPrice IS NULL AND :maxPrice IS NULL) OR (p.discountedPrice BETWEEN :minPrice AND :maxPrice))"
-                        + "AND(:minDiscount IS NULL OR p.discountPresent>=:minDiscount)" + "ORDER BY "
-                        + "CASE WHEN:sort ='price_low'THEN p.discountedPrice END ASC,"
-                        + "CASE WHEN:sort ='price_high'THEN p.discountedPrice END DESC")
-        Optional<List<Product>> filterProducts(@Param("category") String category, @Param("minPrice") Integer minPrice,
-                        @Param("maxPrice") Integer maxPrice, @Param("minDiscount") Integer minDiscount,
-                        @Param("sort") String sort) throws RepositoryException;
+        @Query("SELECT p FROM Product p WHERE (:categories IS NULL OR p.category.name IN :categories)")
+        Optional<List<Product>> filterProducts(@Param("categories") List<String> categories);
 
         @Query("SELECT p FROM Product p WHERE p.category.categoryId = :categoryId")
         Optional<List<Product>> singleSubSearch(@Param("categoryId") Long categoryId);
@@ -27,8 +20,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
         Optional<List<Product>> getByRealOrFake(@Param("categoryId1") Long categoryId1,
                         @Param("categoryId2") Long categoryId2);
 
-        // find all by brand;
-        @Query("SELECT p FROM Product p WHERE p.brand = :brand")
-        Optional<List<Product>> findByBrand(@Param("brand") String brand);;
+        @Query("SELECT p FROM Product p WHERE p.brand IN :brands")
+        Optional<List<Product>> findByBrand(@Param("brands") List<String> brands);
+
+        @Query("SELECT p FROM Product p WHERE p.veracity = true")
+        List<Product> getAllReal();
+
+        @Query("SELECT p FROM Product p WHERE p.veracity = false")
+        List<Product> getAllFake();
 
 }
